@@ -1,4 +1,4 @@
-import { faBars, faHome, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFile, faFolder, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
@@ -46,7 +46,7 @@ const Sidebar = () => {
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                 >
-                  <FontAwesomeIcon icon={faHome} className="mr-2" />
+                  <FontAwesomeIcon icon={faTruck} className="mr-2" />
                   Transfers
                 </NavLink>
               </li>
@@ -57,7 +57,7 @@ const Sidebar = () => {
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                 >
-                  <FontAwesomeIcon icon={faHome} className="mr-2" />
+                  <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
                   New Order
                 </NavLink>
               </li>
@@ -68,7 +68,7 @@ const Sidebar = () => {
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                 >
-                  <FontAwesomeIcon icon={faHome} className="mr-2" />
+                  <FontAwesomeIcon icon={faTruck} className="mr-2" />
                   Active Transfers
                 </NavLink>
               </li>
@@ -79,7 +79,7 @@ const Sidebar = () => {
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                 >
-                  <FontAwesomeIcon icon={faHome} className="mr-2" />
+                  <FontAwesomeIcon icon={faBell} className="mr-2" />
                   Notifications
                 </NavLink>
               </li>
@@ -90,7 +90,7 @@ const Sidebar = () => {
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                 >
-                  <FontAwesomeIcon icon={faHome} className="mr-2" />
+                  <FontAwesomeIcon icon={faGear} className="mr-2" />
                   Settings
                 </NavLink>
               </li>
