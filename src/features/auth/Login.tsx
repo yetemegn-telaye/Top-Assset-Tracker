@@ -1,6 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faRightToBracket, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+
+interface formData  {
+    username: string;
+    password: string;
+}
 const Login = () => {
+    const [loginFormData, setLoginFormData] = useState<formData>({username: '', password: ''});
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setLoginFormData({...loginFormData, [name]: value});
+    }
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(loginFormData);
+    }
     return (
 <div className="min-h-screen flex items-center justify-center">
   <div className="bg-background-paper border border-gray-300 rounded-xl shadow-md w-50 m-auto flex flex-col max-h-screen items-center justify-center gap-12 p-12">
@@ -8,11 +24,15 @@ const Login = () => {
       <FontAwesomeIcon icon={faUserCircle} size="5x" className="text-primary" />
       <p className='text-xs text-secondary-light font-light'>Welcome to Top's Tracking System.</p>
     </div>
-    <form className="flex flex-col space-y-8">
+    <form className="flex flex-col space-y-8" onSubmit={handleSubmit}>
         <div className='relative'>
         <input
         type="text"
         placeholder="Username"
+        id='username'
+        name='username'
+        value={loginFormData.username}
+        onChange={handleInputChange}
         className="p-2 pl-10 border-0 border-b border-primary-light"
         
       />
@@ -23,6 +43,10 @@ const Login = () => {
         <input
         type="password"
         placeholder="Password"
+        id='password'
+        name='password'
+        value={loginFormData.password}
+        onChange={handleInputChange}
         className="p-2 pl-10 border-0 border-b border-primary-light"
       />
       <FontAwesomeIcon icon={faLock} size='1x'
