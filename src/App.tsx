@@ -1,14 +1,21 @@
-import React from "react";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import routes from './constants/routes';
 
 const App: React.FC = () => {
-    return (
-       <div>
-            <h1 className="text-primary-lighter">Hello, World!</h1>
-            <h1 className="text-secondary-lighter">Hello, World!</h1>
-            <h1 className="text-error-lighter">Hello, World!</h1>
-            <h1 className="text-accent-lighter">Hello, World!</h1>
-       </div>
-    );
+  return (
+    <Router>
+      <Routes>
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={<route.component />}
+          />
+        ))}
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
