@@ -9,7 +9,7 @@ type LayoutProps = {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
     return (
-        <div className="flex gap-4">
+        <div className="flex gap-8 h-screen">
         <Sidebar />
        
         <div className="flex flex-col gap-4">

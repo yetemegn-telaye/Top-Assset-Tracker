@@ -1,7 +1,11 @@
+import Layout from "../../components/layout/Layout";
+
 const TransferList = () => {
     return (
         <div>
-        <h1>Transfer List</h1>
+        <Layout>
+            <h1>Transfer List</h1>
+        </Layout>
         </div>
     );
     }
