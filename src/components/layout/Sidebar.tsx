@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
+import profilePic from "../assets/images/driverprofile.jpeg";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,9 +107,12 @@ const Sidebar = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-center justify-center gap-3 mt-auto mb-8 md:mb-0">
-            <FontAwesomeIcon icon={faUserCircle} size="2x" className="text-accent" />
-            <h4>John Doe</h4>
+          <div className="flex flex-col items-center justify-center gap-4 mt-auto mb-8 md:mb-0">
+            <img src={profilePic} alt="Profile" className="w-16 h-16 rounded-full" />
+            <div className="flex flex-col items-center justify-center">
+            <h6 className="text-secondary font-light">Sammuel Doe</h6>
+            <span className="text-sm text-accent font-light">sammuel@gmail.com</span>
+            </div>
           </div>
         </div>
       </div>
