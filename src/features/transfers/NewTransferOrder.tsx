@@ -1,7 +1,12 @@
+import Layout from "../../components/layout/Layout";
+
 const NewTransferOrder= () => {
     return (
         <div>
-        <h1>New Transfer Order</h1>
+            <Layout>
+            <h1>New Transfer Order</h1>
+            </Layout>
+        
         </div>
     );
     }

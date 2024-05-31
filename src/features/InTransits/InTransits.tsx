@@ -1,7 +1,11 @@
+import Layout from "../../components/layout/Layout";
+
 const InTransits = () => {
     return (
         <div>
-        <h1>InTransits</h1>
+            <Layout>
+                <h1>InTransits</h1>
+            </Layout>
         </div>
     );
     }
