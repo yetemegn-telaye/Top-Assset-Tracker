@@ -1,0 +1,47 @@
+{
+  "name": "top-asset-tracker",
+  "version": "1.0.0",
+  "description": "asset tracker",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yetemegn-telaye/Top-Assset-Tracker.git"
+  },
+  "keywords": [],
+  "author": "yetemegn-telaye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yetemegn-telaye/Top-Assset-Tracker/issues"
+  },
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-scripts": "^5.0.1",
+    "tailwindcss": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "typescript": "^5.4.5",
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
