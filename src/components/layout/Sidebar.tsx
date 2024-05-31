@@ -2,6 +2,7 @@ import { faBars, faBell, faGear, faHome, faPlusCircle, faTruck, faUserCircle } f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import topLogo from "../assets/top-logo-final.png";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,9 @@ const Sidebar = () => {
         } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:h-full overflow-y-auto z-20`}
       >
         <div className="flex flex-col gap-8 w-full items-center h-full">
-          <div className="text-lg font-bold">Logo</div>
+          <div className="text-lg font-bold">
+            <img src={topLogo} alt="Top Logo" className="w-32" />
+          </div>
           <hr className="w-full" />
           <div className="mt-8 flex-1 w-full">
             <ul className="flex flex-col gap-6">
