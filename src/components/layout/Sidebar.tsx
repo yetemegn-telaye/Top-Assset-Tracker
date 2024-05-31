@@ -1,8 +1,7 @@
-import { faBars, faBell, faFile, faFolder, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import topLogo from '../assets/top-logo-final.png';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,23 +10,22 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <button
-        className="md:hidden p-6"
-        onClick={toggleSidebar}
-      >
+      <button className="md:hidden p-6" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
       <div
         className={`fixed inset-y-0 left-0 w-64 bg-background-paper shadow-md rounded-md p-8 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:h-full overflow-y-auto`}
+        } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:h-full overflow-y-auto z-20`}
       >
         <div className="flex flex-col gap-8 w-full items-center h-full">
-          <div className="text-lg font-bold">
-            <img src={topLogo} alt="Top Logo" className="w-32" />
-          </div>
+          <div className="text-lg font-bold">Logo</div>
           <hr className="w-full" />
           <div className="mt-8 flex-1 w-full">
             <ul className="flex flex-col gap-6">
@@ -37,6 +35,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faHome} className="mr-2" />
                   Dashboard
@@ -48,6 +47,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faTruck} className="mr-2" />
                   Transfers
@@ -59,6 +59,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
                   New Order
@@ -70,6 +71,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faTruck} className="mr-2" />
                   Active Transfers
@@ -81,6 +83,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faBell} className="mr-2" />
                   Notifications
@@ -92,6 +95,7 @@ const Sidebar = () => {
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
+                  onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faGear} className="mr-2" />
                   Settings
@@ -100,12 +104,15 @@ const Sidebar = () => {
             </ul>
           </div>
           <div className="flex flex-col items-center justify-center gap-3 mt-auto mb-8 md:mb-0">
-            <FontAwesomeIcon icon={faUserCircle} size="3x" className="text-accent" />
+            <FontAwesomeIcon icon={faUserCircle} size="2x" className="text-accent" />
             <h4>John Doe</h4>
           </div>
         </div>
       </div>
-      <div className={`fixed inset-0 bg-black opacity-50 z-10 ${isOpen ? 'block' : 'hidden'} md:hidden`} onClick={toggleSidebar}></div>
+      <div
+        className={`fixed inset-0 bg-black opacity-50 z-10 ${isOpen ? "block" : "hidden"} md:hidden`}
+        onClick={toggleSidebar}
+      ></div>
     </div>
   );
 };
