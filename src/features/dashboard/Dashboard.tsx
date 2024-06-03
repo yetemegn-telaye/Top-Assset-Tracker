@@ -45,10 +45,10 @@ const Dashboard = () => {
       ];
       
       const data: Data[] = [
-        { item_name: 'John Doe', quantity: 28, issuer: 'USA', origin: 'USA', destination: 'UK', issued_date: '2021-09-01', status: 'Active' },
-        { item_name: 'John Doe', quantity: 28, issuer: 'USA', origin: 'USA', destination: 'UK', issued_date: '2021-09-01', status: 'Active' },
-        { item_name: 'John Doe', quantity: 28, issuer: 'USA', origin: 'USA', destination: 'UK', issued_date: '2021-09-01', status: 'Active' },
-        { item_name: 'John Doe', quantity: 28, issuer: 'USA', origin: 'USA', destination: 'UK', issued_date: '2021-09-01', status: 'Active' },
+        { item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,03,2024', status: 'In transit' },
+        { item_name: 'Item 4', quantity: 211, issuer: 'Abebe', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
+        { item_name: 'Item 3', quantity: 283, issuer: 'Abebe', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
+        { item_name: 'Item 3', quantity: 55, issuer: 'Abebe', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
     return (
