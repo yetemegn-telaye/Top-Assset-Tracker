@@ -56,7 +56,7 @@ const Dashboard = () => {
             <div className="bg-background-paper rounded-xl shadow-md p-16">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
-                    <h1>Recent Transfers</h1>
+                    <h1 className="text-2xl text-primary">Recent Transfers</h1>
                     <span className="text-sm text-accent">42 in total</span>
                     </div>
                     <div className="flex gap-8 items-center">
