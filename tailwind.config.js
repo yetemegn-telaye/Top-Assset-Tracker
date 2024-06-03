@@ -25,8 +25,8 @@ module.exports = {
         },
         accent: {
           DEFAULT: '#938E8E',
-          light: 'rgba(147,142,142,0.2)',
-          lighter: 'rgba(147,142,142,0.20)'
+          light: 'rgba(147,142,142,0.6)',
+          lighter: 'rgba(147,142,142,0.2)'
         },
         background: {
           DEFAULT: '#F7F9F5',
