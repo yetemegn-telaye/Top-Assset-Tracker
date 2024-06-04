@@ -4,6 +4,8 @@ import Layout from "../../components/layout/Layout";
 import SearchInput from "../../components/common/SearchInput";
 import { useEffect, useState } from "react";
 import FilterOptions from "../../components/common/Table/FilterOptions";
+import StatusCard from "./StatusCard";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const Dashboard = () => {
     interface Data {
@@ -59,7 +61,13 @@ const Dashboard = () => {
 
       ];
     //   const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
-      
+      const statusProgress = [
+        {status: 'Delayed', progress: 8,icon:'faClock'},
+        {status: 'Received', progress: 20, icon:'faCheck'},
+        {status: 'In transit', progress: 32, icon:'faTruck'},
+        {status: 'Pending', progress: 12, icon:'faClock'},
+        {status: 'Returnables', progress: 28, icon:'faBox'},
+      ];
       useEffect(() => {
         const sortedData = data.sort((a, b) => {
             const dateA = new Date(a.issued_date).getTime();
@@ -94,7 +102,8 @@ const Dashboard = () => {
       
     return (
         <Layout>
-            <div className="bg-background-paper rounded-xl shadow-md p-12 pb-6">
+            <div className="flex flex-col gap-3 items-start w-full">
+            <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
                     <h1 className="text-2xl text-primary">Recent Transfers</h1>
@@ -118,6 +127,14 @@ const Dashboard = () => {
 
                 </div>
             <DataTable columns={columns} data={tableData} />
+            
+            </div>
+            <div className="flex items-center justify-between w-full">
+            {statusProgress.map((item, index) => (
+                <StatusCard key={index} status={item.status} progress={item.progress} icon={item.icon} />
+            ))
+            }
+            </div>
             </div>
         </Layout>
     );
