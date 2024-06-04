@@ -1,6 +1,7 @@
 import { faBell, faExclamation, faMoon, faSearch, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchInput from "../common/SearchInput";
+import { useState } from "react";
 
 const SearchBar = () => {
 
@@ -27,11 +28,11 @@ const SearchBar = () => {
     const currentDate = getCurrentTime();
     const dayTime = isDayTime();
     
-
+    const [searchTerm,setSearchTerm] = useState("");
     return (
         <div className="bg-background-paper rounded-xl shadow-md border border-gray-200 flex items-center justify-between gap-8 w-full p-5">
       
-          <SearchInput />
+          <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
           <div className="flex items-center justify-center gap-4">
           <FontAwesomeIcon icon={dayTime ? faSun : faMoon} className={dayTime ? "text-yellow-500" : "text-blue-500"} />
             <p className="text-sm text-accent">{currentDate}</p>

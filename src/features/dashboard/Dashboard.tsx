@@ -1,6 +1,8 @@
 import { Column } from "react-table";
 import DataTable from "../../components/common/Table/DataTable";
 import Layout from "../../components/layout/Layout";
+import SearchInput from "../../components/common/SearchInput";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
     interface Data {
@@ -12,6 +14,9 @@ const Dashboard = () => {
         issued_date: string;
         status: string;
       }
+
+      const [searchTerm, setSearchTerm] = useState("");
+      const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
         {
@@ -45,12 +50,37 @@ const Dashboard = () => {
       ];
       
       const data: Data[] = [
-        { item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,03,2024', status: 'In transit' },
-        { item_name: 'Item 4', quantity: 211, issuer: 'Abebe', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        { item_name: 'Item 3', quantity: 283, issuer: 'Abebe', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        { item_name: 'Item 3', quantity: 55, issuer: 'Abebe', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
+        { item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
+        { item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
+        { item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
+        { item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
+      
+      useEffect(() => {
+        const sortedData = data.sort((a, b) => {
+            const dateA = new Date(a.issued_date).getTime();
+            const dateB = new Date(b.issued_date).getTime();
+            return dateA - dateB;
+          });
+        setTableData(sortedData);
+      },[]);
+      
+
+      useEffect(() => {
+        if(searchTerm != '') {
+        const filteredData = data.filter((item) => {
+          return (
+            item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.status.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        });
+        setTableData(filteredData);
+    }
+      },[searchTerm]);
     return (
         <Layout>
             <div className="bg-background-paper rounded-xl shadow-md p-16">
@@ -71,8 +101,10 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
-            <DataTable columns={columns} data={data} />
+                <div className="flex mb-8 items-center">
+                    <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+                </div>
+            <DataTable columns={columns} data={tableData} />
             </div>
         </Layout>
     );

@@ -8,6 +8,7 @@ interface TableProps<T extends object> {
 }
 
 const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
+  
   const {
     getTableProps,
     getTableBodyProps,
