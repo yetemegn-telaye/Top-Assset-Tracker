@@ -5,6 +5,7 @@ import SearchInput from "../../components/common/SearchInput";
 import { useEffect, useState } from "react";
 import FilterOptions from "../../components/common/Table/FilterOptions";
 import StatusCard from "./StatusCard";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const Dashboard = () => {
     interface Data {
@@ -61,11 +62,11 @@ const Dashboard = () => {
       ];
     //   const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
       const statusProgress = [
-        {status: 'Delayed Orders', progress: 8},
-        {status: 'Received Orders', progress: 20},
-        {status: 'In transit', progress: 32},
-        {status: 'Pending', progress: 12},
-        {status: 'Returnables', progress: 28},
+        {status: 'Delayed', progress: 8,icon:'faClock'},
+        {status: 'Received', progress: 20, icon:'faCheck'},
+        {status: 'In transit', progress: 32, icon:'faTruck'},
+        {status: 'Pending', progress: 12, icon:'faClock'},
+        {status: 'Returnables', progress: 28, icon:'faBox'},
       ];
       useEffect(() => {
         const sortedData = data.sort((a, b) => {
@@ -130,7 +131,7 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center justify-between w-full">
             {statusProgress.map((item, index) => (
-                <StatusCard key={index} status={item.status} progress={item.progress} />
+                <StatusCard key={index} status={item.status} progress={item.progress} icon={item.icon} />
             ))
             }
             </div>
