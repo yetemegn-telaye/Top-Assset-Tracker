@@ -1,9 +1,19 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTable, useSortBy, Column } from 'react-table';
 import Badge from '../Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortAsc, faSortDesc } from '@fortawesome/free-solid-svg-icons';
+import { faSort, faSortAsc, faSortDesc, faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Pagination from './Pagination';
+
+interface Data {
+  item_name: string;
+  quantity: number;
+  issuer: string;
+  origin: string;
+  destination: string;
+  issued_date: string;
+  status: string;
+}
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -11,7 +21,6 @@ interface TableProps<T extends object> {
 }
 
 const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -22,9 +31,41 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
     }
   };
 
-const paginatedData = useMemo(() => {
-  return data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-}, [currentPage, itemsPerPage, data]);
+  const paginatedData = useMemo(() => {
+    return data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  }, [currentPage, itemsPerPage, data]);
+
+  const handleEdit = (row: T) => {
+    console.log('Edit', row);
+  };
+
+  const handleView = (row: T) => {
+    console.log('View', row);
+  };
+
+  const handleDelete = (row: T) => {
+    console.log('Delete', row);
+  };
+
+  const actionsColumn: Column<T> = {
+    Header: 'Actions',
+    accessor: 'actions' as keyof T,
+    Cell: ({ row }: { row: any }) => (
+      <div className="flex justify-center gap-2">
+        <button onClick={() => handleEdit(row.original)} className="text-blue-500">
+          <FontAwesomeIcon icon={faEdit} />
+        </button>
+        <button onClick={() => handleView(row.original)} className="text-green-500">
+          <FontAwesomeIcon icon={faEye} />
+        </button>
+        <button onClick={() => handleDelete(row.original)} className="text-red-500">
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
+    ),
+  };
+
+  const extendedColumns = useMemo(() => [...columns, actionsColumn], [columns]);
 
   const {
     getTableProps,
@@ -34,12 +75,11 @@ const paginatedData = useMemo(() => {
     prepareRow,
   } = useTable<T>(
     {
-      columns,
+      columns: extendedColumns,
       data: paginatedData,
     },
-    useSortBy // Add the useSortBy hook
+    useSortBy
   );
-
 
   return (
     <div className="overflow-x-auto">
@@ -57,9 +97,8 @@ const paginatedData = useMemo(() => {
                     {column.isSorted
                       ? column.isSortedDesc
                         ? <FontAwesomeIcon icon={faSortDesc} className='text-secondary ml-2' />
-                        : <FontAwesomeIcon icon={faSortAsc} className='text-secondary ml-2'  />
-                        : column.id === 'issuer'? <FontAwesomeIcon icon={faSort} className='text-secondary ml-2' /> : ''
-                    }
+                        : <FontAwesomeIcon icon={faSortAsc} className='text-secondary ml-2' />
+                      : column.id === 'issuer' ? <FontAwesomeIcon icon={faSort} className='text-secondary ml-2' /> : ''}
                   </span>
                 </th>
               ))}
@@ -93,8 +132,8 @@ const paginatedData = useMemo(() => {
           })}
         </tbody>
       </table>
-      <Pagination  currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
-      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
+    </div>
   );
 };
 
