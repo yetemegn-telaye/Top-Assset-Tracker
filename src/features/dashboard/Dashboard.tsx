@@ -79,7 +79,14 @@ const Dashboard = () => {
           );
         });
         setTableData(filteredData);
-    }
+    } else {
+        const sortedData = data.sort((a, b) => {
+          const dateA = new Date(a.issued_date).getTime();
+          const dateB = new Date(b.issued_date).getTime();
+          return dateA - dateB;
+        });
+        setTableData(sortedData);
+      }
       },[searchTerm]);
     return (
         <Layout>

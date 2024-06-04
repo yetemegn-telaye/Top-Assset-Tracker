@@ -1,6 +1,8 @@
 import React from 'react';
-import { useTable, Column } from 'react-table';
+import { useTable, useSortBy, Column } from 'react-table';
 import Badge from '../Badge';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortAsc, faSortDesc } from '@fortawesome/free-solid-svg-icons';
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -8,17 +10,19 @@ interface TableProps<T extends object> {
 }
 
 const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
-  
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = useTable<T>({
-    columns,
-    data,
-  });
+  } = useTable<T>(
+    {
+      columns,
+      data,
+    },
+    useSortBy // Add the useSortBy hook
+  );
 
   return (
     <div className="overflow-x-auto">
@@ -26,12 +30,20 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} className="text-center">
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column: any) => (
                 <th
-                  {...column.getHeaderProps()}
-                  className="px-6 py-3 border-b border-t border-accent-lighter text-gray-600 text-sm font-medium"
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className="px-6 py-3 border-b border-t border-accent-lighter text-gray-600 hover:text-info text-sm font-medium cursor-pointer"
                 >
                   {column.render('Header')}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? <FontAwesomeIcon icon={faSortDesc} className='text-secondary ml-2' />
+                        : <FontAwesomeIcon icon={faSortAsc} className='text-secondary ml-2'  />
+                        : column.id === 'issuer'? <FontAwesomeIcon icon={faSort} className='text-secondary ml-2' /> : ''
+                    }
+                  </span>
                 </th>
               ))}
             </tr>
@@ -42,24 +54,24 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()} className="hover:bg-accent-lighter">
-              {row.cells.map(cell => {
-                const cellValue = cell.value;
-                let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
-                let cellContent = cell.render('Cell');
-                if (cell.column.id === 'status') {
-                  const color = cellValue === 'In transit' ? 'primary-lighter' : cellValue === 'Received' ? 'secondary-lighter' : 'error-lighter';
-                  cellContent = <Badge color={color} value={cellValue} />;
-                }
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    className={`${cellClass}`}
-                  >
-                    {cellContent}
-                  </td>
-                );
-              })}
-            </tr>
+                {row.cells.map(cell => {
+                  const cellValue = cell.value;
+                  let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
+                  let cellContent = cell.render('Cell');
+                  if (cell.column.id === 'status') {
+                    const color = cellValue === 'In transit' ? 'primary-lighter' : cellValue === 'Received' ? 'secondary-lighter' : 'error-lighter';
+                    cellContent = <Badge color={color} value={cellValue} />;
+                  }
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      className={`${cellClass}`}
+                    >
+                      {cellContent}
+                    </td>
+                  );
+                })}
+              </tr>
             );
           })}
         </tbody>
