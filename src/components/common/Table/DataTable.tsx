@@ -23,7 +23,7 @@ interface TableProps<T extends object> {
 
 const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const changePage = (newPage: number) => {
@@ -74,7 +74,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
   );
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto overflow-y-auto">
       <table {...getTableProps()} className="min-w-full bg-white">
         <thead>
           {headerGroups.map(headerGroup => (

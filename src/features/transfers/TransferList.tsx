@@ -122,8 +122,7 @@ const TransferList = () => {
       
     return (
         <Layout>
-        <div className="flex flex-col gap-3 items-start w-full">
-        <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
+        <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full overflow-y-auto">
             <div className="flex item-center justify-between ml-4 mb-6 pb-6 mt-4">
                 <div className="flex items-center gap-4 ">
                 <FontAwesomeIcon icon={faTruck} className="text-primary" size="xl" />
@@ -142,7 +141,7 @@ const TransferList = () => {
         
         </div>
         
-        </div>
+    
     </Layout>
     );
     }
