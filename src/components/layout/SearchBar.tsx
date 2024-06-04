@@ -5,15 +5,6 @@ import { useState } from "react";
 
 const SearchBar = () => {
 
-    // const currentDate = new Date().toLocaleDateString(
-    //     "en-US",
-    //     {
-    //         weekday: "long",
-    //         year: "numeric",
-    //         day: "numeric",
-    //     }
-       
-    // );
     const getCurrentTime = () => {
       const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: '2-digit', year: 'numeric' };
       const currentDate = new Date();

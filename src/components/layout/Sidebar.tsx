@@ -17,7 +17,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen sticky">
       <button className="md:hidden p-6" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
