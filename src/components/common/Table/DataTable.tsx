@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy, Column } from 'react-table';
 import Badge from '../Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortAsc, faSortDesc } from '@fortawesome/free-solid-svg-icons';
+import Pagination from './Pagination';
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -10,6 +11,21 @@ interface TableProps<T extends object> {
 }
 
 const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const changePage = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+const paginatedData = useMemo(() => {
+  return data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+}, [currentPage, itemsPerPage, data]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -19,10 +35,11 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
   } = useTable<T>(
     {
       columns,
-      data,
+      data: paginatedData,
     },
     useSortBy // Add the useSortBy hook
   );
+
 
   return (
     <div className="overflow-x-auto">
@@ -76,7 +93,8 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
           })}
         </tbody>
       </table>
-    </div>
+      <Pagination  currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
+      </div>
   );
 };
 

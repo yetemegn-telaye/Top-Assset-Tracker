@@ -90,7 +90,7 @@ const Dashboard = () => {
       },[searchTerm]);
     return (
         <Layout>
-            <div className="bg-background-paper rounded-xl shadow-md p-16">
+            <div className="bg-background-paper rounded-xl shadow-md p-12 pb-6">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
                     <h1 className="text-2xl text-primary">Recent Transfers</h1>
