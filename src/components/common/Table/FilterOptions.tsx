@@ -2,11 +2,11 @@
 import { useState } from "react";
 
 
-type TripsDataActionsProps = {
+type FilterOptionsProps = {
     setSelectedStatus: (status: string) => void;
-    tripStatus: string[];
+    transferStatus: string[];
 };
-const TripsDataActions: React.FC<TripsDataActionsProps> = ({setSelectedStatus, tripStatus}) => {
+const FilterOptions: React.FC<FilterOptionsProps> = ({setSelectedStatus, transferStatus}) => {
   const [activeStatus, setActiveStatus] = useState('All');
 
   const handleStatusChange = (status: string) => {
@@ -14,18 +14,18 @@ const TripsDataActions: React.FC<TripsDataActionsProps> = ({setSelectedStatus, t
     setSelectedStatus(status);
 };
     return(
-        <div className="mt-5">
+        <div className="">
         <div className="flex flex-col gap-0 mt-4">
             
-            <ul className="inline-block p-4 gap-5">
-                   {tripStatus.map((stat: any, index: number) => (
-                       <li key={index} className="inline-block text-md text-gray-500 mr-6 hover:text-purple-500 hover:cursor-pointer">
+            <ul className="inline-block p-4">
+                   {transferStatus.map((stat: any, index: number) => (
+                       <li key={index} className="inline-block text-xs text-accent hover:text-secondary hover:cursor-pointer">
                         <button
                         onClick={() => handleStatusChange(stat)}
                           className={`text-md py-2 px-4 rounded-lg transition-colors duration-300
                   ${activeStatus === stat
-                    ? "bg-purple-500 text-white hover:bg-purple-600"
-                    : "text-gray-500 hover:text-purple-500 hover:bg-purple-100"}`}>{stat}</button>
+                    ? "text-secondary hover:bg-accent-lighter hover:text-secondary"
+                    : "text-gray-500  hover:bg-accent-lighter hover:text-secondary"}`}>{stat}</button>
                        </li>
                      ))}
                      
@@ -35,4 +35,4 @@ const TripsDataActions: React.FC<TripsDataActionsProps> = ({setSelectedStatus, t
       </div> 
     );
 }
-export default TripsDataActions;
+export default FilterOptions;

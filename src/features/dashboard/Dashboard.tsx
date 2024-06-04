@@ -3,6 +3,7 @@ import DataTable from "../../components/common/Table/DataTable";
 import Layout from "../../components/layout/Layout";
 import SearchInput from "../../components/common/SearchInput";
 import { useEffect, useState } from "react";
+import FilterOptions from "../../components/common/Table/FilterOptions";
 
 const Dashboard = () => {
     interface Data {
@@ -16,6 +17,7 @@ const Dashboard = () => {
       }
 
       const [searchTerm, setSearchTerm] = useState("");
+    //   const [selectedStatus, setSelectedStatus] = useState('');
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
@@ -56,6 +58,7 @@ const Dashboard = () => {
         { item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
+    //   const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
       
       useEffect(() => {
         const sortedData = data.sort((a, b) => {
@@ -88,6 +91,7 @@ const Dashboard = () => {
         setTableData(sortedData);
       }
       },[searchTerm]);
+      
     return (
         <Layout>
             <div className="bg-background-paper rounded-xl shadow-md p-12 pb-6">
@@ -110,6 +114,8 @@ const Dashboard = () => {
                 </div>
                 <div className="flex mb-8 items-center">
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+                    {/* <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} /> */}
+
                 </div>
             <DataTable columns={columns} data={tableData} />
             </div>
