@@ -24,7 +24,7 @@ const SearchInput : React.FC<SearchInputProps> = ({setSearchTerm,searchTerm}) =>
         name="search"
         value={searchTerm}
         onChange={handleChange}
-        className="rounded-md shadow-md bg-gray-100 p-3 pr-12"
+        className="rounded-md shadow-md bg-gray-100 p-2 pr-12"
       />
       <FontAwesomeIcon
         icon={faSearch}
