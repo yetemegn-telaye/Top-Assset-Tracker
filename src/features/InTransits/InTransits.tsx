@@ -1,12 +1,12 @@
 import Layout from "../../components/layout/Layout";
 
-const Notifications = () => {
+const InTransits = () => {
     return (
         <div>
             <Layout>
-                <h1>Notifications</h1>
-            </Layout>  
+                <h1>InTransits</h1>
+            </Layout>
         </div>
     );
     }
-export default Notifications;
+export default InTransits;

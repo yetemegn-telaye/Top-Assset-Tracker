@@ -1,13 +1,13 @@
 import Layout from "../../components/layout/Layout";
 
-const NewTransferOrder= () => {
+const Settings = () => {
     return (
         <div>
             <Layout>
-            <h1>New Transfer Order</h1>
+            <h1>Settings</h1>
             </Layout>
-        
+            
         </div>
     );
-    }
-export default NewTransferOrder;
+}
+export default Settings;

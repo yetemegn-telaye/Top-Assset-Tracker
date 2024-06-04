@@ -1,8 +1,13 @@
+import Layout from "../../components/layout/Layout"
+
 const TransferDetail = () => {
     return (
         <div>
-        <h1>Transfer Detail</h1>
+            <Layout>
+            <h1>Transfer Detail</h1>
      
+            </Layout>
+        
         </div>
     );
     }
