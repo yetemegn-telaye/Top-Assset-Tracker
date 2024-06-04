@@ -4,6 +4,7 @@ import Badge from '../Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortAsc, faSortDesc, faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Pagination from './Pagination';
+import ActionButtons from './ActionButtons';
 
 interface Data {
   item_name: string;
@@ -51,17 +52,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
     Header: 'Actions',
     accessor: 'actions' as keyof T,
     Cell: ({ row }: { row: any }) => (
-      <div className="flex justify-center gap-2">
-        <button onClick={() => handleEdit(row.original)} className="text-blue-500">
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button onClick={() => handleView(row.original)} className="text-green-500">
-          <FontAwesomeIcon icon={faEye} />
-        </button>
-        <button onClick={() => handleDelete(row.original)} className="text-red-500">
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </div>
+      <ActionButtons row={row.original} onEdit={handleEdit} onView={handleView} onDelete={handleDelete} />
     ),
   };
 
