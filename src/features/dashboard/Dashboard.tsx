@@ -19,7 +19,6 @@ const Dashboard = () => {
       }
 
       const [searchTerm, setSearchTerm] = useState("");
-    //   const [selectedStatus, setSelectedStatus] = useState('');
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
@@ -122,7 +121,6 @@ const Dashboard = () => {
                 </div>
                 <div className="flex mb-8 items-center">
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-                    {/* <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} /> */}
 
                 </div>
             <DataTable columns={columns} data={tableData} />
