@@ -52,6 +52,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
     Header: 'Actions',
     accessor: 'actions' as keyof T,
     Cell: ({ row }: { row: any }) => (
+
       <ActionButtons row={row.original} onEdit={handleEdit} onView={handleView} onDelete={handleDelete} />
     ),
   };
