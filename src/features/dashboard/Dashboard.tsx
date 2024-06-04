@@ -57,10 +57,9 @@ const Dashboard = () => {
         { item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
         { item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
         { item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        { item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
-    //   const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
+   
       const statusProgress = [
         {status: 'Delayed', progress: 8,icon:'faClock'},
         {status: 'Received', progress: 20, icon:'faCheck'},
