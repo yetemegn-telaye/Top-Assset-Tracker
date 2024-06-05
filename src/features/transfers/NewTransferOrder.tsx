@@ -65,7 +65,7 @@ const NewTransferOrder= () => {
                 <div className="flex flex-col gap-8 items-center justify-center pb-3 mt-8">
                     <StatusBarLine status={status} currentStatus={currentStatus} icons={icons} />
                 <form className="flex flex-col items-center gap-4" onSubmit={handleCreateOrder}>
-                    <div className="flex flex-col gap-4 items-start">
+                    <div className="flex flex-col gap-4 items-start w-full">
 
                     <div className="flex gap-4">
                     <div className="flex flex-col gap-4">
@@ -101,14 +101,14 @@ const NewTransferOrder= () => {
                     </div>
                     </div>
    
-                    <div className="flex  gap-4">
+                    <div className="flex w-full gap-4">
                     <div className="flex flex-col gap-4">
                     <label htmlFor="issuer" className="text-primary">Issuer</label>
                     <input type="text" id="issuer" name="issuer" onChange={handleChange} value={formData.issuer} className="rounded-md border border-gray-300 p-2" />
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 w-full">
                     <label htmlFor="issued_date" className="text-primary">Issued Date</label>
-                    <input type="date" id="issued_date" name="issued_date" onChange={handleChange} value={formData.issued_date} className="rounded-md border border-gray-300 p-2 w-full text-accent" />
+                    <input type="date" id="issued_date" name="issued_date" onChange={handleChange} value={formData.issued_date} className="rounded-md border border-gray-300 p-2 text-accent" />
                     </div>
                     </div>
                     <div className="flex gap-4 justify-start">
