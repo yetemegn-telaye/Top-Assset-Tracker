@@ -115,7 +115,7 @@ const InTransits = () => {
                     In Transits
                 </h1>
                 </div>
-                <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl"
+                <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light"
                     onClick={handleNavigate}
                     >New Transfer</button>
             </div>
