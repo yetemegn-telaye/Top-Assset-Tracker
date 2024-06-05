@@ -6,6 +6,7 @@ import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import FilterOptions from "../../components/common/Table/FilterOptions";
+import { useNavigate } from "react-router-dom";
 
 const InTransits = () => {
     interface Data {
@@ -64,6 +65,7 @@ const InTransits = () => {
         { item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
+      const navigate = useNavigate();
       const sortedData = data.sort((a, b) => {
         const dateA = new Date(a.issued_date).getTime();
         const dateB = new Date(b.issued_date).getTime();
@@ -75,13 +77,7 @@ const InTransits = () => {
         );
       }
     );
-    //   const statusProgress = [
-    //     {status: 'Delayed', progress: 8,icon:'faClock'},
-    //     {status: 'Received', progress: 20, icon:'faCheck'},
-    //     {status: 'In transit', progress: 32, icon:'faTruck'},
-    //     {status: 'Pending', progress: 12, icon:'faClock'},
-    //     {status: 'Returnables', progress: 28, icon:'faBox'},
-    //   ];
+
       useEffect(() => {
         setTableData(filteredData);
       },[]);
@@ -104,6 +100,10 @@ const InTransits = () => {
       }
       },[searchTerm]);
 
+
+    const handleNavigate = () => {
+        navigate('/new-transfer');
+    }
       
     return (
         <Layout>
@@ -115,7 +115,9 @@ const InTransits = () => {
                     In Transits
                 </h1>
                 </div>
-                    <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl">New Transfer</button>
+                <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl"
+                    onClick={handleNavigate}
+                    >New Transfer</button>
             </div>
             <div className="flex justify-between mb-8 items-center">
                 <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />

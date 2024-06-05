@@ -6,6 +6,7 @@ import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import FilterOptions from "../../components/common/Table/FilterOptions";
+import { useNavigate } from 'react-router';
 
 const TransferList = () => {
     interface Data {
@@ -65,19 +66,14 @@ const TransferList = () => {
 
       ];
       const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
-      const statusProgress = [
-        {status: 'Delayed', progress: 8,icon:'faClock'},
-        {status: 'Received', progress: 20, icon:'faCheck'},
-        {status: 'In transit', progress: 32, icon:'faTruck'},
-        {status: 'Pending', progress: 12, icon:'faClock'},
-        {status: 'Returnables', progress: 28, icon:'faBox'},
-      ];
+      const navigate = useNavigate();
+      
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.issued_date).getTime();
+        const dateB = new Date(b.issued_date).getTime();
+        return dateA - dateB;
+      });
       useEffect(() => {
-        const sortedData = data.sort((a, b) => {
-            const dateA = new Date(a.issued_date).getTime();
-            const dateB = new Date(b.issued_date).getTime();
-            return dateA - dateB;
-          });
         setTableData(sortedData);
       },[]);
       
@@ -95,11 +91,7 @@ const TransferList = () => {
         });
         setTableData(filteredData);
     } else {
-        const sortedData = data.sort((a, b) => {
-          const dateA = new Date(a.issued_date).getTime();
-          const dateB = new Date(b.issued_date).getTime();
-          return dateA - dateB;
-        });
+        
         setTableData(sortedData);
       }
       },[searchTerm]);
@@ -119,6 +111,10 @@ const TransferList = () => {
         setTableData(filteredData);
         }
     },[selectedStatus])
+
+    const handleNavigate = () => {
+        navigate('/new-transfer');
+    }
       
     return (
         <Layout>
@@ -130,7 +126,9 @@ const TransferList = () => {
                     Transfers
                 </h1>
                 </div>
-                    <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl">New Transfer</button>
+                    <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl"
+                    onClick={handleNavigate}
+                    >New Transfer</button>
             </div>
             <div className="flex justify-between mb-8 items-center">
                 <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
