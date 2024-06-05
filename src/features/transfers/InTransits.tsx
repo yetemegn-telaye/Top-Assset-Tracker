@@ -6,9 +6,9 @@ import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import FilterOptions from "../../components/common/Table/FilterOptions";
-import { useNavigate } from 'react-router';
+import { useNavigate } from "react-router-dom";
 
-const TransferList = () => {
+const InTransits = () => {
     interface Data {
         item_name: string;
         quantity: number;
@@ -20,7 +20,7 @@ const TransferList = () => {
       }
 
       const [searchTerm, setSearchTerm] = useState("");
-      const [selectedStatus, setSelectedStatus] = useState('');
+      const [selectedStatus, setSelectedStatus] = useState('In transit');
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
@@ -65,22 +65,27 @@ const TransferList = () => {
         { item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
 
       ];
-      const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
       const navigate = useNavigate();
-      
       const sortedData = data.sort((a, b) => {
         const dateA = new Date(a.issued_date).getTime();
         const dateB = new Date(b.issued_date).getTime();
         return dateA - dateB;
       });
+      const filteredData = sortedData.filter((item) => {
+        return (
+          item.status.toLowerCase().includes(selectedStatus.toLowerCase())
+        );
+      }
+    );
+
       useEffect(() => {
-        setTableData(sortedData);
+        setTableData(filteredData);
       },[]);
       
 
       useEffect(() => {
         if(searchTerm != '') {
-        const filteredData = data.filter((item) => {
+        const searchResult = filteredData.filter((item) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,28 +94,12 @@ const TransferList = () => {
             item.status.toLowerCase().includes(searchTerm.toLowerCase())
           );
         });
-        setTableData(filteredData);
+        setTableData(searchResult);
     } else {
-        
-        setTableData(sortedData);
+        setTableData(filteredData);
       }
       },[searchTerm]);
 
-      useEffect(() => {
-        if(selectedStatus === '' || selectedStatus === 'All')
-            {
-                setTableData(data);
-            }
-            else
-            {
-        const filteredData = data.filter((item) => {
-          return (
-            item.status.toLowerCase().includes(selectedStatus.toLowerCase())
-          );
-        });
-        setTableData(filteredData);
-        }
-    },[selectedStatus])
 
     const handleNavigate = () => {
         navigate('/new-transfer');
@@ -123,17 +112,15 @@ const TransferList = () => {
                 <div className="flex items-center gap-4 ">
                 <FontAwesomeIcon icon={faTruck} className="text-primary" size="xl" />
                 <h1 className="text-2xl text-primary">
-                    Transfers
+                    In Transits
                 </h1>
                 </div>
-                    <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl"
+                <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl"
                     onClick={handleNavigate}
                     >New Transfer</button>
             </div>
             <div className="flex justify-between mb-8 items-center">
                 <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-                <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
-
             </div>
         <DataTable columns={columns} data={tableData} />
         
@@ -143,4 +130,4 @@ const TransferList = () => {
     </Layout>
     );
     }
-export default TransferList;
+export default InTransits;

@@ -69,17 +69,21 @@ const NewTransferOrder= () => {
 
                     <div className="flex gap-4">
                     <div className="flex flex-col gap-4">
-                    <label htmlFor="item_name" className="text-primary">Item Name</label>
-                    <input type="text" id="item_name" name="item_name" onChange={handleChange} value={formData.item_name} className="rounded-md border border-gray-300 p-2" />
+                    <label htmlFor="item_name" className="text-accent text-sm">Item Name</label>
+                    <input type="text" id="item_name" name="item_name"
+                     onChange={handleChange} value={formData.item_name} 
+                     className="rounded-md border border-primary-light p-2" />
                     </div>
                     <div className="flex gap-2 items-center">
                     <div className="flex flex-col gap-4">
-                    <label htmlFor="quantity" className="text-primary">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" onChange={handleChange} value={formData.quantity} className="rounded-md border border-gray-300 p-2 w-32" />
+                    <label htmlFor="quantity" className="text-accent text-sm">Quantity</label>
+                    <input type="number" id="quantity" name="quantity"
+                     onChange={handleChange} value={formData.quantity}
+                      className="rounded-md border border-primary-light p-2 w-32" />
                     </div>
                     <div className="flex flex-col gap-4">
-                        <label htmlFor="unit" className="text-primary">Unit</label>
-                    <select name="unit" id="unit"  onChange={handleChange} value={formData.unit} className="rounded-md border border-gray-300 p-2 text-accent">
+                        <label htmlFor="unit" className="text-accent text-sm">Unit</label>
+                    <select name="unit" id="unit"  onChange={handleChange} value={formData.unit} className="rounded-md border border-primary-light p-2 text-accent">
                         <option value="pcs">pcs</option>
                         <option value="kg">kg</option>
                         <option value="g">g</option>
@@ -92,28 +96,28 @@ const NewTransferOrder= () => {
 
                     <div className="flex gap-4">
                     <div className="flex flex-col gap-4">
-                    <label htmlFor="origin" className="text-primary">Origin</label>
-                    <input type="text" id="origin" name="origin" onChange={handleChange} value={formData.origin} className="rounded-md border border-gray-300 p-2" />
+                    <label htmlFor="origin" className="text-accent text-sm">Origin</label>
+                    <input type="text" id="origin" name="origin" onChange={handleChange} value={formData.origin} className="rounded-md border border-primary-light p-2" />
                     </div>
                     <div className="flex flex-col gap-4">
-                    <label htmlFor="destination" className="text-primary">Destination</label>
-                    <input type="text" id="destination" name="destination" onChange={handleChange} value={formData.destination} className="rounded-md border border-gray-300 p-2" />
+                    <label htmlFor="destination" className="text-accent text-sm">Destination</label>
+                    <input type="text" id="destination" name="destination" onChange={handleChange} value={formData.destination} className="rounded-md border border-primary-light p-2" />
                     </div>
                     </div>
    
                     <div className="flex w-full gap-4">
                     <div className="flex flex-col gap-4">
-                    <label htmlFor="issuer" className="text-primary">Issuer</label>
-                    <input type="text" id="issuer" name="issuer" onChange={handleChange} value={formData.issuer} className="rounded-md border border-gray-300 p-2" />
+                    <label htmlFor="issuer" className="text-accent text-sm">Issuer</label>
+                    <input type="text" id="issuer" name="issuer" onChange={handleChange} value={formData.issuer} className="rounded-md border border-primary-light p-2" />
                     </div>
                     <div className="flex flex-col gap-4 w-full">
-                    <label htmlFor="issued_date" className="text-primary">Issued Date</label>
-                    <input type="date" id="issued_date" name="issued_date" onChange={handleChange} value={formData.issued_date} className="rounded-md border border-gray-300 p-2 text-accent" />
+                    <label htmlFor="issued_date" className="text-accent text-sm">Issued Date</label>
+                    <input type="date" id="issued_date" name="issued_date" onChange={handleChange} value={formData.issued_date} className="rounded-md border border-primary-light p-2 text-accent" />
                     </div>
                     </div>
                     <div className="flex gap-4 justify-start">
                         <input type="checkbox" id="returnable" name="returnable" onChange={handleChange} className="rounded-md border border-info p-2" /> 
-                        <span className="text-accent">Returnable</span>
+                        <span className="text-accent text-sm">Returnable</span>
                     </div>
                     </div>
                  
