@@ -52,7 +52,7 @@ const TransferDetail = () => {
                         </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-4 items-start">
+                    <div className="flex flex-col gap-16 items-start w-full justify-end">
                     <div className="flex gap-6 items-center">
                         <div>
                             <p className="text-accent-light text-xs">Origin</p>
@@ -64,7 +64,7 @@ const TransferDetail = () => {
                             <p>Top 1</p>
                         </div>
                     </div>
-                    <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light">Approve</button>
+                    <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light">Approve</button>
                     </div>
                 </div>
             </div>
