@@ -12,6 +12,7 @@ interface ActionButtonsProps<T> {
 const ActionButtons = <T extends object>({ row, onEdit, onView, onDelete }: ActionButtonsProps<T>) => {
 
   
+
   return (
     <div className="flex justify-center gap-2">
       <button onClick={() => onEdit(row)} className="text-primary-light hover:text-primary">
