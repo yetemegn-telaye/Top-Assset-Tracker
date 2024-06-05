@@ -10,7 +10,7 @@ const TransferDetail = () => {
     const id = useParams<{id: string}>().id;
     return (
             <Layout>
-            <div className="bg-background-paper rounded-xl shadow-lg h-full flex flex-col gap-3 items-center pt-12">
+            <div className="bg-background-paper rounded-xl shadow-lg h-full flex flex-col gap-3 items-center pt-12 pb-9">
                
                 <StatusBarLine status={['Origin', 'Approval', 'Move to Transit', 'Received']}
                 currentStatus='Approval' 
