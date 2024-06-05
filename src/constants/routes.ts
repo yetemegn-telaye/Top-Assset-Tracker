@@ -4,7 +4,7 @@ import Dashboard from '../features/dashboard/Dashboard';
 import TransferList from '../features/transfers/TransferList';
 import TransferDetail from '../features/transfers/TransferDetail';
 import NewTransferOrder from '../features/transfers/NewTransferOrder';
-import InTransits from '../features/InTransits/InTransits';
+import InTransits from '../features/transfers/InTransits';
 import Settings from '../features/settings/Settings';
 import Notifications from '../features/notifications/Notifications';
 
