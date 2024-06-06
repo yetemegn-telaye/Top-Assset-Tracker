@@ -3,6 +3,7 @@ import Layout from "../../components/layout/Layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck, faTruck } from "@fortawesome/free-solid-svg-icons";
 import StatusBarLine from "./StatusBarLine";
+import Carousel from "../../components/common/Carousel";
 
 
 
@@ -17,7 +18,8 @@ const TransferDetail = () => {
                 icons={[<FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck}/>]} />
             
                 <div className="flex gap-32 w-full mt-8 ml-64">
-                    <img src="https://via.placeholder.com/150" alt="Item" className="w-64 h-40 rounded-lg" />
+                    {/* <img src="https://via.placeholder.com/150" alt="Item" className="w-64 h-40 rounded-lg" /> */}
+                    <Carousel images={['https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg']} />
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl text-secondary">Plastics</h2>
                         <div className="flex flex-col gap-4 mt-2">
@@ -28,7 +30,7 @@ const TransferDetail = () => {
                     </div>
                 </div>
 
-                <div className="flex gap-32 w-full mt-8 ml-64">
+                <div className="flex gap-40 w-full mt-8 ml-64">
                     <div className="flex flex-col gap-4 items-start">
                         <div className="flex gap-4 items-center">
                         <p className=" text-accent-light">Issuer:</p>
