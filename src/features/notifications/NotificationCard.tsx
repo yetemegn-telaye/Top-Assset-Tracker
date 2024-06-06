@@ -11,7 +11,7 @@ interface NotificationCardProps {
 
 const NotificationCard: React.FC<NotificationCardProps> = ({ notification }) => {
     return (
-        <div className="bg-background border flex gap-4 items-center p-4 rounded-lg shadow-lg hover:bg-accent-light ">
+        <div className="bg-background border flex gap-4 items-center p-4 rounded-lg shadow-lg hover:bg-accent-lighter ">
             <FontAwesomeIcon icon={faBell} className="text-info text-sm animate-pulse" />
             <div className="flex flex-col gap-1">
                 <h5 className={`text-${(notification.message.includes('delayed'))? 'error-light':(notification.message.includes('waiting'))? 'yellow-500':'gray-500'} ${(notification.message.includes('waiting'))? 'animate-bounce': ''}`}>{notification.message}</h5>
