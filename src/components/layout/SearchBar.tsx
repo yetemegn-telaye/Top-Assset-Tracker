@@ -2,6 +2,7 @@ import { faBell, faExclamation, faMoon, faSearch, faSun } from "@fortawesome/fre
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchInput from "../common/SearchInput";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
 
@@ -20,6 +21,10 @@ const SearchBar = () => {
     const dayTime = isDayTime();
     
     const [searchTerm,setSearchTerm] = useState("");
+    const navigate = useNavigate();
+    const handleBellClick = () => {
+      navigate('/notifications');
+    }
     return (
         <div className="bg-background-paper rounded-xl shadow-md border border-gray-200 flex items-center justify-between gap-8 w-full p-5">
       
@@ -31,7 +36,7 @@ const SearchBar = () => {
           
           <div className="flex items-center justify-center gap-7 mr-6">
             <FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/>
-            <FontAwesomeIcon icon={faBell} className="text-info text-2xl" />
+            <button onClick={handleBellClick}><FontAwesomeIcon icon={faBell} className="text-info text-2xl hover:text-info-light" /></button>
           </div>
         </div>
     );
