@@ -29,7 +29,7 @@ const SearchBar = () => {
             <p className="text-sm text-accent">{currentDate}</p>
           </div>
           
-          <div className="flex items-center justify-center gap-4 mr-6">
+          <div className="flex items-center justify-center gap-7 mr-6">
             <FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/>
             <FontAwesomeIcon icon={faBell} className="text-info text-2xl" />
           </div>
