@@ -27,7 +27,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     <div className="relative overflow-hidden">
       <div className="flex items-center w-64 justify-between">
         <button
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 z-10 bg-gray-300 rounded-full p-2"
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-gray-300 rounded-full p-2"
           onClick={handlePrev}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
