@@ -1,14 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faRightToBracket, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface formData  {
     username: string;
     password: string;
 }
+
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState<formData>({username: '', password: ''});
 
+    const navigate = useNavigate();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setLoginFormData({...loginFormData, [name]: value});
@@ -16,6 +19,8 @@ const Login = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(loginFormData);
+        navigate('/dashboard');
+
     }
     return (
 <div className="min-h-screen flex items-center justify-center">

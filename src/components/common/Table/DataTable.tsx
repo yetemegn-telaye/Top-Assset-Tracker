@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortAsc, faSortDesc, faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Pagination from './Pagination';
 import ActionButtons from './ActionButtons';
+import { useNavigate } from 'react-router-dom';
 
 interface Data {
+  id: number;
   item_name: string;
   quantity: number;
   issuer: string;
@@ -25,6 +27,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const totalPages = Math.ceil(data.length / itemsPerPage);
+  const navigate = useNavigate();
 
   const changePage = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -41,7 +44,8 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
   };
 
   const handleView = (row: T) => {
-    console.log('View', row);
+    const {id} = row as any;
+    navigate(`/transfers/${id}`); 
   };
 
   const handleDelete = (row: T) => {

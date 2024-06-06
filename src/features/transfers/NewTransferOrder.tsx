@@ -135,7 +135,7 @@ const NewTransferOrder= () => {
     </label>
 </div> 
 
-                    <button type="submit" className="bg-secondary text-sm text-white w-40 px-4 py-2 rounded-md shadow-xl">Create Order</button>
+                    <button type="submit" className="bg-secondary text-sm text-white w-40 px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light">Create Order</button>
                 </form>
                 </div>
          
