@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck, faTruck } from "@fortawesome/free-solid-svg-icons";
 import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
+import itemPic from "../../components/assets/images/plastics.jpeg";
 
 
 
@@ -11,15 +12,14 @@ const TransferDetail = () => {
     const id = useParams<{id: string}>().id;
     return (
             <Layout>
-            <div className="bg-background-paper rounded-xl shadow-lg h-full flex flex-col gap-3 items-center pt-12 pb-9">
+            <div className="bg-background-paper rounded-xl shadow-lg h-full flex flex-col gap-3 items-center h-screen overflow-y-auto pt-12 pb-9">
                
                 <StatusBarLine status={['Origin', 'Approval', 'Move to Transit', 'Received']}
                 currentStatus='Approval' 
                 icons={[<FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck}/>]} />
             
                 <div className="flex gap-32 w-full mt-8 ml-64">
-                    {/* <img src="https://via.placeholder.com/150" alt="Item" className="w-64 h-40 rounded-lg" /> */}
-                    <Carousel images={['https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg']} />
+                    <Carousel images={[`${itemPic}`,'https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg']} />
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl text-secondary">Plastics</h2>
                         <div className="flex flex-col gap-4 mt-2">

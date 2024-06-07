@@ -24,23 +24,23 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   };
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="flex items-center w-64 justify-between">
+    <div className="flex flex-col gap-2 overflow-hidden">
+      <div className="flex items-center gap-2 justify-between">
         <button
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-gray-300 rounded-full p-2"
+          className="text-accent rounded-full p-2"
           onClick={handlePrev}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        <img src={images[currentImageIndex]} alt={`Slide ${currentImageIndex + 1}`} className="w-full rounded" />
+        <img src={images[currentImageIndex]} alt={`Slide ${currentImageIndex + 1}`} className="w-48 rounded" />
         <button
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10 bg-gray-300 rounded-full p-2"
+          className="text-accent rounded-full p-2"
           onClick={handleNext}
         >
          <FontAwesomeIcon icon={faAngleRight}/>
         </button>
       </div>
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+      <div className="flex justify-center">
         {images.map((_, index) => (
           <button
             key={index}
