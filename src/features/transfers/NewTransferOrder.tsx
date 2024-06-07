@@ -54,7 +54,7 @@ const NewTransferOrder= () => {
     return (
       
             <Layout>
-            <div className="bg-background-paper rounded-xl overflow-y-auto shadow-md p-2 pb-8 w-full">
+            <div className="bg-background-paper rounded-xl overflow-y-auto shadow-md p-2 pb-8 w-full h-screen">
             
                 <div className="flex items-center gap-4 mt-4 ml-12 mb-4  pb-4">
                 <FontAwesomeIcon icon={faFile} className="text-primary" size="xl" />

@@ -101,7 +101,7 @@ const Dashboard = () => {
       
     return (
         <Layout>
-            <div className="flex flex-col gap-4 items-start w-full">
+            <div className="flex flex-col gap-4 items-start h-screen w-full">
             <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
