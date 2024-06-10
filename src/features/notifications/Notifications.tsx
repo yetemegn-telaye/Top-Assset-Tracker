@@ -23,7 +23,7 @@ const Notifications = () => {
     return (
        
             <Layout>
-                <div className="flex flex-col bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
+                <div className="flex flex-col cursor-pointer bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
                     <div className="flex items-center gap-4 ml-4 mb-6 pb-6 mt-4">
                     <FontAwesomeIcon icon={faBell} className="text-primary" size="xl" />
                     <h1 className="text-2xl text-primary">

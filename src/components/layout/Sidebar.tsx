@@ -108,7 +108,7 @@ const Sidebar = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-center justify-center gap-4 mt-auto mb-8 md:mb-0">
+          <div className="flex flex-col items-center justify-center gap-4 mt-auto mb-8 md:mb-0 cursor-pointer">
             <div className="flex item-center justify-center  rounded-full h-16">
             <img src={profilePic} alt="Profile" className="w-1/2 rounded-full" />
             </div>

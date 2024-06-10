@@ -35,7 +35,7 @@ const SearchBar = () => {
           </div>
           
           <div className="flex items-center justify-center gap-7 mr-6">
-            <FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/>
+            <button className="cursor-pointer"><FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/></button>
             <button onClick={handleBellClick}><FontAwesomeIcon icon={faBell} className="text-info text-2xl hover:text-info-light" /></button>
           </div>
         </div>

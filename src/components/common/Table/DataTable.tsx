@@ -105,7 +105,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="hover:bg-accent-lighter">
+              <tr {...row.getRowProps()} className="hover:bg-accent-lighter cursor-pointer">
                 {row.cells.map(cell => {
                   const cellValue = cell.value;
                   let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
