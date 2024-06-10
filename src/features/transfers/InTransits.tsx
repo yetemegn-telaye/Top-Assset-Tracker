@@ -4,7 +4,7 @@ import Layout from "../../components/layout/Layout";
 import { Column } from "react-table";
 import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faFileLines, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const InTransits = () => {
@@ -20,7 +20,7 @@ const InTransits = () => {
       }
 
       const [searchTerm, setSearchTerm] = useState("");
-      const [selectedStatus, setSelectedStatus] = useState('In transit');
+      const [selectedStatus, setSelectedStatus] = useState('Returnables');
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
@@ -55,14 +55,14 @@ const InTransits = () => {
       ];
       
       const data: Data[] = [
-        {id: 1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
+        {id: 1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Returnables' },
         {id: 2, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
         {id: 3, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id: 4, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
-        {id: 5, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
+        {id: 4, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Pending...' },
+        {id: 5, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
         {id: 6, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
         {id: 7, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id: 8, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
+        {id: 8, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Returnables' },
 
       ];
       const navigate = useNavigate();
@@ -110,9 +110,9 @@ const InTransits = () => {
         <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
             <div className="flex item-center justify-between ml-4 mb-6 pb-6 mt-4">
                 <div className="flex items-center gap-4 ">
-                <FontAwesomeIcon icon={faTruck} className="text-primary" size="xl" />
+                <FontAwesomeIcon icon={faFileLines} className="text-primary" size="xl" />
                 <h1 className="text-2xl text-primary">
-                    In Transits
+                    Returnables
                 </h1>
                 </div>
                 <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light"
