@@ -63,10 +63,12 @@ const TransferList = () => {
         {id:4, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
         {id:5,item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
         {id:6, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id:7, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Pending...' },
+        {id:7, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Returnables' },
+        {id:6, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Approved' },
+        {id:7, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Approved' },
 
       ];
-      const transferStatus = ['All', 'Pending...','Returnables', 'In transit', 'Received', 'Delayed'];
+      const transferStatus = ['All', 'Pending...', 'Approved', 'Delayed', 'Received', 'Returnables'];
       const navigate = useNavigate();
       
       const sortedData = data.sort((a, b) => {
