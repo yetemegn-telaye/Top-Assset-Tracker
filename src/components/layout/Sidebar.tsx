@@ -27,8 +27,9 @@ const Sidebar = () => {
         } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:h-full overflow-y-auto z-20`}
       >
         <div className="flex flex-col gap-8 w-full items-center h-full">
-          <div className="text-lg font-bold">
-            <img src={topLogo} alt="Top Logo" className="w-32" />
+          <div className="text-lg flex flex-col gap-2 items-center">
+            <img src={topLogo} alt="Top Logo" className="w-24" />
+            <span className="text-sm font-light text-primary">Asset Tracker</span>
           </div>
           <hr className="w-full" />
           <div className="mt-8 flex-1 w-full">
