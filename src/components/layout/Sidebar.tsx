@@ -1,4 +1,4 @@
-import { faBars, faBell, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFile, faFileLines, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
@@ -48,18 +48,6 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/transfers"
-                  className={({ isActive }) =>
-                    isActive ? "text-info" : "text-accent hover:text-info"
-                  }
-                  onClick={closeSidebar}
-                >
-                  <FontAwesomeIcon icon={faTruck} className="mr-2" />
-                  Transfers
-                </NavLink>
-              </li>
-              <li className="text-sm font-light">
-                <NavLink
                   to="/new-transfer"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
@@ -72,14 +60,26 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/in-transits"
+                  to="/transfers"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                   onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faTruck} className="mr-2" />
-                  Active Transfers
+                  Transfers
+                </NavLink>
+              </li>
+              <li className="text-sm font-light">
+                <NavLink
+                  to="/in-transits"
+                  className={({ isActive }) =>
+                    isActive ? "text-info" : "text-accent hover:text-info"
+                  }
+                  onClick={closeSidebar}
+                >
+                  <FontAwesomeIcon icon={faFileLines} className="mr-2" />
+                  Returnables
                 </NavLink>
               </li>
               <li className="text-sm font-light">
