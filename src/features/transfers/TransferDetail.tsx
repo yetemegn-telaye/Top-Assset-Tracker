@@ -5,17 +5,24 @@ import { faArrowRight, faCheck, faTruck } from "@fortawesome/free-solid-svg-icon
 import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
 import itemPic from "../../components/assets/images/plastics.jpeg";
+import { transferData } from "../../constants/data";
 
 
 
 const TransferDetail = () => {
-    const id = useParams<{id: string}>().id;
+    const id:number = parseInt((useParams<{id: string}>().id) ?? '');
+
+    const data = transferData.find((item) => item.id === id);
+    console.log(data);
+
+
+    
     return (
             <Layout>
             <div className="bg-background-paper rounded-xl shadow-lg flex flex-col gap-3 items-center w-full h-screen overflow-y-auto pt-12 pb-9">
                
-                <StatusBarLine status={['Origin', 'Approval', 'Move to Transit', 'Received']}
-                currentStatus='Approval' 
+                <StatusBarLine 
+                currentStatus={data?.status ?? 'Origin'} 
                 icons={[<FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck}/>]} />
                 <div className="flex flex-col w-full items-center gap-8 justify-center">
                 <div className="flex gap-20 items-center justify-center mt-8">

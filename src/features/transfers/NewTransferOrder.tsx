@@ -63,7 +63,7 @@ const NewTransferOrder= () => {
                 </h1>
                 </div>
                 <div className="flex flex-col gap-8 items-center justify-center pb-3 mt-8">
-                    <StatusBarLine status={status} currentStatus={currentStatus} icons={icons} />
+                    <StatusBarLine currentStatus={currentStatus} icons={icons} />
                 <form className="flex flex-col items-center gap-4" onSubmit={handleCreateOrder}>
                     <div className="flex flex-col gap-4 items-start w-full">
 
