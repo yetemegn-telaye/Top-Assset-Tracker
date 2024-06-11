@@ -21,7 +21,7 @@ const TransferDetail = () => {
                 <div className="flex gap-20 items-center justify-center mt-8">
                     <Carousel images={[`${itemPic}`,'https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg']} />
                     <div className="flex flex-col gap-4">
-                        <h2 className="text-2xl text-secondary">Plastics</h2>
+                        <h2 className="text-2xl text-secondary">Item Name</h2>
                         <div className="flex flex-col gap-4 mt-2">
                         <p className=" text-accent-light">Quantity: <span className="text-gray-500 ml-6">10 pcs</span></p>
                         <p className="text-accent-light">Returnable: <FontAwesomeIcon icon={faCheck} className="text-secondary text-2xl ml-2"/> </p>
