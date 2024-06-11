@@ -12,13 +12,13 @@ const TransferDetail = () => {
     const id = useParams<{id: string}>().id;
     return (
             <Layout>
-            <div className="bg-background-paper rounded-xl shadow-lg h-full flex flex-col gap-3 items-center h-screen overflow-y-auto pt-12 pb-9">
+            <div className="bg-background-paper rounded-xl shadow-lg flex flex-col gap-3 items-center w-full h-screen overflow-y-auto pt-12 pb-9">
                
                 <StatusBarLine status={['Origin', 'Approval', 'Move to Transit', 'Received']}
                 currentStatus='Approval' 
                 icons={[<FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck}/>]} />
-            
-                <div className="flex gap-32 w-full mt-8 ml-64">
+                <div className="flex flex-col w-full items-center gap-8 justify-center">
+                <div className="flex gap-20 items-center justify-center mt-8">
                     <Carousel images={[`${itemPic}`,'https://i.imghippo.com/files/s9tvT1717669071.jpg','https://i.imghippo.com/files/s9tvT1717669071.jpg']} />
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl text-secondary">Plastics</h2>
@@ -30,31 +30,31 @@ const TransferDetail = () => {
                     </div>
                 </div>
 
-                <div className="flex gap-40 w-full mt-8 ml-64">
-                    <div className="flex flex-col gap-4 items-start">
-                        <div className="flex gap-4 items-center">
+                <div className="flex gap-32 mt-8 justify-center items-end">
+                    <div className="flex flex-col gap-5">
+                        <div className="flex gap-3 items-center text-sm w-48">
                         <p className=" text-accent-light">Issuer:</p>
                         <div className="flex flex-col">
                             <p className="text-gray-700">Samson Kebede</p>
                             <p className="text-accent-light hover:text-info">+251911904565</p>
                         </div>
                         </div>
-                        <div className="flex gap-4 items-center">
+                        <div className="flex gap-3 items-center text-sm w-48">
                         <p className=" text-accent-light">Receiver:</p>
                         <div className="flex flex-col">
                             <p className="text-gray-700">Ayele Alemayewu</p>
                             <p className="text-accent-light hover:text-info">+251911904565</p>
                         </div>
                         </div>
-                        <div className="flex gap-4 items-center">
-                        <p className=" text-accent-light">Transfer agent:</p>
+                        <div className="flex gap-1 items-center text-sm w-48">
+                        <p className="text-accent-light">Transfer Agent:</p>
                         <div className="flex flex-col">
                             <p className="text-gray-700">Samson Kebede</p>
                             <p className="text-accent-light hover:text-info">+251911904565</p>
                         </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-16 items-start w-full justify-end">
+                    <div className="flex flex-col gap-16">
                     <div className="flex gap-6 items-center">
                         <div>
                             <p className="text-accent-light text-xs">Origin</p>
@@ -68,6 +68,7 @@ const TransferDetail = () => {
                     </div>
                     <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light">Approve</button>
                     </div>
+                </div>
                 </div>
             </div>
             
