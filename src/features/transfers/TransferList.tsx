@@ -27,6 +27,10 @@ const TransferList = () => {
       
       const columns: Column<Data>[] = [
         {
+            Header: 'ID',
+            accessor: 'id'
+          },
+        {
           Header: 'Item Name',
           accessor: 'item_name',
         },
