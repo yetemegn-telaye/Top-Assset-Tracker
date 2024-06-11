@@ -6,8 +6,9 @@ import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileLines, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { transferData } from "../../constants/data";
 
-const InTransits = () => {
+const ReturnableList = () => {
     interface Data {
         id: number;
         item_name: string;
@@ -54,17 +55,7 @@ const InTransits = () => {
           },
       ];
       
-      const data: Data[] = [
-        {id: 1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Returnables' },
-        {id: 2, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        {id: 3, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id: 4, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Pending...' },
-        {id: 5, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
-        {id: 6, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        {id: 7, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id: 8, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Returnables' },
-
-      ];
+    const data: Data[] = transferData;
       const navigate = useNavigate();
       const sortedData = data.sort((a, b) => {
         const dateA = new Date(a.issued_date).getTime();
@@ -77,10 +68,6 @@ const InTransits = () => {
         );
       }
     );
-
-      useEffect(() => {
-        setTableData(filteredData);
-      },[]);
       
 
       useEffect(() => {
@@ -130,4 +117,4 @@ const InTransits = () => {
     </Layout>
     );
     }
-export default InTransits;
+export default ReturnableList;

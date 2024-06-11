@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import FilterOptions from "../../components/common/Table/FilterOptions";
 import StatusCard from "./StatusCard";
 import { icon } from "@fortawesome/fontawesome-svg-core";
+import { transferData } from "../../constants/data";
 
 const Dashboard = () => {
     interface Data {
@@ -52,14 +53,8 @@ const Dashboard = () => {
             accessor: 'status',
           },
       ];
-      
-      const data: Data[] = [
-        { id:1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
-        { id:2, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        { id:3, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-
-      ];
    
+    const data:Data[]= transferData;
       const statusProgress = [
         {status: 'Delayed', progress: 8,icon:'faClock'},
         {status: 'Received', progress: 20, icon:'faCheck'},
@@ -67,14 +62,11 @@ const Dashboard = () => {
         {status: 'Pending', progress: 12, icon:'faClock'},
         {status: 'Returnables', progress: 28, icon:'faBox'},
       ];
-      useEffect(() => {
-        const sortedData = data.sort((a, b) => {
-            const dateA = new Date(a.issued_date).getTime();
-            const dateB = new Date(b.issued_date).getTime();
-            return dateA - dateB;
-          });
-        setTableData(sortedData);
-      },[]);
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.issued_date).getTime();
+        const dateB = new Date(b.issued_date).getTime();
+        return dateA - dateB;
+      });
       
 
       useEffect(() => {
@@ -90,18 +82,13 @@ const Dashboard = () => {
         });
         setTableData(filteredData);
     } else {
-        const sortedData = data.sort((a, b) => {
-          const dateA = new Date(a.issued_date).getTime();
-          const dateB = new Date(b.issued_date).getTime();
-          return dateA - dateB;
-        });
-        setTableData(sortedData);
+        setTableData(sortedData.slice(0,3));
       }
       },[searchTerm]);
       
     return (
         <Layout>
-            <div className="flex flex-col gap-4 items-start h-screen w-full">
+            <div className="flex flex-col gap-3 items-start h-screen w-full">
             <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>

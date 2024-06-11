@@ -52,6 +52,11 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
     console.log('Delete', row);
   };
 
+ const handleRowClick = (e: any) => {
+    const id = e.target.parentElement.children[0].textContent;
+    navigate(`/transfers/${id}`);
+  }
+
   const actionsColumn: Column<T> = {
     Header: 'Actions',
     accessor: 'actions' as keyof T,
@@ -105,7 +110,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="hover:bg-accent-lighter cursor-pointer">
+              <tr {...row.getRowProps()} className="hover:bg-secondary-lighter cursor-pointer" onClick={handleRowClick}>
                 {row.cells.map(cell => {
                   const cellValue = cell.value;
                   let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
