@@ -4,13 +4,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import topLogo from "../../components/assets/top-logo-final.png";
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { loginUserThunk } from './AuthSlice';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../redux/store';
-// import { loginUser} from './AuthSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
-// import { useLoginUserMutation } from './AuthApi';
+import { AppDispatch, useAppSelector } from '../../redux/store';
+import { loginUserThunk, selectIsAuthenticated } from './AuthSlice';
+
+
 
 interface formData  {
     email: string;
@@ -20,9 +17,8 @@ interface formData  {
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState<formData>({email: '', password: ''});
     const dispatch = useDispatch<AppDispatch>();
-    // const [loginUser] = useLoginUserMutation();
-
-
+    const authenticated:boolean = useAppSelector(selectIsAuthenticated);
+   
     const navigate = useNavigate();
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +29,12 @@ const Login = () => {
         e.preventDefault();
         const {email,password} = loginFormData
         dispatch(loginUserThunk({email,password}));
+        if(authenticated){
+            navigate('/dashboard');
+        }
+        else{
+            alert('Invalid email or password');
+        }
       
     }
     return (

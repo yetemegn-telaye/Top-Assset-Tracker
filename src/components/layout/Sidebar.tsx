@@ -1,12 +1,18 @@
-import { faBars, faBell, faFile, faFileLines, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFile, faFileLines, faGear, faHome, faL, faPlusCircle, faTruck, faUserCircle, faUserLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { logOutUser } from "../../features/auth/AuthSlice";
 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const token = useAppSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -15,6 +21,13 @@ const Sidebar = () => {
   const closeSidebar = () => {
     setIsOpen(false);
   };
+  const handleLogout = () => {
+    dispatch(logOutUser(token));
+  
+    navigate('/');
+    // localStorage.removeItem('token');
+    // window.location.href = '/';
+  }
 
   return (
     <div className="flex flex-col min-h-screen sticky">
@@ -115,6 +128,7 @@ const Sidebar = () => {
             <div className="flex flex-col items-center justify-center">
             <h6 className="text-secondary font-light">Abebe Kebede</h6>
             <span className="text-sm text-accent font-light">abebe@topssets.com</span>
+            <button onClick={handleLogout}><FontAwesomeIcon icon={faUserLock} className="text-accent" /> </button>
             </div>
           </div>
         </div>

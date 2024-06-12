@@ -13,6 +13,7 @@ export interface AppRoute {
   path: string;
   component: React.ComponentType<any>;
   exact?: boolean;
+  protected?: boolean;
 }
 
 const routes: AppRoute[] = [
@@ -24,30 +25,37 @@ const routes: AppRoute[] = [
   {
     path: '/dashboard',
     component: Dashboard,
+    protected: true,
   },
   {
     path: '/transfers',
     component: TransferList,
+    protected: true,
   },
   {
     path: '/transfers/:id',
     component: TransferDetail,
+    protected: true,
   },
   {
     path: '/new-transfer',
     component: NewTransferOrder,
+    protected: true,
   },
   {
     path:'/in-transits',
     component: InTransits,
+    protected: true,
   },
   {
     path: '/notifications',
     component: Notifications,
+    protected: true,
   },
   {
     path: '/settings',
-    component: Settings
+    component: Settings,
+    protected: true,
   }
 ];
 

@@ -59,12 +59,11 @@ export const logOutUser = createAsyncThunk(
   "auth/logoutUser",
   async ( 
     token: string,
-    { rejectWithValue }
+    {dispatch, rejectWithValue }
   ) => {
     try {
-      const response: any = await authApi.endpoints.logoutUser.initiate(
-        token
-      );
+      const response: any = await dispatch(authApi.endpoints.logoutUser.initiate(token)); 
+      console.log(response.data);
       return response.data;
     } catch (err: any) {
       console.error("Error in logoutUser:", err);
@@ -92,6 +91,15 @@ const authSlice = createSlice({
       }
 
     );
+    builder.addMatcher(
+        authApi.endpoints.logoutUser.matchFulfilled,
+        (state, action: any) => {
+          console.log("logoutUser fulfilled payload:", action.payload);
+          state.message = action.payload.message;
+          state.user = action.payload.user;
+          state.token = action.payload.token;
+        }
+    )
     
 },
   
