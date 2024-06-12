@@ -3,25 +3,37 @@ import { faLock, faRightToBracket, faUserCircle } from '@fortawesome/free-solid-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import topLogo from "../../components/assets/top-logo-final.png";
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { loginUserThunk } from './AuthSlice';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../redux/store';
+// import { loginUser} from './AuthSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
+// import { useLoginUserMutation } from './AuthApi';
 
 interface formData  {
-    username: string;
+    email: string;
     password: string;
 }
 
 const Login = () => {
-    const [loginFormData, setLoginFormData] = useState<formData>({username: '', password: ''});
+    const [loginFormData, setLoginFormData] = useState<formData>({email: '', password: ''});
+    const dispatch = useDispatch<AppDispatch>();
+    // const [loginUser] = useLoginUserMutation();
+
 
     const navigate = useNavigate();
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setLoginFormData({...loginFormData, [name]: value});
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(loginFormData);
-        navigate('/dashboard');
-
+        const {email,password} = loginFormData
+        dispatch(loginUserThunk({email,password}));
+      
     }
     return (
 <div className="min-h-screen flex flex-col items-center justify-center">
@@ -39,10 +51,10 @@ const Login = () => {
         <div className='relative'>
         <input
         type="text"
-        placeholder="Username"
-        id='username'
-        name='username'
-        value={loginFormData.username}
+        placeholder="email"
+        id='email'
+        name='email'
+        value={loginFormData.email}
         onChange={handleInputChange}
         className="p-2 pl-10 border-0 border-b border-primary-light"
         

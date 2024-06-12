@@ -1,17 +1,18 @@
 import baseApi from "../../utils/api";
 
+
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     loginUser: builder.mutation({
-      query: (credentials:any) => ({
-        url: "auth/login",
+      query: (credentials:{email:string, password:string}) => ({
+        url: "/login",
         method: "POST",
-        body: credentials
+        body: credentials,
       }),
     }),
     logoutUser: builder.mutation({
         query: () => ({
-            url: "auth/logout",
+            url: "/logout",
             method: "POST",
         }),
         }),
