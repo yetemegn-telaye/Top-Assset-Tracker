@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { authApi } from "./AuthApi";
+import storage from "redux-persist/lib/storage";
+import persistReducer from "redux-persist/es/persistReducer";
 
 
 export interface User {
@@ -95,10 +97,16 @@ const authSlice = createSlice({
   
 });
 
-
+const persistConfig = {
+    key: 'auth',
+    storage,
+    whitelist: ['token', 'user'],
+  };
+  
+  const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
  
 export const selectAuthState = (state: any) => state.auth;
 export const selectIsAuthenticated = (state: any) => state.auth.token !== "";
 export const selectUser = (state: any) => state.auth.user;
 
-export default authSlice.reducer;
+export default persistedAuthReducer;
