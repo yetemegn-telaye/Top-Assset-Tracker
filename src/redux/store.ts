@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import authReducer from "../features/auth/AuthSlice";
+import authReducer from "../features/auth/AuthSlice";
 import { authApi } from "../features/auth/AuthApi";
 import baseApi from '../utils/api';
 import { useSelector, TypedUseSelectorHook } from "react-redux";
@@ -17,11 +17,11 @@ const persistConfig = {
   whitelist: ['auth'], // persist the auth slice
 };
 
-// const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 const store = configureStore({
   reducer: {
-    // auth: persistedAuthReducer,
+    auth: persistedAuthReducer,
     dashboard: dashboardReducer,
     transfer: transferReducer,
     notifications: notificationsReducer,
