@@ -43,7 +43,6 @@ export const loginUserThunk = createAsyncThunk(
   ) => {
     try {
       const response = await dispatch(authApi.endpoints.loginUser.initiate(credentials));
-      console.log(response);
       return response.data;
     } catch (err: any) {
       console.error("Error in loginUser:", err);
@@ -63,7 +62,6 @@ export const logOutUser = createAsyncThunk(
   ) => {
     try {
       const response: any = await dispatch(authApi.endpoints.logoutUser.initiate(token)); 
-      console.log(response.data);
       return response.data;
     } catch (err: any) {
       console.error("Error in logoutUser:", err);
@@ -87,6 +85,7 @@ const authSlice = createSlice({
         state.message = action.payload.message;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        window.localStorage.setItem("token", action.payload.token);
 
       }
 
@@ -114,7 +113,7 @@ const persistConfig = {
   const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
  
 export const selectAuthState = (state: any) => state.auth;
-export const selectIsAuthenticated = (state: any) => state.auth.token !== "";
+export const selectIsAuthenticated = (state: any) => state.auth.token !== "" || window.localStorage.getItem('token')!=undefined;
 export const selectUser = (state: any) => state.auth.user;
 
 export default persistedAuthReducer;

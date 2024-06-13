@@ -81,7 +81,7 @@ const TransferList = () => {
         dispatch(fetchTransfersListThunk());
         setTableData(data);
       },[]);
-      console.log(transferList);
+     
   
 
       useEffect(() => {

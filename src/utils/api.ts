@@ -9,7 +9,9 @@ import { RootState } from '../redux/store';
     baseUrl: config.server.api.url,
     prepareHeaders: (headers, { getState }) => {
   
-      const token = (getState() as RootState).auth.token;
+
+      // const token = (getState() as RootState).auth.token;
+      const token = localStorage.getItem('token');
       if (token) {
        
         headers.set('Authorization', `Bearer ${token}`);

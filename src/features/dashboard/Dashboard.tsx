@@ -127,7 +127,7 @@ const Dashboard = () => {
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
                 </div>
-            <DataTable columns={columns} data={dashboard.recent_transfers} />
+            <DataTable columns={columns} data={dashboard.recent_transfers.slice(0,3)} />
             
             </div>
             <div className="flex items-center justify-between gap-4 w-full">

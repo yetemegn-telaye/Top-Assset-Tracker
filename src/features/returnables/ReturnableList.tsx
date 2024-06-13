@@ -93,7 +93,7 @@ const ReturnableList = () => {
       dispatch(fetchReturnablesListThunk());
     }, []);
     
-      console.log(returnables);
+    
 
       useEffect(() => {
         if(searchTerm != '') {

@@ -17,7 +17,6 @@ export const fetchDashboardStatsThunk = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await dispatch(dashboardApi.endpoints.fetchDashboardStats.initiate({})).unwrap();
-      console.log(response);
       return response;
     } catch (err: any) {
       console.error("Error in fetchDashboardStats:", err);

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const SearchBar = () => {
 
     const getCurrentTime = () => {
-      const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: '2-digit', year: 'numeric' };
+      const options: Intl.DateTimeFormatOptions = {day: '2-digit', month: 'long', year: 'numeric' };
       const currentDate = new Date();
       return new Intl.DateTimeFormat('en-US', options).format(currentDate);
     };
