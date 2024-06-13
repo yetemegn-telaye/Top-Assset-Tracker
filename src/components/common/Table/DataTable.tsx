@@ -116,7 +116,7 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
                   let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
                   let cellContent = cell.render('Cell');
                   if (cell.column.id === 'status') {
-                    const color = cellValue === 'Pending...' ? 'primary-lighter' : cellValue === 'Received' ? 'secondary-light' : cellValue=== 'Returnables' ? 'accent-light' : cellValue=== 'Approved' ? 'secondary-lighter' : 'error-lighter';
+                    const color = cellValue === 'waiting_for_approval' ? 'primary-lighter' : cellValue === 'approved' ? 'secondary-lighter' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== 'in_transit' ? 'secondary-lighter' : cellValue==='at_destination'? 'secondary-light': 'error-lighter';
                     cellContent = <Badge color={color} value={cellValue} />;
                   }
                   return (

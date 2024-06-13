@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface ActionButtonsProps<T> {
   row: T;

@@ -146,7 +146,6 @@ const NewTransferOrder = () => {
                       <option key={approver.id} value={approver.id}>{approver.name}</option>
                     ))}
                     </select>
-                  {/* <input type="text" id="approver_id" name="approver_id" onChange={handleChange} value={orderData.approver_id} className="rounded-md border border-primary-light p-2" /> */}
                 </div>
                 <div className="flex flex-col gap-4">
                   <label htmlFor="destination_id" className="text-accent text-sm">Destination</label>
