@@ -7,12 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import FilterOptions from "../../components/common/Table/FilterOptions";
 import { useNavigate } from 'react-router';
+import { transferData } from "../../constants/data";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchTransfersListThunk, selectTransferList } from "./TransferSlice";
 
 const TransferList = () => {
     interface Data {
         id: number;
         item_name: string;
-        quantity: number;
+        qty: number;
         issuer: string;
         origin: string;
         destination: string;
@@ -23,15 +27,19 @@ const TransferList = () => {
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedStatus, setSelectedStatus] = useState('');
       const [tableData, setTableData] = useState<Data[]>([]);
-      
+      const dispatch = useDispatch<AppDispatch>();
       const columns: Column<Data>[] = [
+        {
+            Header: 'ID',
+            accessor: 'id'
+          },
         {
           Header: 'Item Name',
           accessor: 'item_name',
         },
         {
           Header: 'Quantity',
-          accessor: 'quantity',
+          accessor: 'qty',
         },
         {
           Header: 'Issuer',
@@ -55,33 +63,30 @@ const TransferList = () => {
           },
       ];
       
-      const data: Data[] = [
-        {id:1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
-        {id:2, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        {id:2, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id:3, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
-        {id:4, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
-        {id:5,item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        {id:6, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
-        {id:7, item_name: 'Item 3', quantity: 55, issuer: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'In transit' },
-
-      ];
-      const transferStatus = ['All', 'Pending','Returnables', 'In transit', 'Received', 'Delayed'];
+     
+     
+      const transferStatus = ['All', 'Pending...', 'Approved', 'Delayed', 'Received', 'Returnables'];
       const navigate = useNavigate();
       
-      const sortedData = data.sort((a, b) => {
+     
+      
+      const transferList = useAppSelector(selectTransferList)
+      const data: any = transferData;
+       const sortedData = data.sort((a:any, b:any) => {
         const dateA = new Date(a.issued_date).getTime();
         const dateB = new Date(b.issued_date).getTime();
         return dateA - dateB;
       });
       useEffect(() => {
-        setTableData(sortedData);
+        dispatch(fetchTransfersListThunk());
+        setTableData(data);
       },[]);
-      
+     
+  
 
       useEffect(() => {
         if(searchTerm != '') {
-        const filteredData = data.filter((item) => {
+        const filteredData = data.filter((item:any) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,10 +95,10 @@ const TransferList = () => {
             item.status.toLowerCase().includes(searchTerm.toLowerCase())
           );
         });
-        setTableData(filteredData);
+        setTableData(data);
     } else {
         
-        setTableData(sortedData);
+        setTableData(data);
       }
       },[searchTerm]);
 
@@ -104,17 +109,18 @@ const TransferList = () => {
             }
             else
             {
-        const filteredData = data.filter((item) => {
+        const filteredData = data.filter((item:any) => {
           return (
             item.status.toLowerCase().includes(selectedStatus.toLowerCase())
           );
         });
-        setTableData(filteredData);
+        setTableData(data);
         }
     },[selectedStatus])
 
     const handleNavigate = () => {
         navigate('/new-transfer');
+      
     }
       
     return (
@@ -136,7 +142,7 @@ const TransferList = () => {
                 <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
 
             </div>
-        <DataTable columns={columns} data={tableData} />
+        <DataTable columns={columns} data={transferList} />
         
         </div>
         

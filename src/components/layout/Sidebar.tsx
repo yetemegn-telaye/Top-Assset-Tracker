@@ -1,12 +1,18 @@
-import { faBars, faBell, faGear, faHome, faPlusCircle, faTruck, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFile, faFileLines, faGear, faHome, faL, faPlusCircle, faTruck, faUserCircle, faUserLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
-import profilePic from "../assets/images/profilePic.jpeg";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { logOutUser } from "../../features/auth/AuthSlice";
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const token = useAppSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -15,6 +21,13 @@ const Sidebar = () => {
   const closeSidebar = () => {
     setIsOpen(false);
   };
+  const handleLogout = () => {
+    dispatch(logOutUser(token));
+  
+    navigate('/');
+    // localStorage.removeItem('token');
+    // window.location.href = '/';
+  }
 
   return (
     <div className="flex flex-col min-h-screen sticky">
@@ -27,8 +40,9 @@ const Sidebar = () => {
         } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:h-full overflow-y-auto z-20`}
       >
         <div className="flex flex-col gap-8 w-full items-center h-full">
-          <div className="text-lg font-bold">
-            <img src={topLogo} alt="Top Logo" className="w-32" />
+          <div className="text-lg flex flex-col gap-2 items-center">
+            <img src={topLogo} alt="Top Logo" className="w-24" />
+            <span className="text-sm font-light text-primary">Asset Tracker</span>
           </div>
           <hr className="w-full" />
           <div className="mt-8 flex-1 w-full">
@@ -47,18 +61,6 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/transfers"
-                  className={({ isActive }) =>
-                    isActive ? "text-info" : "text-accent hover:text-info"
-                  }
-                  onClick={closeSidebar}
-                >
-                  <FontAwesomeIcon icon={faTruck} className="mr-2" />
-                  Transfers
-                </NavLink>
-              </li>
-              <li className="text-sm font-light">
-                <NavLink
                   to="/new-transfer"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
@@ -71,14 +73,26 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/in-transits"
+                  to="/transfers"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                   onClick={closeSidebar}
                 >
                   <FontAwesomeIcon icon={faTruck} className="mr-2" />
-                  Active Transfers
+                  Transfers
+                </NavLink>
+              </li>
+              <li className="text-sm font-light">
+                <NavLink
+                  to="/in-transits"
+                  className={({ isActive }) =>
+                    isActive ? "text-info" : "text-accent hover:text-info"
+                  }
+                  onClick={closeSidebar}
+                >
+                  <FontAwesomeIcon icon={faFileLines} className="mr-2" />
+                  Returnables
                 </NavLink>
               </li>
               <li className="text-sm font-light">
@@ -107,13 +121,14 @@ const Sidebar = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-center justify-center gap-4 mt-auto mb-8 md:mb-0">
+          <div className="flex flex-col items-center justify-center gap-4 mt-auto mb-8 md:mb-0 cursor-pointer">
             <div className="flex item-center justify-center  rounded-full h-16">
-            <img src={profilePic} alt="Profile" className="w-1/2 rounded-full" />
+            <img src="https://i.imghippo.com/files/CCcN51718192469.webp" alt="Profile" className="w-1/2 rounded-full" />
             </div>
             <div className="flex flex-col items-center justify-center">
-            <h6 className="text-secondary font-light">Sammuel Doe</h6>
-            <span className="text-sm text-accent font-light">sammuel@gmail.com</span>
+            <h6 className="text-secondary font-light">Abebe Kebede</h6>
+            <span className="text-sm text-accent font-light">abebe@topssets.com</span>
+            <button onClick={handleLogout}><FontAwesomeIcon icon={faUserLock} className="text-accent" /> </button>
             </div>
           </div>
         </div>

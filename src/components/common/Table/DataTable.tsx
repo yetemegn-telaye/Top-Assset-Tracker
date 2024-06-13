@@ -52,6 +52,11 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
     console.log('Delete', row);
   };
 
+ const handleRowClick = (e: any) => {
+    const id = e.target.parentElement.children[0].textContent;
+    navigate(`/transfers/${id}`);
+  }
+
   const actionsColumn: Column<T> = {
     Header: 'Actions',
     accessor: 'actions' as keyof T,
@@ -105,13 +110,13 @@ const DataTable = <T extends object>({ columns, data }: TableProps<T>) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="hover:bg-accent-lighter">
+              <tr {...row.getRowProps()} className="hover:bg-secondary-lighter cursor-pointer" onClick={handleRowClick}>
                 {row.cells.map(cell => {
                   const cellValue = cell.value;
                   let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
                   let cellContent = cell.render('Cell');
                   if (cell.column.id === 'status') {
-                    const color = cellValue === 'In transit' ? 'primary-lighter' : cellValue === 'Received' ? 'secondary-lighter' : 'error-lighter';
+                    const color = cellValue === 'waiting_for_approval' ? 'primary-lighter' : cellValue === 'approved' ? 'secondary-lighter' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== 'in_transit' ? 'secondary-lighter' : cellValue==='at_destination'? 'secondary-light': 'error-lighter';
                     cellContent = <Badge color={color} value={cellValue} />;
                   }
                   return (

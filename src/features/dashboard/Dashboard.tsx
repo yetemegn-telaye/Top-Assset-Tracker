@@ -6,30 +6,39 @@ import { useEffect, useState } from "react";
 import FilterOptions from "../../components/common/Table/FilterOptions";
 import StatusCard from "./StatusCard";
 import { icon } from "@fortawesome/fontawesome-svg-core";
+import { transferData } from "../../constants/data";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchDashboardStatsThunk, selectDashboardStats } from "./DashboardSlice"
 
 const Dashboard = () => {
     interface Data {
         id:number;
         item_name: string;
-        quantity: number;
+        qty: number;
         issuer: string;
         origin: string;
         destination: string;
         issued_date: string;
         status: string;
       }
-
+      const dispatch = useDispatch<AppDispatch>();
+      
       const [searchTerm, setSearchTerm] = useState("");
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
+        {
+            Header: 'ID',
+            accessor: 'id'
+        },
         {
           Header: 'Item Name',
           accessor: 'item_name',
         },
         {
           Header: 'Quantity',
-          accessor: 'quantity',
+          accessor: 'qty',
         },
         {
           Header: 'Issuer',
@@ -52,29 +61,28 @@ const Dashboard = () => {
             accessor: 'status',
           },
       ];
-      
-      const data: Data[] = [
-        { id:1, item_name: 'Item 1', quantity: 28, issuer: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'In transit' },
-        { id:2, item_name: 'Item 4', quantity: 211, issuer: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
-        { id:3, item_name: 'Item 3', quantity: 283, issuer: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
 
-      ];
-   
+
+      const dashboard = useAppSelector(selectDashboardStats);
+  
+    const data:any[]= transferData;
       const statusProgress = [
-        {status: 'Delayed', progress: 8,icon:'faClock'},
-        {status: 'Received', progress: 20, icon:'faCheck'},
-        {status: 'In transit', progress: 32, icon:'faTruck'},
-        {status: 'Pending', progress: 12, icon:'faClock'},
-        {status: 'Returnables', progress: 28, icon:'faBox'},
+        {status: 'Delayed', count: 8},
+        {status: 'Approval Required', count: 20},
+        {status: 'Waiting to Transit', count: 32},
+        {status: 'In Transit', count: 12},
+        {status: 'Returnables', count: 28},
       ];
+
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.issued_date).getTime();
+        const dateB = new Date(b.issued_date).getTime();
+        return dateA - dateB;
+      });
       useEffect(() => {
-        const sortedData = data.sort((a, b) => {
-            const dateA = new Date(a.issued_date).getTime();
-            const dateB = new Date(b.issued_date).getTime();
-            return dateA - dateB;
-          });
-        setTableData(sortedData);
-      },[]);
+        dispatch(fetchDashboardStatsThunk());
+      }, []);
+      
       
 
       useEffect(() => {
@@ -90,18 +98,13 @@ const Dashboard = () => {
         });
         setTableData(filteredData);
     } else {
-        const sortedData = data.sort((a, b) => {
-          const dateA = new Date(a.issued_date).getTime();
-          const dateB = new Date(b.issued_date).getTime();
-          return dateA - dateB;
-        });
-        setTableData(sortedData);
+        setTableData(sortedData.slice(0,3));
       }
       },[searchTerm]);
       
     return (
         <Layout>
-            <div className="flex flex-col gap-4 items-start h-screen w-full">
+            <div className="flex flex-col gap-3 items-start h-screen w-full">
             <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
@@ -124,14 +127,15 @@ const Dashboard = () => {
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
                 </div>
-            <DataTable columns={columns} data={tableData} />
+            <DataTable columns={columns} data={dashboard.recent_transfers.slice(0,3)} />
             
             </div>
-            <div className="flex items-center justify-between w-full">
-            {statusProgress.map((item, index) => (
-                <StatusCard key={index} status={item.status} progress={item.progress} icon={item.icon} />
+            <div className="flex items-center justify-between gap-4 w-full">
+            {dashboard.summary.map((item, index) => (
+                <StatusCard key={index} status={item.status} count={item.count} />
             ))
             }
+
             </div>
             </div>
         </Layout>

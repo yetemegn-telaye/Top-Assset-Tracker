@@ -8,7 +8,7 @@ interface BadgeProps {
 
 
 const Badge: React.FC<BadgeProps> = ({ color, value }) => {
-  return <span className={`bg-${color} px-2 rounded-xl text-gray-800`}>{value}</span>;
+  return <p className={`bg-${color} px-2 rounded-xl text-gray-800 ${value==='waiting_for_approval' && 'animate-pulse'} `}>{value}</p>;
 };
 
 export default Badge;

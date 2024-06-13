@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const SearchBar = () => {
 
     const getCurrentTime = () => {
-      const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: '2-digit', year: 'numeric' };
+      const options: Intl.DateTimeFormatOptions = {day: '2-digit', month: 'long', year: 'numeric' };
       const currentDate = new Date();
       return new Intl.DateTimeFormat('en-US', options).format(currentDate);
     };
@@ -35,7 +35,7 @@ const SearchBar = () => {
           </div>
           
           <div className="flex items-center justify-center gap-7 mr-6">
-            <FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/>
+            <button className="cursor-pointer"><FontAwesomeIcon icon={faExclamation} className="text-error-light text-2xl"/></button>
             <button onClick={handleBellClick}><FontAwesomeIcon icon={faBell} className="text-info text-2xl hover:text-info-light" /></button>
           </div>
         </div>
