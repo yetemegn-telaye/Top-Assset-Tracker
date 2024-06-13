@@ -16,7 +16,7 @@ const TransferList = () => {
     interface Data {
         id: number;
         item_name: string;
-        quantity: number;
+        qty: number;
         issuer: string;
         origin: string;
         destination: string;
@@ -39,7 +39,7 @@ const TransferList = () => {
         },
         {
           Header: 'Quantity',
-          accessor: 'quantity',
+          accessor: 'qty',
         },
         {
           Header: 'Issuer',

@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileLines, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { transferData } from "../../constants/data";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchReturnablesListThunk, selectReturnablesList } from "./ReturnablesSlice";
 
 const ReturnableList = () => {
     interface Data {
@@ -23,6 +26,8 @@ const ReturnableList = () => {
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedStatus, setSelectedStatus] = useState('Returnables');
       const [tableData, setTableData] = useState<Data[]>([]);
+      const dispatch = useDispatch<AppDispatch>();
+      const returnables = useAppSelector(selectReturnablesList);
       
       const columns: Column<Data>[] = [
         {
@@ -84,7 +89,11 @@ const ReturnableList = () => {
         );
       }
     );
-      
+    useEffect(() => { 
+      dispatch(fetchReturnablesListThunk());
+    }, []);
+    
+      console.log(returnables);
 
       useEffect(() => {
         if(searchTerm != '') {

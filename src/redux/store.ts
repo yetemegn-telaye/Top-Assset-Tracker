@@ -9,6 +9,7 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist
 import dashboardReducer from "../features/dashboard/DashboardSlice";
 import transferReducer from "../features/transfers/TransferSlice";
 import notificationsReducer from "../features/notifications/notificationsSlice";
+import returnablesReducer from "../features/returnables/ReturnablesSlice";
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const store = configureStore({
     dashboard: dashboardReducer,
     transfer: transferReducer,
     notifications: notificationsReducer,
+    returnables: returnablesReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
