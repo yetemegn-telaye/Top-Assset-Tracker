@@ -27,8 +27,8 @@ const TransferList = () => {
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedStatus, setSelectedStatus] = useState('');
       const [tableData, setTableData] = useState<Data[]>([]);
-      
-      const columns: Column[] = [
+      const dispatch = useDispatch<AppDispatch>();
+      const columns: Column<Data>[] = [
         {
             Header: 'ID',
             accessor: 'id'
@@ -69,8 +69,8 @@ const TransferList = () => {
       const navigate = useNavigate();
       
      
-      const dispatch = useDispatch<AppDispatch>();
-      const transferdata = useAppSelector(selectTransferList)
+      
+      const transferList = useAppSelector(selectTransferList)
       const data: any = transferData;
        const sortedData = data.sort((a:any, b:any) => {
         const dateA = new Date(a.issued_date).getTime();
@@ -81,7 +81,7 @@ const TransferList = () => {
         dispatch(fetchTransfersListThunk());
         setTableData(data);
       },[]);
-      console.log(transferdata);
+      console.log(transferList);
   
 
       useEffect(() => {
@@ -142,7 +142,7 @@ const TransferList = () => {
                 <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
 
             </div>
-        <DataTable columns={columns} data={transferData} />
+        <DataTable columns={columns} data={transferList} />
         
         </div>
         
