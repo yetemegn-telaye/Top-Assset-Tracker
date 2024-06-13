@@ -7,6 +7,9 @@ import FilterOptions from "../../components/common/Table/FilterOptions";
 import StatusCard from "./StatusCard";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 import { transferData } from "../../constants/data";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchDashboardStatsThunk, selectDashboardStats } from "./DashboardSlice"
 
 const Dashboard = () => {
     interface Data {
@@ -19,7 +22,7 @@ const Dashboard = () => {
         issued_date: string;
         status: string;
       }
-
+      const dispatch = useDispatch<AppDispatch>();
       const [searchTerm, setSearchTerm] = useState("");
       const [tableData, setTableData] = useState<Data[]>([]);
       
@@ -60,17 +63,23 @@ const Dashboard = () => {
    
     const data:Data[]= transferData;
       const statusProgress = [
-        {status: 'Delayed', progress: 8,icon:'faClock'},
-        {status: 'Received', progress: 20, icon:'faCheck'},
-        {status: 'In transit', progress: 32, icon:'faTruck'},
-        {status: 'Pending', progress: 12, icon:'faClock'},
-        {status: 'Returnables', progress: 28, icon:'faBox'},
+        {status: 'Delayed', count: 8},
+        {status: 'Approval Required', count: 20},
+        {status: 'Waiting to Transit', count: 32},
+        {status: 'In Transit', count: 12},
+        {status: 'Returnables', count: 28},
       ];
+
       const sortedData = data.sort((a, b) => {
         const dateA = new Date(a.issued_date).getTime();
         const dateB = new Date(b.issued_date).getTime();
         return dateA - dateB;
       });
+      useEffect(() => {
+        dispatch(fetchDashboardStatsThunk());
+      }, []);
+      const dashboardStats = useAppSelector(selectDashboardStats);
+      console.log(dashboardStats);
       
 
       useEffect(() => {
@@ -118,11 +127,12 @@ const Dashboard = () => {
             <DataTable columns={columns} data={tableData} />
             
             </div>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between gap-4 w-full">
             {statusProgress.map((item, index) => (
-                <StatusCard key={index} status={item.status} progress={item.progress} icon={item.icon} />
+                <StatusCard key={index} status={item.status} count={item.count} />
             ))
             }
+
             </div>
             </div>
         </Layout>

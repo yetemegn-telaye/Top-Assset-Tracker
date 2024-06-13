@@ -13,7 +13,7 @@ const ReturnableList = () => {
         id: number;
         item_name: string;
         quantity: number;
-        issuer: string;
+        receiver: string;
         origin: string;
         destination: string;
         issued_date: string;
@@ -38,8 +38,8 @@ const ReturnableList = () => {
           accessor: 'quantity',
         },
         {
-          Header: 'Issuer',
-          accessor: 'issuer',
+          Header: 'Receiver',
+          accessor: 'receiver',
         },
         {
             Header: 'Origin',
@@ -59,7 +59,19 @@ const ReturnableList = () => {
           },
       ];
       
-    const data: Data[] = transferData;
+    const data: Data[] = [
+      {id:1, item_name: 'Item 1', quantity: 28, receiver: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
+      {id:2, item_name: 'Item 4', quantity: 211, receiver: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
+      {id:2, item_name: 'Item 3', quantity: 283, receiver: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
+      {id:3, item_name: 'Item 3', quantity: 55, receiver: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Pending...' },
+      {id:4, item_name: 'Item 1', quantity: 28, receiver: 'Abebe', origin: 'Top 1', destination: 'Top 2', issued_date: 'May,07,2024', status: 'Pending...' },
+      {id:5,item_name: 'Item 4', quantity: 211, receiver: 'Kebede', origin: 'Top 2', destination: 'Top 3', issued_date: 'May,05,2024', status: 'Received' },
+      {id:6, item_name: 'Item 3', quantity: 283, receiver: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Delayed' },
+      {id:7, item_name: 'Item 3', quantity: 55, receiver: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Returnables' },
+      {id:6, item_name: 'Item 3', quantity: 283, receiver: 'Meron', origin: 'Top 4', destination: 'Top 1', issued_date: 'May,10,2024', status: 'Approved' },
+      {id:7, item_name: 'Item 3', quantity: 55, receiver: 'Tati', origin: 'Top 3', destination: 'Top 2', issued_date: 'May,06,2024', status: 'Approved' },
+  
+    ];
       const navigate = useNavigate();
       const sortedData = data.sort((a, b) => {
         const dateA = new Date(a.issued_date).getTime();
@@ -79,7 +91,7 @@ const ReturnableList = () => {
         const searchResult = filteredData.filter((item) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.receiver.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.status.toLowerCase().includes(searchTerm.toLowerCase())

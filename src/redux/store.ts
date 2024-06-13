@@ -6,6 +6,7 @@ import { useSelector, TypedUseSelectorHook } from "react-redux";
 import storage from 'redux-persist/lib/storage'; 
 import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import dashboardReducer from "../features/dashboard/DashboardSlice";
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +19,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    dashboard: dashboardReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
