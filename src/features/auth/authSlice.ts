@@ -70,7 +70,7 @@ export const logOutUser = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
+const AuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -110,7 +110,7 @@ const persistConfig = {
     whitelist: ['token', 'user'],
   };
   
-  const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
+  const persistedAuthReducer = persistReducer(persistConfig, AuthSlice.reducer);
  
 export const selectAuthState = (state: any) => state.auth;
 export const selectIsAuthenticated = (state: any) => state.auth.token !== "" || window.localStorage.getItem('token')!=undefined;
