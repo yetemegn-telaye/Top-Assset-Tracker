@@ -7,6 +7,8 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import dashboardReducer from "../features/dashboard/DashboardSlice";
+import transferReducer from "../features/transfers/TransferSlice";
+import notificationsReducer from "../features/notifications/notificationsSlice";
 
 const persistConfig = {
   key: 'root',
@@ -20,6 +22,8 @@ const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     dashboard: dashboardReducer,
+    transfer: transferReducer,
+    notifications: notificationsReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

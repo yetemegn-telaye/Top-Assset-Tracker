@@ -2,24 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout/Layout";
 import { faBell, faShippingFast } from "@fortawesome/free-solid-svg-icons";
 import NotificationCard from "./NotificationCard";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchNotificationsThunk, selectNotifications } from "./notificationsSlice";
+import { useEffect } from "react";
 
 const Notifications = () => {
-    const notifications = [
-        {
-          message: 'Your item has been shipped'
-        },
-        {
-            message: 'Your item is waiting for approval'
-        },
-        {
-          message: 'Your item has been received'
-        },
-        {
-          message: 'Your item has been delayed'
-        },
-     
-      ];
-      
+
+      const dispatch = useDispatch<AppDispatch>();
+      useEffect(() => {
+        dispatch(fetchNotificationsThunk());
+      },[]);
+      const notfications = useAppSelector(selectNotifications);
     return (
        
             <Layout>
@@ -31,8 +25,8 @@ const Notifications = () => {
                     </h1>
                     </div>
                     <div className="flex flex-col gap-4">
-                    {notifications.map((notification, index) => (
-                        <NotificationCard key={index} notification={notification} />
+                    {notfications.notifications.map((notification:any, index:any) => (
+                        <NotificationCard key={index} notificationObj={notification} />
                       ))
                     }
                     </div>

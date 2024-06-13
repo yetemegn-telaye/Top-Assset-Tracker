@@ -8,6 +8,9 @@ import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import FilterOptions from "../../components/common/Table/FilterOptions";
 import { useNavigate } from 'react-router';
 import { transferData } from "../../constants/data";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { fetchTransfersListThunk, selectTransferList } from "./TransferSlice";
 
 const TransferList = () => {
     interface Data {
@@ -25,7 +28,7 @@ const TransferList = () => {
       const [selectedStatus, setSelectedStatus] = useState('');
       const [tableData, setTableData] = useState<Data[]>([]);
       
-      const columns: Column<Data>[] = [
+      const columns: Column[] = [
         {
             Header: 'ID',
             accessor: 'id'
@@ -60,24 +63,30 @@ const TransferList = () => {
           },
       ];
       
-      const data: Data[] = transferData;
-  
+     
+     
       const transferStatus = ['All', 'Pending...', 'Approved', 'Delayed', 'Received', 'Returnables'];
       const navigate = useNavigate();
       
-      const sortedData = data.sort((a, b) => {
+     
+      const dispatch = useDispatch<AppDispatch>();
+      const transferdata = useAppSelector(selectTransferList)
+      const data: any = transferData;
+       const sortedData = data.sort((a:any, b:any) => {
         const dateA = new Date(a.issued_date).getTime();
         const dateB = new Date(b.issued_date).getTime();
         return dateA - dateB;
       });
       useEffect(() => {
-        setTableData(sortedData);
+        dispatch(fetchTransfersListThunk());
+        setTableData(data);
       },[]);
-      
+      console.log(transferdata);
+  
 
       useEffect(() => {
         if(searchTerm != '') {
-        const filteredData = data.filter((item) => {
+        const filteredData = data.filter((item:any) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -86,10 +95,10 @@ const TransferList = () => {
             item.status.toLowerCase().includes(searchTerm.toLowerCase())
           );
         });
-        setTableData(filteredData);
+        setTableData(data);
     } else {
         
-        setTableData(sortedData);
+        setTableData(data);
       }
       },[searchTerm]);
 
@@ -100,12 +109,12 @@ const TransferList = () => {
             }
             else
             {
-        const filteredData = data.filter((item) => {
+        const filteredData = data.filter((item:any) => {
           return (
             item.status.toLowerCase().includes(selectedStatus.toLowerCase())
           );
         });
-        setTableData(filteredData);
+        setTableData(data);
         }
     },[selectedStatus])
 
@@ -133,7 +142,7 @@ const TransferList = () => {
                 <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
 
             </div>
-        <DataTable columns={columns} data={tableData} />
+        <DataTable columns={columns} data={transferData} />
         
         </div>
         

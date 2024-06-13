@@ -1,60 +1,53 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { dashboardApi } from "./DashboardApi";
+import { RootState } from "../../redux/store";
 
 interface DashboardState {
-    status: string;
-    count: string;
+  recent_transfers: any[];
+  summary: any[];
 }
 
 const initialState: DashboardState = {
-    status: "",
-    count: "",
+  recent_transfers: [],
+  summary: []
 };
 
 export const fetchDashboardStatsThunk = createAsyncThunk(
-    "dashboard/fetchDashboardStats",
-    async (_, { dispatch, rejectWithValue }) => {
-        try {
-            const response = await dispatch(dashboardApi.endpoints.fetchDashboardStats.initiate(_));
-            console.log(response);
-            return response.data;
-        } catch (err: any) {
-            console.error("Error in fetchDashboardStats:", err);
-
-            return rejectWithValue(err.response.data);
-        }
+  "dashboard/fetchDashboardStats",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await dispatch(dashboardApi.endpoints.fetchDashboardStats.initiate({})).unwrap();
+      console.log(response);
+      return response;
+    } catch (err: any) {
+      console.error("Error in fetchDashboardStats:", err);
+      return rejectWithValue(err.response ? err.response.data : { error: "Failed to fetch" });
     }
+  }
 );
 
 const dashboardSlice = createSlice({
-  name: "dashbooardStats",
+  name: "dashboard",
   initialState,
-  reducers: {
-    
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
       dashboardApi.endpoints.fetchDashboardStats.matchFulfilled,
-   
-      (state:any, action: any) => {
+      (state, action) => {
         console.log("Dashboard stats fetched", action.payload);
-        state.status = action.payload.status;
-        state.count = action.payload.count;
+        state.recent_transfers = action.payload.recent_transfers;
+        state.summary = action.payload.summary;
       }
-
     );
     builder.addMatcher(
-       dashboardApi.endpoints.fetchDashboardStats.matchRejected,
-        (state:any, action: any) => {
-          console.log("Dashboard stats failed to fetch:", action.payload);
-          
-        }
-    )
-    
-},
-  
+      dashboardApi.endpoints.fetchDashboardStats.matchRejected,
+      (state, action) => {
+        console.log("Dashboard stats failed to fetch:", action.payload);
+      }
+    );
+  },
 });
 
-export const selectDashboardStats = (state: { dashboard: { status: string; count: string; }; }) => state.dashboard;
+export const selectDashboardStats = (state: RootState) => state.dashboard;
 
 export default dashboardSlice.reducer;

@@ -15,7 +15,7 @@ const Dashboard = () => {
     interface Data {
         id:number;
         item_name: string;
-        quantity: number;
+        qty: number;
         issuer: string;
         origin: string;
         destination: string;
@@ -23,6 +23,7 @@ const Dashboard = () => {
         status: string;
       }
       const dispatch = useDispatch<AppDispatch>();
+      
       const [searchTerm, setSearchTerm] = useState("");
       const [tableData, setTableData] = useState<Data[]>([]);
       
@@ -37,7 +38,7 @@ const Dashboard = () => {
         },
         {
           Header: 'Quantity',
-          accessor: 'quantity',
+          accessor: 'qty',
         },
         {
           Header: 'Issuer',
@@ -60,8 +61,11 @@ const Dashboard = () => {
             accessor: 'status',
           },
       ];
-   
-    const data:Data[]= transferData;
+
+
+      const dashboard = useAppSelector(selectDashboardStats);
+  
+    const data:any[]= transferData;
       const statusProgress = [
         {status: 'Delayed', count: 8},
         {status: 'Approval Required', count: 20},
@@ -78,8 +82,7 @@ const Dashboard = () => {
       useEffect(() => {
         dispatch(fetchDashboardStatsThunk());
       }, []);
-      const dashboardStats = useAppSelector(selectDashboardStats);
-      console.log(dashboardStats);
+      
       
 
       useEffect(() => {
@@ -124,11 +127,11 @@ const Dashboard = () => {
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
                 </div>
-            <DataTable columns={columns} data={tableData} />
+            <DataTable columns={columns} data={dashboard.recent_transfers} />
             
             </div>
             <div className="flex items-center justify-between gap-4 w-full">
-            {statusProgress.map((item, index) => (
+            {dashboard.summary.map((item, index) => (
                 <StatusCard key={index} status={item.status} count={item.count} />
             ))
             }
