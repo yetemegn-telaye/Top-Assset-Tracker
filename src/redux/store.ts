@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/auth/AuthSlice";
+import authReducer from "../features/auth/authSlice";
 import baseApi from "../utils/api";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
-import dashboardReducer from "../features/dashboard/DashboardSlice";
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 import transferReducer from "../features/transfers/TransferSlice";
 import notificationsReducer from "../features/notifications/notificationsSlice";
 import returnablesReducer from "../features/returnables/ReturnablesSlice";
