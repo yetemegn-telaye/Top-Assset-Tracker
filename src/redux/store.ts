@@ -13,7 +13,7 @@ import returnablesReducer from "../features/returnables/ReturnablesSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"], // persist the auth slice
+  whitelist: ["auth"], 
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

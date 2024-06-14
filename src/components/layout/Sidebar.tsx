@@ -5,7 +5,7 @@ import { useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { logOutUser } from "../../features/auth/AuthSlice";
+import { logOutUser } from "../../features/auth/authSlice";
 
 
 const Sidebar = () => {

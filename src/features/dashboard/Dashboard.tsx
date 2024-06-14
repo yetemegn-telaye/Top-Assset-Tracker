@@ -9,7 +9,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchDashboardStatsThunk, selectDashboardStats } from "./DashboardSlice"
+import { fetchDashboardStatsThunk, selectDashboardStats } from "./dashboardSlice"
 
 const Dashboard = () => {
     interface Data {

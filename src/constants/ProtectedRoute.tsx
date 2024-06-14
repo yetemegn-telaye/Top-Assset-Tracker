@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../redux/store';
-import { selectIsAuthenticated } from '../features/auth/AuthSlice';
+import { selectIsAuthenticated } from '../features/auth/authSlice';
 
 interface ProtectedRouteProps {
   element: React.ReactElement;

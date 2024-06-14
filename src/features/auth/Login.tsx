@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import topLogo from "../../components/assets/top-logo-final.png";
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../../redux/store';
-import { loginUserThunk, selectIsAuthenticated } from './AuthSlice';
+import { loginUserThunk, selectIsAuthenticated } from './authSlice';
 
 
 
