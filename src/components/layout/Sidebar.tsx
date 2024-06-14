@@ -1,4 +1,4 @@
-import { faBars, faBell, faFile, faFileLines, faGear, faHome, faL, faPlusCircle, faTruck, faUserCircle, faUserLock } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFile, faFileLines, faGear, faHome, faL, faPlusCircle, faRightFromBracket, faTruck, faUserCircle, faUserLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -128,7 +128,7 @@ const Sidebar = () => {
             <div className="flex flex-col items-center justify-center">
             <h6 className="text-secondary font-light">Abebe Kebede</h6>
             <span className="text-sm text-accent font-light">abebe@topssets.com</span>
-            <button onClick={handleLogout}><FontAwesomeIcon icon={faUserLock} className="text-accent" /> </button>
+            <button onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} className="text-accent hover:text-info" /> </button>
             </div>
           </div>
         </div>
