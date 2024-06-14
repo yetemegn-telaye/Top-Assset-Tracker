@@ -94,7 +94,6 @@ const AuthSlice = createSlice({
         authApi.endpoints.logoutUser.matchFulfilled,
         (state, action: any) => {
           console.log("logoutUser fulfilled payload:", action.payload);
-          localStorage.removeItem("token");
           state.message = action.payload.message;
           state.user = action.payload.user;
           state.token = action.payload.token;
