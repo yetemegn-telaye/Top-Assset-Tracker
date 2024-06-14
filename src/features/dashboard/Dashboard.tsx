@@ -105,7 +105,7 @@ const Dashboard = () => {
     return (
         <Layout>
             <div className="flex flex-col gap-3 items-start h-screen w-full">
-            <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full">
+            <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 h-full w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
                     <h1 className="text-2xl text-primary">Recent Transfers</h1>

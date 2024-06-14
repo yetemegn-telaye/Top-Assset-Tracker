@@ -18,10 +18,10 @@ const NewTransferOrder = () => {
     },
     guest: {
       name: "",
-      phone: 1234567890
+      phone: ''
     },
     approver_id: 1,
-    destination_id: 2,
+    destination_id: 1,
     images: [] as File[]
   });
 
