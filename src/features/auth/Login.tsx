@@ -45,8 +45,7 @@ const Login = () => {
     </div>
   <div className="bg-background-paper border border-gray-300 rounded-xl shadow-md w-50 m-auto flex flex-col max-h-screen items-center justify-center gap-12 p-12">
     <div className='flex flex-col items-center justify-center gap-4'>
-      {/* <FontAwesomeIcon icon={faUserCircle} size="4x" className="text-secondary" /> */}
-      <h1 className='text-primary text-3xl font-light'>Login</h1>
+      <FontAwesomeIcon icon={faUserCircle} size="2x" className="text-primary-light" />
       <p className='text-xs text-secondary-light font-light'>Welcome to Top's Tracking System.</p>
     </div>
     <form className="flex flex-col space-y-8" onSubmit={handleSubmit}>
