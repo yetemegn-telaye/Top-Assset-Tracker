@@ -6,14 +6,17 @@ import { AppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect } from "react";
 import AlertCard from "./AlertCard";
 import { fetchNotificationsThunk, selectNotifications } from "../notifications/notificationsSlice";
+import { fetchAlertsThunk, selectAlerts } from "./AlertsSlice";
 
 const Alerts = () => {
 
       const dispatch = useDispatch<AppDispatch>();
       useEffect(() => {
         dispatch(fetchNotificationsThunk());
+        // dispatch(fetchAlertsThunk());
       },[]);
       const notifications:any =useAppSelector(selectNotifications);
+      // const alerts:any = useAppSelector(selectAlerts);
       const alertNotifications = (notifications.notifications).filter((notification:any) => notification.notification.message.includes('to approve'));
   
       return (

@@ -5,9 +5,12 @@ import { Column } from "react-table";
 import UsersTable from "../../components/common/UsersTable/UsersTable";
 import AddUser from "./AddUser";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../../redux/store";
+import { addUserThunk, fetchUsersThunk, selectAddUserError, selectAddUserLoading, selectUsers } from "./UsersSlice";
 
 const Settings = () => {
-  interface Data {
+  interface UsersData {
     id: string;
     name: string;
     email: string;
@@ -20,14 +23,14 @@ const Settings = () => {
     role_name: string;
   }
 
-  const [users, setUsers] = useState<Data[]>([
+  const [users, setUsers] = useState<UsersData[]>([
     { id: '1', name: 'Ayele Tewodros', email: 'jd@gmail.com', phone: '1234567890', email_verified_at: '2021-09-01', created_at: '2021-09-01', updated_at: '2021-09-01', role: '1', location_id: '1', role_name: 'Admin' },
     // { id: '2', name: 'Abebe Daniel', email: 'jd@gmail.com', phone: '1234567890', email_verified_at: '2021-09-01', created_at: '2021-09-01', updated_at: '2021-09-01', role: '1', location_id: '1', role_name: 'Approver' },
     // { id: '3', name: 'Kebede Tilahun', email: 'jd@gmail.com', phone: '1234567890', email_verified_at: '2021-09-01', created_at: '2021-09-01', updated_at: '2021-09-01', role: '1', location_id: '1', role_name: 'Receiver' },
     // { id: '4', name: 'Kidus Samuel', email: 'jd@gmail.com', phone: '1234567890', email_verified_at: '2021-09-01', created_at: '2021-09-01', updated_at: '2021-09-01', role: '1', location_id: '1', role_name: 'Issuer' },
   ]);
 
-  const columns: Column<Data>[] = [
+  const columns: Column<UsersData>[] = [
     {
       Header: 'ID',
       accessor: 'id'
@@ -66,12 +69,19 @@ const Settings = () => {
     },
   ];
 
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     console.log("Initial users:", users);
+    // dispatch(fetchUsersThunk());
   }, [users]);
 
-  const handleAddUser = (newUser: Data) => {
+//   const usersList = useAppSelector(selectUsers);
+// const isAddUserLoading = useAppSelector(selectAddUserLoading);
+// const isAddUserError = useAppSelector(selectAddUserError);
+
+  const handleAddUser = (newUser: UsersData) => {
     setUsers((prevUsers) => [...prevUsers, newUser]);
+    // dispatch(addUserThunk(newUser));
   };
 
   return (

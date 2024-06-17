@@ -9,6 +9,8 @@ import dashboardReducer from "../features/dashboard/dashboardSlice";
 import transferReducer from "../features/transfers/TransferSlice";
 import notificationsReducer from "../features/notifications/notificationsSlice";
 import returnablesReducer from "../features/returnables/ReturnablesSlice";
+import usersReducer from "../features/settings/UsersSlice";
+import alertsReducer from "../features/alerts/AlertsSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +27,8 @@ const store = configureStore({
     transfer: transferReducer,
     notifications: notificationsReducer,
     returnables: returnablesReducer,
+    users: usersReducer,
+    alerts: alertsReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
