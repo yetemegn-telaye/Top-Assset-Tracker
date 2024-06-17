@@ -1,11 +1,12 @@
 import { faBars, faBell, faFile, faFileLines, faGear, faHome, faL, faPlusCircle, faRightFromBracket, faTruck, faUserCircle, faUserLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
 import { logOutUser } from "../../features/auth/authSlice";
+import { fetchNotificationsThunk, selectNotifications } from "../../features/notifications/notificationsSlice";
 
 
 const Sidebar = () => {
@@ -13,6 +14,7 @@ const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const token = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
+  const notifications= useAppSelector(selectNotifications);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -21,6 +23,11 @@ const Sidebar = () => {
   const closeSidebar = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(fetchNotificationsThunk());
+  }, [dispatch]);
+   
   const handleLogout = () => {
     dispatch(logOutUser(token));
   
@@ -105,7 +112,13 @@ const Sidebar = () => {
                 >
                   <FontAwesomeIcon icon={faBell} className="mr-2" />
                   Notifications
-                </NavLink>
+            </NavLink>
+            {notifications.notifications.length > 0 && (
+            <span className="relative top-0 right-0 left-5 bottom-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-error rounded-full">
+              {notifications.notifications.length}
+            </span>
+          )}
+              
               </li>
               <li className="text-sm font-light">
                 <NavLink
