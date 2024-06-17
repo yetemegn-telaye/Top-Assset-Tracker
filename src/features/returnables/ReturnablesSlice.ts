@@ -55,4 +55,5 @@ interface ReturnablesState {
 
     export const selectReturnablesList = (state: RootState) => state.returnables;
     export const selectIsReturnablesLoading = (state: RootState) => state.returnables.isLoading;
+    export const selectReturnablesError = (state: RootState) => state.returnables.error;
     export default returnablesSlice.reducer;

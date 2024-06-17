@@ -170,5 +170,6 @@ export const selectTransferDetail = (state: RootState) => state.transfer.transfe
 export const selectApprovers = (state: RootState) => state.transfer.approvers;
 export const selectLocations = (state: RootState) => state.transfer.locations;
 export const selectIsTransfersLoading = (state: RootState) => state.transfer.isTransfersLoading;
+export const selectTransfersError = (state: RootState) => state.transfer.error;
 
 export default transferSlice.reducer;

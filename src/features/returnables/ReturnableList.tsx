@@ -6,10 +6,9 @@ import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileLines, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchReturnablesListThunk, selectIsReturnablesLoading, selectReturnablesList } from "./ReturnablesSlice";
+import { fetchReturnablesListThunk, selectIsReturnablesLoading, selectReturnablesError, selectReturnablesList } from "./ReturnablesSlice";
 
 const ReturnableList = () => {
     interface Data {
@@ -28,6 +27,8 @@ const ReturnableList = () => {
       const [tableData, setTableData] = useState<Data[]>([]);
       const dispatch = useDispatch<AppDispatch>();
       const returnables = useAppSelector(selectReturnablesList);
+      const error = useAppSelector(selectReturnablesError);
+      
       
       const columns: Column<Data>[] = [
         {
@@ -134,7 +135,7 @@ const ReturnableList = () => {
             <div className="flex justify-between mb-8 items-center">
                 <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
             </div>
-        <DataTable columns={columns} data={tableData} isLoading={isReturnablesLoading} />
+        <DataTable columns={columns} data={tableData} isLoading={isReturnablesLoading} error={error} />
         
         </div>
         

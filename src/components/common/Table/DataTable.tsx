@@ -7,6 +7,7 @@ import Pagination from './Pagination';
 import ActionButtons from './ActionButtons';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../LoadingSpinner';
+import ErrorDisplay from '../Error';
 
 interface Data {
   id: number;
@@ -23,9 +24,10 @@ interface TableProps<T extends object> {
   columns: Column<T>[];
   data: T[];
   isLoading: boolean;
+  error: string| null;
 }
 
-const DataTable = <T extends object>({ columns, data, isLoading }: TableProps<T>) => {
+const DataTable = <T extends object>({ columns, data, isLoading,error }: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -115,6 +117,16 @@ const DataTable = <T extends object>({ columns, data, isLoading }: TableProps<T>
            <td colSpan={columns.length} className="h-64">
              <div className="flex justify-center items-center h-full">
                <LoadingSpinner />
+             </div>
+           </td>
+         </tr>
+       </tbody>
+      ) : error!=null ? (
+        <tbody>
+         <tr>
+           <td colSpan={columns.length} className="h-64">
+             <div className="flex justify-center items-center h-full">
+               <ErrorDisplay message={error} />
              </div>
            </td>
          </tr>

@@ -63,5 +63,6 @@ const dashboardSlice = createSlice({
 
 export const selectDashboardStats = (state: RootState) => state.dashboard;
 export const selectIsLoading = (state: RootState) => state.dashboard.isLoading;
+export const selectError = (state: RootState)=> state.dashboard.error;
 
 export default dashboardSlice.reducer;

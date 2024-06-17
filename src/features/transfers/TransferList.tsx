@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router';
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchTransfersListThunk, selectIsTransfersLoading, selectTransferList } from "./TransferSlice";
+import { fetchTransfersListThunk, selectIsTransfersLoading, selectTransferList, selectTransfersError } from "./TransferSlice";
 
 const TransferList = () => {
     interface Data {
@@ -71,6 +71,9 @@ const TransferList = () => {
      
       
       const transferList = useAppSelector(selectTransferList);
+      const isTransfersLoading = useAppSelector(selectIsTransfersLoading);
+      const transfersError = useAppSelector(selectTransfersError);
+
       const data: any = transferData;
        const sortedData = data.sort((a:any, b:any) => {
         const dateA = new Date(a.issued_date).getTime();
@@ -82,7 +85,7 @@ const TransferList = () => {
         setTableData(data);
       },[]);
      
-      const isTransfersLoading = useAppSelector(selectIsTransfersLoading);
+
 
       useEffect(() => {
         if(searchTerm != '') {
@@ -142,7 +145,7 @@ const TransferList = () => {
                 <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
 
             </div>
-        <DataTable columns={columns} data={transferList} isLoading={isTransfersLoading} />
+        <DataTable columns={columns} data={transferList} isLoading={isTransfersLoading} error={transfersError} />
         
         </div>
         
