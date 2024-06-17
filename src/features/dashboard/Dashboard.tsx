@@ -103,6 +103,8 @@ const Dashboard = () => {
         setTableData(sortedData.slice(0,3));
       }
       },[searchTerm]);
+      const inTransitCount = dashboard.recent_transfers.filter((item) => item.status === 'in_transit').length;
+      const pendingCount = dashboard.recent_transfers.filter((item) => item.status === 'waiting_for_approval').length;
       
     return (
         <Layout>
@@ -111,16 +113,16 @@ const Dashboard = () => {
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
                     <h1 className="text-2xl text-primary">Recent Transfers</h1>
-                    <span className="text-sm text-accent">42 in total</span>
+                    <span className="text-sm text-accent">{dashboard.recent_transfers.length} in total</span>
                     </div>
                     <div className="flex gap-8 items-center">
                         <div className="flex flex-col justify-center items-center gap-2">
-                        <p className="text-2xl">12</p>
-                        <span className="text-xs text-accent-light">Pending</span>
+                        <p className="text-2xl">{pendingCount}</p>
+                        <span className="text-xs text-accent-light">Approval Required</span>
                         </div>
                         <div className="h-full border border-l-accent"></div>
                         <div className="flex flex-col justify-center items-center gap-2">
-                        <p className="text-2xl">32</p>
+                        <p className="text-2xl">{inTransitCount}</p>
                         <span className="text-xs text-accent-light">In transit</span>
                         </div>
                     </div>
