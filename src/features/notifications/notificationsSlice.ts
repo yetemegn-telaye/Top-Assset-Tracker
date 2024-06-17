@@ -32,7 +32,7 @@ const notificationSlice = createSlice({
       notificationApi.endpoints.fetchNotification.matchFulfilled,
       (state, action: any) => {
         state.notifications = action.payload;
-        console.log("Notifications fetched", action.payload);
+        // console.log("Notifications fetched", action.payload);
       }
     );
     builder.addMatcher(
