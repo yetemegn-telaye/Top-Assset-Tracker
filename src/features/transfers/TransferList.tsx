@@ -10,25 +10,26 @@ import { useNavigate } from 'react-router';
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchTransfersListThunk, selectIsTransfersLoading, selectTransferList, selectTransfersError } from "./TransferSlice";
+import TransferSlice, { fetchTransfersListThunk, selectIsTransfersLoading, selectTransferList, selectTransfersError } from "./TransferSlice";
 
 const TransferList = () => {
-    interface Data {
-        id: number;
-        item_name: string;
-        qty: number;
-        issuer: string;
-        origin: string;
-        destination: string;
-        issued_date: string;
-        status: string;
+    interface TransferData {
+      id: string;
+      item_name: string;
+      qty: string;
+      unit_measurement: string;
+      origin: string;
+      destination: string;
+      issuer: string;
+      status: string;
+      issued_date: string;
       }
 
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedStatus, setSelectedStatus] = useState('');
-      const [tableData, setTableData] = useState<Data[]>([]);
+      const [tableData, setTableData] = useState<TransferData[]>([]);
       const dispatch = useDispatch<AppDispatch>();
-      const columns: Column<Data>[] = [
+      const columns: Column<TransferData>[] = [
         {
             Header: 'ID',
             accessor: 'id'
@@ -65,7 +66,7 @@ const TransferList = () => {
       
      
      
-      const transferStatus = ['All', 'Pending...', 'Approved', 'Delayed', 'Received', 'Returnables'];
+      const transferStatus = ['All', 'Approval Required', 'Approved', 'Delayed', 'In transit', 'Returnables'];
       const navigate = useNavigate();
       
      
@@ -73,23 +74,18 @@ const TransferList = () => {
       const transferList = useAppSelector(selectTransferList);
       const isTransfersLoading = useAppSelector(selectIsTransfersLoading);
       const transfersError = useAppSelector(selectTransfersError);
+ 
 
-      const data: any = transferData;
-       const sortedData = data.sort((a:any, b:any) => {
-        const dateA = new Date(a.issued_date).getTime();
-        const dateB = new Date(b.issued_date).getTime();
-        return dateA - dateB;
-      });
+       
       useEffect(() => {
         dispatch(fetchTransfersListThunk());
-        setTableData(data);
+        setTableData(transferList);
       },[]);
      
 
-
       useEffect(() => {
         if(searchTerm != '') {
-        const filteredData = data.filter((item:any) => {
+        const filteredData = transferList.filter((item:any) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,26 +94,26 @@ const TransferList = () => {
             item.status.toLowerCase().includes(searchTerm.toLowerCase())
           );
         });
-        setTableData(data);
+        setTableData(filteredData);
     } else {
         
-        setTableData(data);
+        setTableData(transferList);
       }
       },[searchTerm]);
 
       useEffect(() => {
         if(selectedStatus === '' || selectedStatus === 'All')
             {
-                setTableData(data);
+                setTableData(transferList);
             }
             else
             {
-        const filteredData = data.filter((item:any) => {
+        const filteredData = transferList.filter((item:any) => {
           return (
             item.status.toLowerCase().includes(selectedStatus.toLowerCase())
           );
         });
-        setTableData(data);
+        setTableData(filteredData);
         }
     },[selectedStatus])
 
@@ -145,7 +141,7 @@ const TransferList = () => {
                 <FilterOptions setSelectedStatus={setSelectedStatus} transferStatus={transferStatus} />
 
             </div>
-        <DataTable columns={columns} data={transferList} isLoading={isTransfersLoading} error={transfersError} />
+        <DataTable columns={columns} data={tableData} isLoading={isTransfersLoading} error={transfersError} />
         
         </div>
         

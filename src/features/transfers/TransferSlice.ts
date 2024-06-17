@@ -113,6 +113,7 @@ const transferSlice = createSlice({
     builder.addMatcher(
       transferApi.endpoints.fetchTransferList.matchFulfilled,
       (state, action: any) => {
+        state.isTransfersLoading = false;
         state.transfers = action.payload.transfers;
       }
     );
@@ -120,12 +121,14 @@ const transferSlice = createSlice({
       transferApi.endpoints.fetchTransferList.matchPending,
       (state) => {
         state.isTransfersLoading = true;
+
         state.error = null;
       }
     );
     builder.addMatcher(
       transferApi.endpoints.fetchTransferList.matchRejected,
       (state, action) => {
+        state.isTransfersLoading = false;
         state.error = action.error.message ?? null;
       }
     );
