@@ -4,10 +4,14 @@ import { RootState } from "../../redux/store";
 
 interface ReturnablesState {
     returnables: any[];
+    isLoading: boolean;
+    error: string | null;
   }
   
   const initialState: ReturnablesState = {
     returnables: [],
+    isLoading: false,
+    error: null,
   };
   
   export const fetchReturnablesListThunk = createAsyncThunk(
@@ -35,13 +39,20 @@ interface ReturnablesState {
             }
         );
         builder.addMatcher(
+            returnablesApi.endpoints.fetchReturnables.matchPending,
+            (state) => {
+            state.isLoading = true;
+            }
+        );
+        builder.addMatcher(
             returnablesApi.endpoints.fetchReturnables.matchRejected,
             (state, action) => {
-            console.error("Returnables list failed to fetch:", action.payload);
+              state.error = action.error.message ?? null;
             }
         );
         },
     });
 
     export const selectReturnablesList = (state: RootState) => state.returnables;
+    export const selectIsReturnablesLoading = (state: RootState) => state.returnables.isLoading;
     export default returnablesSlice.reducer;

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchReturnablesListThunk, selectReturnablesList } from "./ReturnablesSlice";
+import { fetchReturnablesListThunk, selectIsReturnablesLoading, selectReturnablesList } from "./ReturnablesSlice";
 
 const ReturnableList = () => {
     interface Data {
@@ -92,7 +92,7 @@ const ReturnableList = () => {
     useEffect(() => { 
       dispatch(fetchReturnablesListThunk());
     }, []);
-    
+     const isReturnablesLoading = useAppSelector(selectIsReturnablesLoading);
     
 
       useEffect(() => {
@@ -134,7 +134,7 @@ const ReturnableList = () => {
             <div className="flex justify-between mb-8 items-center">
                 <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
             </div>
-        <DataTable columns={columns} data={tableData} />
+        <DataTable columns={columns} data={tableData} isLoading={isReturnablesLoading} />
         
         </div>
         

@@ -9,7 +9,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchDashboardStatsThunk, selectDashboardStats } from "./dashboardSlice"
+import { fetchDashboardStatsThunk, selectDashboardStats, selectIsLoading } from "./dashboardSlice"
 
 const Dashboard = () => {
     interface Data {
@@ -25,6 +25,7 @@ const Dashboard = () => {
       const dispatch = useDispatch<AppDispatch>();
       
       const [searchTerm, setSearchTerm] = useState("");
+      const isDashboardLoading = useAppSelector(selectIsLoading);
       const [tableData, setTableData] = useState<Data[]>([]);
       
       const columns: Column<Data>[] = [
@@ -127,7 +128,7 @@ const Dashboard = () => {
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
                 </div>
-            <DataTable columns={columns} data={dashboard.recent_transfers.slice(0,3)} />
+            <DataTable columns={columns} data={dashboard.recent_transfers.slice(0,3)} isLoading={isDashboardLoading} />
             
             </div>
             <div className="flex items-center justify-between gap-4 w-full">

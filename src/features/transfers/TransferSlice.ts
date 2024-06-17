@@ -8,13 +8,18 @@ interface TransferState {
   transfer: any;
   approvers: any[];
   locations: any[];
+  isTransfersLoading: boolean;
+  error: string | null;
+  
 }
 
 const initialState: TransferState = {
   transfers: [],
   transfer: {},
   approvers: [],
-  locations: []
+  locations: [],
+  isTransfersLoading: false,
+  error: null,
 };
 
 
@@ -112,9 +117,16 @@ const transferSlice = createSlice({
       }
     );
     builder.addMatcher(
+      transferApi.endpoints.fetchTransferList.matchPending,
+      (state) => {
+        state.isTransfersLoading = true;
+        state.error = null;
+      }
+    );
+    builder.addMatcher(
       transferApi.endpoints.fetchTransferList.matchRejected,
       (state, action) => {
-        console.error("Transfer list failed to fetch:", action.payload);
+        state.error = action.error.message ?? null;
       }
     );
     builder.addMatcher(
@@ -157,5 +169,6 @@ export const selectTransferList = (state: RootState) => state.transfer.transfers
 export const selectTransferDetail = (state: RootState) => state.transfer.transfer;
 export const selectApprovers = (state: RootState) => state.transfer.approvers;
 export const selectLocations = (state: RootState) => state.transfer.locations;
+export const selectIsTransfersLoading = (state: RootState) => state.transfer.isTransfersLoading;
 
 export default transferSlice.reducer;

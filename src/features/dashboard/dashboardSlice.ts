@@ -5,11 +5,15 @@ import { RootState } from "../../redux/store";
 interface DashboardState {
   recent_transfers: any[];
   summary: any[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: DashboardState = {
   recent_transfers: [],
-  summary: []
+  summary: [],
+  isLoading: false,
+  error: null
 };
 
 export const fetchDashboardStatsThunk = createAsyncThunk(
@@ -36,17 +40,28 @@ const dashboardSlice = createSlice({
         console.log("Dashboard stats fetched", action.payload);
         state.recent_transfers = action.payload.recent_transfers;
         state.summary = action.payload.summary;
+        state.isLoading = false;
+        state.error = null;
+      }
+    );
+    builder.addMatcher(
+      dashboardApi.endpoints.fetchDashboardStats.matchPending,
+      (state) => {
+        state.isLoading = true;
+        state.error = null;
       }
     );
     builder.addMatcher(
       dashboardApi.endpoints.fetchDashboardStats.matchRejected,
       (state, action) => {
-        console.log("Dashboard stats failed to fetch:", action.payload);
+        state.isLoading = false;
+        state.error = action.error.message ?? null;
       }
     );
   },
 });
 
 export const selectDashboardStats = (state: RootState) => state.dashboard;
+export const selectIsLoading = (state: RootState) => state.dashboard.isLoading;
 
 export default dashboardSlice.reducer;
