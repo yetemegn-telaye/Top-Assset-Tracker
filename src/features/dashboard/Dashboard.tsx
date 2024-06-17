@@ -10,6 +10,7 @@ import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
 import { fetchDashboardStatsThunk, selectDashboardStats, selectError, selectIsLoading } from "./dashboardSlice"
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const Dashboard = () => {
     // interface Data {
@@ -145,13 +146,16 @@ const Dashboard = () => {
             <DataTable columns={columns} data={tableData.slice(0,3)} isLoading={isDashboardLoading} error={error} />
             
             </div>
-            <div className="flex items-center justify-between gap-4 w-full">
-            {dashboard.summary.map((item, index) => (
-                <StatusCard key={index} status={item.status} count={item.count} />
-            ))
-            }
-
-            </div>
+            {isDashboardLoading ? <LoadingSpinner/> :(
+                <div className="flex items-center justify-between gap-4 w-full">
+                {dashboard.summary.map((item, index) => (
+                    <StatusCard key={index} status={item.status} count={item.count} />
+                ))
+                }
+    
+                </div>
+            ) }
+          
             </div>
         </Layout>
     );
