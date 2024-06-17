@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
 import { fetchTransfersListThunk, selectIsTransfersLoading, selectTransferList, selectTransfersError } from "./TransferSlice";
+import useFetchOnRouteChange from "../../hooks/useFetchOnRouteChange";
 
 const TransferList = () => {
   interface TransferData {
@@ -71,9 +72,15 @@ const TransferList = () => {
   const isTransfersLoading = useAppSelector(selectIsTransfersLoading);
   const transfersError = useAppSelector(selectTransfersError);
 
-  useEffect(() => {
+  const fetchTransferList = () => {
     dispatch(fetchTransfersListThunk());
+  };
+
+  useEffect(() => {
+    fetchTransferList();
   }, [dispatch]);
+
+  useFetchOnRouteChange(fetchTransferList);
 
   useEffect(() => {
     if (searchTerm !== '' || selectedStatus !== '') {

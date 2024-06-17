@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCheck, faTruck } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchTransferDetailsThunk, selectTransferDetail, updateTransferStatusThunk, fetchTransfersListThunk } from "./TransferSlice";
+import { fetchTransferDetailsThunk, selectTransferDetail, updateTransferStatusThunk } from "./TransferSlice";
 import { useEffect } from "react";
 import { TransferStatus } from "../../constants/data";
 
@@ -14,7 +14,6 @@ const TransferDetail = () => {
   const id: any = parseInt((useParams<{ id: string }>().id) ?? '');
   const dispatch = useDispatch<AppDispatch>();
   const detail = useAppSelector(selectTransferDetail);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchTransferDetailsThunk(id));
@@ -22,10 +21,7 @@ const TransferDetail = () => {
 
   const handleUpdate = (status: string) => {
     if (window.confirm(`Are you sure you want to ${status} this transfer?`) && detail) {
-      dispatch(updateTransferStatusThunk({ id, body: { status } })).then(() => {
-        dispatch(fetchTransfersListThunk());
-        navigate('/transfers');
-      });
+      dispatch(updateTransferStatusThunk({ id, body: { status } }));
     }
   };
 
