@@ -7,6 +7,7 @@ import NewTransferOrder from '../features/transfers/NewTransferOrder';
 import InTransits from '../features/returnables/ReturnableList';
 import Settings from '../features/settings/Settings';
 import Notifications from '../features/notifications/Notifications';
+import Alerts from '../features/alerts/Alerts';
 
 
 export interface AppRoute {
@@ -50,6 +51,11 @@ const routes: AppRoute[] = [
   {
     path: '/notifications',
     component: Notifications,
+    protected: true,
+  },
+  {
+    path: '/alerts',
+    component: Alerts,
     protected: true,
   },
   {
