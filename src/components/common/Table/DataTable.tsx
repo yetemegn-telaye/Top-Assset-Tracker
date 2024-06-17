@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 import ActionButtons from './ActionButtons';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../LoadingSpinner';
-import ErrorDisplay from '../Error';
+import ErrorDisplay from '../ErrorDisplay';
 
 interface Data {
   id: number;
