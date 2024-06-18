@@ -12,7 +12,7 @@ import { fetchNotificationsThunk, selectNotifications } from "../../features/not
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const token = useAppSelector((state) => state.auth.token);
+  const token = useAppSelector((state: { auth: { token: string } }) => state.auth.token);
   const navigate = useNavigate();
   const notifications= useAppSelector(selectNotifications);
 

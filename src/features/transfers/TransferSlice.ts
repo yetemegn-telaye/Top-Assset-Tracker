@@ -10,6 +10,10 @@ interface TransferState {
   locations: any[];
   isTransfersLoading: boolean;
   error: string | null;
+  isApproverLoading: boolean;
+  isLocationLoading: boolean;
+  approversError: string | null;
+  locationsError: string | null;
   
 }
 
@@ -20,6 +24,10 @@ const initialState: TransferState = {
   locations: [],
   isTransfersLoading: false,
   error: null,
+  isApproverLoading: false,
+  isLocationLoading: false,
+  approversError: null,
+  locationsError: null,
 };
 
 
@@ -82,7 +90,6 @@ export const fetchApproversThunk = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await dispatch(transferApi.endpoints.fetchApprovers.initiate({})).unwrap();
-      console.log("Approvers fetched successfully:", response);
       return response;
     } catch (err: any) {
       console.error("Error in fetchApproversThunk:", err);
@@ -156,16 +163,47 @@ const transferSlice = createSlice({
     transferApi.endpoints.fetchApprovers.matchFulfilled,
     (state, action: any) => {
       state.approvers = action.payload;
-
+      state.isApproverLoading = false;
+      state.approversError = null;
+    }
+  );
+  builder.addMatcher(
+    transferApi.endpoints.fetchApprovers.matchPending,
+    (state) => {
+      state.isApproverLoading = true;
+      state.approversError = null;
+    }
+  );
+  builder.addMatcher(
+    transferApi.endpoints.fetchApprovers.matchRejected,
+    (state, action: any) => {
+      state.isApproverLoading = false;
+      state.approversError = action.error.message ?? null;
     }
   );
   builder.addMatcher(
     transferApi.endpoints.fetchLocations.matchFulfilled,
     (state, action: any) => {
       state.locations = action.payload;
+      state.isLocationLoading = false;
+      state.locationsError = null;
     }
   );
-  },
+  builder.addMatcher(
+    transferApi.endpoints.fetchLocations.matchPending,
+    (state) => {
+      state.isLocationLoading = true;
+      state.locationsError = null;
+    }
+  );
+  builder.addMatcher
+    (transferApi.endpoints.fetchLocations.matchRejected,
+    (state, action: any) => {
+      state.isLocationLoading = false;
+      state.locationsError = action.error.message ?? null;
+    }
+  );
+  }
 });
 
 export const selectTransferList = (state: RootState) => state.transfer.transfers;
@@ -174,5 +212,9 @@ export const selectApprovers = (state: RootState) => state.transfer.approvers;
 export const selectLocations = (state: RootState) => state.transfer.locations;
 export const selectIsTransfersLoading = (state: RootState) => state.transfer.isTransfersLoading;
 export const selectTransfersError = (state: RootState) => state.transfer.error;
+export const selectIsApproverLoading = (state: RootState) => state.transfer.isApproverLoading;
+export const selectApproversError = (state: RootState) => state.transfer.approversError;
+export const selectIsLocationLoading = (state: RootState) => state.transfer.isLocationLoading;
+export const selectLocationsError = (state: RootState) => state.transfer.locationsError;
 
 export default transferSlice.reducer;

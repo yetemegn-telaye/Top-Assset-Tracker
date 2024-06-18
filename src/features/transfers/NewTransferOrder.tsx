@@ -5,7 +5,7 @@ import StatusBarLine from "./StatusBarLine";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectLocations } from "./TransferSlice";
+import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectIsApproverLoading, selectIsLocationLoading, selectLocations } from "./TransferSlice";
 
 const NewTransferOrder = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,6 +32,8 @@ const NewTransferOrder = () => {
     }, [dispatch]);
  const approvers = useAppSelector(selectApprovers);
  const locations = useAppSelector(selectLocations);
+ const isApproversLoading = useAppSelector(selectIsApproverLoading);
+ const isLocationsLoading = useAppSelector(selectIsLocationLoading);
 
  
 
@@ -141,7 +143,7 @@ const NewTransferOrder = () => {
               <div className="flex gap-4">
                 <div className="flex flex-col gap-4">
                   <label htmlFor="approver_id" className="text-accent text-sm">Approver</label>
-                  <select name="approver_id" id="approver_id" onChange={handleChange} value={orderData.approver_id} className="rounded-md border border-primary-light p-2 text-accent">
+                  <select name="approver_id" id="approver_id" onChange={handleChange} value={isApproversLoading ?('Loading...'): (orderData.approver_id)} className="rounded-md border border-primary-light p-2 text-accent">
                     {approvers.map((approver) => (
                       <option key={approver.id} value={approver.id}>{approver.name}</option>
                     ))}
@@ -149,7 +151,7 @@ const NewTransferOrder = () => {
                 </div>
                 <div className="flex flex-col gap-4">
                   <label htmlFor="destination_id" className="text-accent text-sm">Destination</label>
-                  <select name="destination_id" id="destination_id" onChange={handleChange} value={orderData.destination_id} className="rounded-md border border-primary-light p-2 text-accent">
+                  <select name="destination_id" id="destination_id" onChange={handleChange} value={isLocationsLoading ?('Loading...'): orderData.destination_id} className="rounded-md border border-primary-light p-2 text-accent">
                     {locations.map((location) => (
                       <option key={location.id} value={location.id}>{location.name}</option>
                     ))}
