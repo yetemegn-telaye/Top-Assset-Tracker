@@ -25,18 +25,32 @@ const Login = () => {
         const { name, value } = e.target;
         setLoginFormData({...loginFormData, [name]: value});
     }
-    const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const {email,password} = loginFormData
-        dispatch(loginUserThunk({email,password}));
-        if(authenticated){
-            navigate('/dashboard');
-        }
-        else{
-            alert('Invalid email or password');
-        }
+    // const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     const {email,password} = loginFormData
+    //     dispatch(loginUserThunk({email,password}));
+    //     if(authenticated){
+    //         navigate('/dashboard');
+    //     }
+    //     else{
+    //         alert('Invalid email or password');
+    //     }
       
-    }
+    // }
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const {email,password} = loginFormData;
+      dispatch(loginUserThunk({ email, password }))
+        .unwrap()
+        .then(() => {
+          navigate('/dashboard');
+        })
+        .catch((err) => {
+          alert('Invalid email or password' + err);
+        });
+        
+    };
     return (
 <div className="min-h-screen flex flex-col items-center justify-center">
     <div className="text-lg flex flex-col gap-2 items-center mt-20">
@@ -51,6 +65,7 @@ const Login = () => {
     <form className="flex flex-col space-y-8" onSubmit={handleSubmit}>
         <div className='relative'>
         <input
+        required
         type="text"
         placeholder="email"
         id='email'
@@ -65,6 +80,7 @@ const Login = () => {
         </div>
         <div className='relative'>
         <input
+        required
         type="password"
         placeholder="Password"
         id='password'
