@@ -8,17 +8,11 @@ import LoadingSpinner from '../LoadingSpinner';
 import ErrorDisplay from '../ErrorDisplay';
 import Pagination from '../Table/Pagination';
 import ReturnActions from './ReturnActions';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, useAppSelector } from '../../../redux/store';
+import { returnItemThunk, selectIsItemReturnLoading, selectItemReturnError } from '../../../features/returnables/ReturnablesSlice';
 
-// interface Data {
-//   id: number;
-//   item_name: string;
-//   quantity: number;
-//   issuer: string;
-//   origin: string;
-//   destination: string;
-//   issued_date: string;
-//   status: string;
-// }
+
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -32,6 +26,8 @@ const RetunablesTable = <T extends object>({ columns, data, isLoading,error }: T
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
 
   const changePage = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -43,29 +39,20 @@ const RetunablesTable = <T extends object>({ columns, data, isLoading,error }: T
     return data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }, [currentPage, itemsPerPage, data]);
 
-  const handleEdit = (row: T) => {
-    console.log('Edit', row);
-  };
 
-  const handleView = (row: T) => {
+
+const handleReturn = (row: T) => {
     const {id} = row as any;
-    navigate(`/transfers/${id}`); 
-  };
+    dispatch(returnItemThunk(id));
+};
 
-  const handleDelete = (row: T) => {
-    console.log('Delete', row);
-  };
 
-  const handleRowClick = (e: any) => {
-    const id = e.target.parentElement.children[0].textContent;
-    navigate(`/transfers/${id}`);
-  };
 
   const actionsColumn: Column<T> = {
     Header: 'Actions',
     accessor: 'actions' as keyof T,
     Cell: ({ row }: { row: any }) => (
-      <ReturnActions row={row.original} onEdit={handleEdit} onDelete={handleDelete} />
+      <ReturnActions row={row.original}  onReturn={handleReturn} />
     ),
   };
 
@@ -136,7 +123,7 @@ const RetunablesTable = <T extends object>({ columns, data, isLoading,error }: T
               {rows.map(row => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()} className="hover:bg-secondary-lighter cursor-pointer" onClick={handleRowClick}>
+                  <tr {...row.getRowProps()} className="hover:bg-secondary-lighter cursor-pointer">
                     {row.cells.map(cell => {
                       const cellValue = cell.value;
                       let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";

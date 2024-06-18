@@ -1,27 +1,31 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEdit, faEye, faRepeat, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from '../../../redux/store';
+import { selectIsItemReturnLoading, selectItemReturnError } from '../../../features/returnables/ReturnablesSlice';
+import ErrorDisplay from '../ErrorDisplay';
 
 interface ReturnActionsProps<T> {
   row: T;
-  onEdit: (row: T) => void;
-  onDelete: (row: T) => void;
+  onReturn: (row: T) => void;
 }
 
-const ReturnActions = <T extends object>({ row, onEdit,onDelete }: ReturnActionsProps<T>) => {
+const ReturnActions = <T extends object>({ row,onReturn }: ReturnActionsProps<T>) => {
 
-  
+    const isItemReturnLoading = useAppSelector(selectIsItemReturnLoading);
+  const itemReturnError = useAppSelector(selectItemReturnError);
 
   return (
     <div className="flex justify-center gap-4">
-     <button onClick={() => onDelete(row)} className="text-primary-light hover:cursor-pointer hover:text-primary">
-        <span className='mr-1'>Return</span>
-        <FontAwesomeIcon icon={faRepeat} />
-      </button>
-      {/* <button onClick={() => onEdit(row)} className="text-secondary-light hover:text-secondary">
-        <FontAwesomeIcon icon={faEdit} />
-      </button> */}
-    
+        {
+            isItemReturnLoading ? <span>Loading...</span>: itemReturnError ? <ErrorDisplay message={itemReturnError} /> :
+             (
+                <button onClick={() => onReturn(row)} className="text-primary-light hover:cursor-pointer hover:text-primary">
+                <span className='mr-1'>Return</span>
+                <FontAwesomeIcon icon={faRepeat} />
+              </button>
+            )
+        }
     
     </div>
   );

@@ -64,7 +64,7 @@ const ReturnableList = () => {
 
   useEffect(() => {
     dispatch(fetchReturnablesListThunk());
-  }, [dispatch]);
+  }, [dispatch,returnables]);
 
   useEffect(() => {
     if (searchTerm !== "") {
@@ -82,10 +82,6 @@ const ReturnableList = () => {
       setTableData(returnables);
     }
   }, [searchTerm, returnables]);
-
-  const handleNavigate = () => {
-    navigate("/new-transfer");
-  };
 
   return (
     <Layout>
