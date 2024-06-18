@@ -14,6 +14,8 @@ interface TransferState {
   isLocationLoading: boolean;
   approversError: string | null;
   locationsError: string | null;
+  isCreateTransferLoading: boolean;
+  createTransferError: string | null;
   
 }
 
@@ -28,6 +30,8 @@ const initialState: TransferState = {
   isLocationLoading: false,
   approversError: null,
   locationsError: null,
+  isCreateTransferLoading: false,
+  createTransferError: null,
 };
 
 
@@ -49,10 +53,8 @@ export const createTransferThunk = createAsyncThunk(
   async (body: any, { dispatch, rejectWithValue }) => {
     try {
       const response = await dispatch(transferApi.endpoints.createTransfer.initiate(body)).unwrap();
-      console.log("Transfer created successfully:", response);
       return response;
     } catch (err: any) {
-      console.error("Error in createTransferThunk:", err);
       return rejectWithValue(err.response ? err.response.data : { error: "Failed to create transfer" });
     }
   }
@@ -147,6 +149,20 @@ const transferSlice = createSlice({
       }
     );
     builder.addMatcher(
+      transferApi.endpoints.createTransfer.matchPending,
+      (state) => {
+        state.isCreateTransferLoading = true;
+        state.createTransferError = null;
+      }
+    );
+    builder.addMatcher(
+      transferApi.endpoints.createTransfer.matchRejected,
+      (state, action: any) => {
+        state.isCreateTransferLoading = false;
+        state.createTransferError = action.error.message ?? null;
+      }
+    );
+    builder.addMatcher(
       transferApi.endpoints.fetchTransferDetails.matchFulfilled,
       (state, action: any) => {
         state.transfer = action.payload.transfer_order;
@@ -216,5 +232,7 @@ export const selectIsApproverLoading = (state: RootState) => state.transfer.isAp
 export const selectApproversError = (state: RootState) => state.transfer.approversError;
 export const selectIsLocationLoading = (state: RootState) => state.transfer.isLocationLoading;
 export const selectLocationsError = (state: RootState) => state.transfer.locationsError;
+export const selectIsCreateTransferLoading = (state: RootState) => state.transfer.isCreateTransferLoading;
+export const selectCreateTransferError = (state: RootState) => state.transfer.createTransferError;
 
 export default transferSlice.reducer;
