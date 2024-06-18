@@ -12,12 +12,12 @@ const Alerts = () => {
 
       const dispatch = useDispatch<AppDispatch>();
       useEffect(() => {
-        dispatch(fetchNotificationsThunk());
-        // dispatch(fetchAlertsThunk());
+        // dispatch(fetchNotificationsThunk());
+        dispatch(fetchAlertsThunk());
       },[]);
       const notifications:any =useAppSelector(selectNotifications);
-      // const alerts:any = useAppSelector(selectAlerts);
-      const alertNotifications = (notifications.notifications).filter((notification:any) => notification.notification.message.includes('to approve'));
+      const alerts:any = useAppSelector(selectAlerts);
+      // const alertNotifications = (notifications.notifications).filter((notification:any) => notification.notification.message.includes('to approve'));
   
       return (
             <Layout>
@@ -29,8 +29,8 @@ const Alerts = () => {
                     </h1>
                     </div>
                     <div className="flex flex-col gap-4">
-                    {alertNotifications.map((notification:any, index:any) => (
-                        <AlertCard key={index} alertObj={notification} />
+                    {alerts.map((alert:any, index:any) => (
+                        <AlertCard key={index} alertObj={alert} />
                       ))
                     }
                     </div>

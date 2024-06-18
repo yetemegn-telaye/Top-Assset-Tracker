@@ -9,6 +9,7 @@ export const notificationApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    
   }),
 });
 export const {useFetchNotificationQuery} = notificationApi;

@@ -38,7 +38,7 @@ const alertsSlice = createSlice({
         state.alerts = action.payload;
         state.isLoading = false;
         state.error = null;
-        // console.log("Notifications fetched", action.payload);
+    
       }
     );
     builder.addMatcher(
@@ -58,7 +58,7 @@ const alertsSlice = createSlice({
   },
 });
 
-export const selectAlerts = (state: RootState) => state.alerts;
+export const selectAlerts = (state: RootState) => state.alerts.alerts;
 export const selectAlertsLoading = (state: RootState) => state.alerts.isLoading;
 export const selectAlertsError = (state: RootState) => state.alerts.error;
 
