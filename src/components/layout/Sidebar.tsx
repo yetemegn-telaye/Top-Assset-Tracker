@@ -112,7 +112,7 @@ const Sidebar = () => {
                   <span className="hidden md:inline">Notifications</span>
                 </NavLink>
                 {notifications.notifications.length > 0 && (
-                  <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-error rounded-full">
+                  <span className="relative top-0 right-0 left-4 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-error rounded-full">
                     {notifications.notifications.length}
                   </span>
                 )}
