@@ -18,6 +18,10 @@ export interface AuthState {
   message: string;
   user: User;
   token: string;
+  isLoginLoading?: boolean;
+  isLogoutLoading?: boolean;
+  loginError?: string;
+  logoutError?: string;
 }
 
 const initialState: AuthState = {
@@ -33,6 +37,10 @@ const initialState: AuthState = {
     location_id: "",
   },
   token: "",
+  isLoginLoading: false,
+  isLogoutLoading: false,
+  loginError: "",
+  logoutError: "",
 };
 
 export const loginUserThunk = createAsyncThunk(
@@ -45,7 +53,7 @@ export const loginUserThunk = createAsyncThunk(
       const response = await dispatch(authApi.endpoints.loginUser.initiate(credentials));
       return response.data;
     } catch (err: any) {
-      console.error("Error in loginUser:", err);
+      alert("Error in loginUser:");
       return rejectWithValue(err.response.data);
     }
   }
@@ -91,11 +99,24 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.loginUser.matchFulfilled,
       (state, action: any) => {
-        console.log("loginUser fulfilled payload:", action.payload);
         state.message = action.payload.message;
         state.user = action.payload.user;
         state.token = action.payload.token;
         window.localStorage.setItem("token", action.payload.token);
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.loginUser.matchPending,
+      (state) => {
+        state.isLoginLoading = true;
+        state.loginError = "";
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.loginUser.matchRejected,
+      (state, action: any) => {
+        state.isLoginLoading = false;
+        state.loginError = action.error.message ?? "";
       }
     );
     builder.addMatcher(
@@ -116,6 +137,20 @@ const authSlice = createSlice({
         state.token = "";
       }
     );
+    builder.addMatcher(
+      authApi.endpoints.logoutUser.matchPending,
+      (state) => {
+        state.isLogoutLoading = true;
+        state.logoutError = "";
+      }
+    );
+    builder.addMatcher(
+      authApi.endpoints.logoutUser.matchRejected,
+      (state, action: any) => {
+        state.isLogoutLoading = false;
+        state.logoutError = action.error.message ?? "";
+      }
+    );
   },
 });
 
@@ -133,5 +168,9 @@ export const selectAuthState = (state: any) => state.auth;
 export const selectIsAuthenticated = (state: any) =>
   state.auth.token !== "" || window.localStorage.getItem("token") !== null;
 export const selectUser = (state: any) => state.auth.user;
+export const selectIsLoginLoading = (state: any) => state.auth.isLoginLoading;
+export const selectLoginError = (state: any) => state.auth.loginError;
+export const selectIsLogoutLoading = (state: any) => state.auth.isLogoutLoading;
+export const  selectLogoutError = (state: any) => state.auth.logoutError;
 
 export default persistedAuthReducer;
