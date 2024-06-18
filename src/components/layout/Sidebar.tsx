@@ -1,4 +1,4 @@
-import { faBars, faBell, faFileLines, faGear, faHome, faPlusCircle, faRightFromBracket, faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBell, faFileLines, faGear, faHome, faPlusCircle, faRepeat, faRightFromBracket, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -90,13 +90,13 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/in-transits"
+                  to="/returnables"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }
                   onClick={closeSidebar}
                 >
-                  <FontAwesomeIcon icon={faFileLines} className="mr-0 md:mr-2" />
+                  <FontAwesomeIcon icon={faRepeat} className="mr-0 md:mr-2" />
                   <span className="hidden md:inline">Returnables</span>
                 </NavLink>
               </li>

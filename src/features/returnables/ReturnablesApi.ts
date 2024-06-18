@@ -9,7 +9,13 @@ export const returnablesApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    returnItem: builder.mutation<any, number>({
+      query: (returnableId) => ({
+        url: `return-item/${returnableId}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
-export const {useFetchReturnablesQuery} = returnablesApi;
+export const {useFetchReturnablesQuery,useReturnItemMutation} = returnablesApi;
 
