@@ -4,8 +4,10 @@ import { faBell, faShippingFast } from "@fortawesome/free-solid-svg-icons";
 import NotificationCard from "./NotificationCard";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchNotificationsThunk, selectNotifications } from "./notificationsSlice";
+import { fetchNotificationsThunk, selectIsNotificationsLoading, selectNotificationError, selectNotifications } from "./notificationsSlice";
 import { useEffect } from "react";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import ErrorDisplay from "../../components/common/ErrorDisplay";
 
 const Notifications = () => {
 
@@ -14,6 +16,8 @@ const Notifications = () => {
         dispatch(fetchNotificationsThunk());
       },[]);
       const notfications = useAppSelector(selectNotifications);
+      const isNotificationsLoading = useAppSelector(selectIsNotificationsLoading);
+      const notificationsError = useAppSelector(selectNotificationError);
     return (
        
             <Layout>
@@ -25,10 +29,15 @@ const Notifications = () => {
                     </h1>
                     </div>
                     <div className="flex flex-col gap-4">
-                    {notfications.notifications.map((notification:any, index:any) => (
+                      {isNotificationsLoading ? <div className="flex items-center justify-center p-10">
+                        <LoadingSpinner/>
+                        </div> : notificationsError ? <div>
+                          <ErrorDisplay message={notificationsError}/>
+                        </div> :
+                    (notfications.notifications.map((notification:any, index:any) => (
                         <NotificationCard key={index} notificationObj={notification} />
                       ))
-                    }
+                    )}
                     </div>
                      
                 </div>

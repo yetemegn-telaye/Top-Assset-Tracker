@@ -6,12 +6,31 @@ type FilterOptionsProps = {
     setSelectedStatus: (status: string) => void;
     transferStatus: string[];
 };
-const FilterOptions: React.FC<FilterOptionsProps> = ({setSelectedStatus, transferStatus}) => {
+const FilterOptions: React.FC<FilterOptionsProps> = ({setSelectedStatus,transferStatus}) => {
   const [activeStatus, setActiveStatus] = useState('All');
 
   const handleStatusChange = (status: string) => {
     setActiveStatus(status);
+    if(status === 'Approval Required'){
+      status = 'waiting_for_approval'
+    } else if(status === 'Approved'){
+      status = 'approved'
+    } else if(status=== 'In transit'){
+      status = 'in_transit'
+    }
+    else if(status === 'Returnables'){
+      status = 'returnables'
+    }else if(status === 'Delayed'){
+      status = 'delayed'
+    }else if(status ==='Received'){
+      status = 'at_destination'
+    }
+    else{
+      status = 'All'
+    }
     setSelectedStatus(status);
+    console.log(status);
+    console.log(transferStatus);
 };
     return(
         <div className="">

@@ -4,10 +4,14 @@ import { RootState } from "../../redux/store";
 
 interface NotificationState {
   notifications: any[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: NotificationState = {
   notifications: [],
+  isLoading: false,
+  error: null,
 };
 
 export const fetchNotificationsThunk = createAsyncThunk(
@@ -32,18 +36,29 @@ const notificationSlice = createSlice({
       notificationApi.endpoints.fetchNotification.matchFulfilled,
       (state, action: any) => {
         state.notifications = action.payload;
-        console.log("Notifications fetched", action.payload);
+        state.isLoading = false;
+        state.error = null;
       }
     );
     builder.addMatcher(
+        notificationApi.endpoints.fetchNotification.matchPending,
+        (state) => {
+            state.isLoading = true;
+            state.error = null;
+        }
+        );
+    builder.addMatcher(
       notificationApi.endpoints.fetchNotification.matchRejected,
       (state, action) => {
-        console.error("Failed to fetch notifications", action.payload);
+        state.isLoading = false;
+        state.error = action.error.message ?? null;
       }
     );
   },
 });
 
 export const selectNotifications = (state: RootState) => state.notifications;
+export const selectIsNotificationsLoading = (state: RootState) => state.notifications.isLoading;
+export const selectNotificationError = (state: RootState) => state.notifications.error;
 
 export default notificationSlice.reducer;
