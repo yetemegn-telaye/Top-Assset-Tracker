@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import { Column } from "react-table";
 import SearchInput from "../../components/common/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileLines } from "@fortawesome/free-solid-svg-icons";
+import { faFileLines, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
@@ -92,7 +92,7 @@ const ReturnableList = () => {
       <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
         <div className="flex item-center justify-between ml-4 mb-6 pb-6 mt-4">
           <div className="flex items-center gap-4 ">
-            <FontAwesomeIcon icon={faFileLines} className="text-primary" size="xl" />
+            <FontAwesomeIcon icon={faRepeat} className="text-primary" size="xl" />
             <h1 className="text-2xl text-primary">Returnables</h1>
           </div>
           <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={handleNavigate}>

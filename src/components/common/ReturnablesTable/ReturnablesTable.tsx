@@ -65,7 +65,7 @@ const RetunablesTable = <T extends object>({ columns, data, isLoading,error }: T
     Header: 'Actions',
     accessor: 'actions' as keyof T,
     Cell: ({ row }: { row: any }) => (
-      <ReturnActions row={row.original} onEdit={handleEdit} onView={handleView} onDelete={handleDelete} />
+      <ReturnActions row={row.original} onEdit={handleEdit} onDelete={handleDelete} />
     ),
   };
 

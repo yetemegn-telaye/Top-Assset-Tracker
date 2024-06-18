@@ -5,11 +5,10 @@ import { faCheck, faEdit, faEye, faRepeat, faTrash } from '@fortawesome/free-sol
 interface ReturnActionsProps<T> {
   row: T;
   onEdit: (row: T) => void;
-  onView: (row: T) => void;
   onDelete: (row: T) => void;
 }
 
-const ReturnActions = <T extends object>({ row, onEdit, onView, onDelete }: ReturnActionsProps<T>) => {
+const ReturnActions = <T extends object>({ row, onEdit,onDelete }: ReturnActionsProps<T>) => {
 
   
 
@@ -19,12 +18,10 @@ const ReturnActions = <T extends object>({ row, onEdit, onView, onDelete }: Retu
         <span className='mr-1'>Return</span>
         <FontAwesomeIcon icon={faRepeat} />
       </button>
-      <button onClick={() => onEdit(row)} className="text-secondary-light hover:text-secondary">
+      {/* <button onClick={() => onEdit(row)} className="text-secondary-light hover:text-secondary">
         <FontAwesomeIcon icon={faEdit} />
-      </button>
-      {/* <button onClick={() => onView(row)} className="text-secondary-light hover:text-secondary">
-        <FontAwesomeIcon icon={faEye} />
       </button> */}
+    
     
     </div>
   );
