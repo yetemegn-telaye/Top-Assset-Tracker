@@ -30,7 +30,7 @@ const Sidebar = () => {
    
   const handleLogout = () => {
     dispatch(logOutUser(token));
-  
+    window.localStorage.removeItem('token');
     navigate('/');
     // localStorage.removeItem('token');
     // window.location.href = '/';
