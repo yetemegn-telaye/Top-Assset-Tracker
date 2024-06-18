@@ -90,7 +90,7 @@ const Sidebar = () => {
               </li>
               <li className="text-sm font-light">
                 <NavLink
-                  to="/in-transits"
+                  to="/returnables"
                   className={({ isActive }) =>
                     isActive ? "text-info" : "text-accent hover:text-info"
                   }

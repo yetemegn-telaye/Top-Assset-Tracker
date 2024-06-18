@@ -8,6 +8,7 @@ import InTransits from '../features/returnables/ReturnableList';
 import Settings from '../features/settings/Settings';
 import Notifications from '../features/notifications/Notifications';
 import Alerts from '../features/alerts/Alerts';
+import ReturnableList from '../features/returnables/ReturnableList';
 
 
 export interface AppRoute {
@@ -44,8 +45,8 @@ const routes: AppRoute[] = [
     protected: true,
   },
   {
-    path:'/in-transits',
-    component: InTransits,
+    path:'/returnables',
+    component: ReturnableList,
     protected: true,
   },
   {
