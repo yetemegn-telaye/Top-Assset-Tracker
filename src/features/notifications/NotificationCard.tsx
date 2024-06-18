@@ -41,7 +41,7 @@ const NotificationCard: React.FC<any> = ({ notificationObj }) => {
         <p className="text-secondary text-xs">{formattedTime()}</p>
       </div>
       <div className="flex gap-4 ml-auto">
-        <FontAwesomeIcon icon={faEye} className="text-secondary" />
+        {/* <FontAwesomeIcon icon={faEye} className="text-secondary" /> */}
         <FontAwesomeIcon icon={faTrash} className="text-error-light" />
       </div>
     </div>

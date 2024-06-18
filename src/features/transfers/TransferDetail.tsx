@@ -25,6 +25,9 @@ const TransferDetail = () => {
     }
   };
 
+  const defaultImage = 'https://fakeimg.pl/600x400/cccccc/848687?text=No+image+added'; 
+  const images = detail?.images && detail.images.length > 0 && detail.images[0] !== '' ? detail.images : [defaultImage];
+
   return (
     <Layout>
       <div className="bg-background-paper rounded-xl shadow-lg flex flex-col gap-3 items-center w-full h-screen overflow-y-auto pt-12 pb-9">
@@ -34,7 +37,7 @@ const TransferDetail = () => {
         />
         <div className="flex flex-col w-full items-center gap-8 justify-center">
           <div className="flex gap-20 items-center justify-center mt-8">
-            <Carousel images={detail?.images ?? []} />
+            <Carousel images={images} />
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl text-secondary">{detail.item_name}</h2>
               <div className="flex flex-col gap-4 mt-2">
