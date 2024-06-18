@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { logOutUser } from "../../features/auth/authSlice";
+import { clearAuthState, logOutUser } from "../../features/auth/authSlice";
 import { fetchNotificationsThunk, selectNotifications } from "../../features/notifications/notificationsSlice";
 
 
@@ -31,11 +31,10 @@ const Sidebar = () => {
   const handleLogout = () => {
     dispatch(logOutUser(token));
     window.localStorage.removeItem('token');
+    dispatch(clearAuthState());
     navigate('/');
-    // localStorage.removeItem('token');
-    // window.location.href = '/';
-  }
-
+  };
+  
   return (
     <div className="flex flex-col min-h-screen sticky">
       <button className="md:hidden p-6" onClick={toggleSidebar}>

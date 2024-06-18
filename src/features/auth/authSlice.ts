@@ -59,6 +59,7 @@ export const logOutUser = createAsyncThunk(
   ) => {
     try {
       const response: any = await dispatch(authApi.endpoints.logoutUser.initiate(token));
+      window.localStorage.removeItem('token');
       return response.data;
     } catch (err: any) {
       console.error("Error in logoutUser:", err);
@@ -70,7 +71,22 @@ export const logOutUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearAuthState: (state) => {
+      state.message = "";
+      state.user = {
+        id: 0,
+        name: "",
+        email: "",
+        email_verified_at: "",
+        created_at: "",
+        updated_at: "",
+        role: "",
+        location_id: "",
+      };
+      state.token = "";
+    }
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       authApi.endpoints.loginUser.matchFulfilled,
@@ -86,9 +102,18 @@ const authSlice = createSlice({
       authApi.endpoints.logoutUser.matchFulfilled,
       (state, action: any) => {
         console.log("logoutUser fulfilled payload:", action.payload);
-        state.message = action.payload.message;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.message = "";
+        state.user = {
+          id: 0,
+          name: "",
+          email: "",
+          email_verified_at: "",
+          created_at: "",
+          updated_at: "",
+          role: "",
+          location_id: "",
+        };
+        state.token = "";
       }
     );
   },
@@ -102,9 +127,11 @@ const persistConfig = {
 
 const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
 
+export const { clearAuthState } = authSlice.actions;
+
 export const selectAuthState = (state: any) => state.auth;
 export const selectIsAuthenticated = (state: any) =>
-  state.auth.token !== "" || window.localStorage.getItem("token") !== undefined;
+  state.auth.token !== "" || window.localStorage.getItem("token") !== null;
 export const selectUser = (state: any) => state.auth.user;
 
 export default persistedAuthReducer;
