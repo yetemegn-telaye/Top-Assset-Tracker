@@ -49,7 +49,9 @@ const Login = () => {
         .catch((err) => {
           alert('Invalid email or password' + err);
         });
-        
+        if (!authenticated) {
+          alert('Invalid email or password');
+        }
     };
     return (
 <div className="min-h-screen flex flex-col items-center justify-center">
