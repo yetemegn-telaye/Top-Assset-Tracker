@@ -77,6 +77,7 @@ const usersSlice = createSlice({
             state.users.push(action.payload);
             state.isAddUserLoading = false;
             state.addUserError = null;
+            alert("User added successfully");
         }
       );
       builder.addMatcher(
@@ -96,7 +97,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const selectUsers = (state: RootState) => state.users;
+export const selectUsers = (state: RootState) => state.users.users;
 export const selectUsersLoading = (state: RootState) => state.users.isLoading;
 export const selectUsersError = (state: RootState) => state.users.error;
 export const selectAddUserLoading = (state: RootState) => state.users.isAddUserLoading;

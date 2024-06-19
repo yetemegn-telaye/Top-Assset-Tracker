@@ -2,7 +2,10 @@ import { faBell, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const NotificationCard: React.FC<any> = ({ notificationObj }) => {
+
+
+
+const NotificationCard: React.FC<any> = ({ notificationObj,handleClear }) => {
   // Calculate the time difference between now and the last updated time
   const lastUpdated = notificationObj.updated_at
     ? Math.floor((new Date().getTime() - new Date(notificationObj.updated_at).getTime()) / 60000)
@@ -20,6 +23,7 @@ const NotificationCard: React.FC<any> = ({ notificationObj }) => {
       return `${Math.floor(lastUpdated / 1440)} days ago`;
     }
   };
+ 
 
   return (
     <div className="bg-background border flex gap-4 items-center p-4 rounded-lg shadow-lg hover:bg-accent-lighter">
@@ -41,7 +45,7 @@ const NotificationCard: React.FC<any> = ({ notificationObj }) => {
         <p className="text-secondary text-xs">{formattedTime()}</p>
       </div>
       <div className="flex gap-4 ml-auto">
-        <button className="text-primary-lighter hover:text-info">Clear</button>
+        <button className="text-primary-lighter hover:text-info" onClick={()=>handleClear(notificationObj.id)}>Clear</button>
         {/* <FontAwesomeIcon icon={faTrash} className="text-error-light" /> */}
       </div>
     </div>

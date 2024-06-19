@@ -4,7 +4,7 @@ import { faBell, faShippingFast } from "@fortawesome/free-solid-svg-icons";
 import NotificationCard from "./NotificationCard";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchNotificationsThunk, selectIsNotificationsLoading, selectNotificationError, selectNotifications } from "./notificationsSlice";
+import { clearNotificationThunk, fetchNotificationsThunk, selectIsNotificationsLoading, selectNotificationError, selectNotifications } from "./notificationsSlice";
 import { useEffect } from "react";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorDisplay from "../../components/common/ErrorDisplay";
@@ -14,10 +14,18 @@ const Notifications = () => {
       const dispatch = useDispatch<AppDispatch>();
       useEffect(() => {
         dispatch(fetchNotificationsThunk());
-      },[]);
+      },[dispatch]);
       const notfications = useAppSelector(selectNotifications);
       const isNotificationsLoading = useAppSelector(selectIsNotificationsLoading);
       const notificationsError = useAppSelector(selectNotificationError);
+      const isClearLoading = useAppSelector(selectIsNotificationsLoading);
+
+      const handleClear = (id:any) => {
+        console.log(id);
+        dispatch(clearNotificationThunk(id));
+        isClearLoading ? <p>...</p>: alert("Notification Cleared")
+
+      }
     return (
        
             <Layout>
@@ -35,7 +43,7 @@ const Notifications = () => {
                           <ErrorDisplay message={notificationsError}/>
                         </div> :
                     (notfications.notifications.map((notification:any, index:any) => (
-                        <NotificationCard key={index} notificationObj={notification} />
+                        <NotificationCard key={index} notificationObj={notification} handleClear={handleClear}/>
                       ))
                     )}
                     </div>
