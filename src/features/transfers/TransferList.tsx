@@ -124,12 +124,12 @@ const TransferList = () => {
   return (
     <Layout>
       <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
-        <div className="flex items-center justify-between ml-4 mb-6 pb-6 mt-4">
+        <div className="flex items-center justify-between ml-4 mb-6 pb-6">
           <div className="flex items-center gap-4">
-            <FontAwesomeIcon icon={faTruck} className="text-primary" size="xl" />
-            <h1 className="text-2xl text-primary">
-              Transfers
-            </h1>
+            {/* <FontAwesomeIcon icon={faTruck} className="text-primary" size="xl" /> */}
+            <h4 className="text-2xl font-light text-primary">
+              Transfers List
+            </h4>
           </div>
           <button className="bg-secondary text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light"
             onClick={handleNavigate}

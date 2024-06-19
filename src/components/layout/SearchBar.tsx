@@ -1,13 +1,18 @@
 import { faBell, faExclamation, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SearchInput from "../common/SearchInput";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
 import { fetchNotificationsThunk, selectNotifications } from "../../features/notifications/notificationsSlice";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  title: string;
+  icon: IconDefinition;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ title, icon }) => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchNotificationsThunk());
@@ -40,7 +45,11 @@ const SearchBar = () => {
 
   return (
     <div className="bg-background-paper rounded-xl shadow-md border border-gray-200 flex items-center justify-between gap-8 w-full p-5">
-      <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+      {/* <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} /> */}
+      <div className="flex items-center gap-2">
+        <FontAwesomeIcon icon={icon} className="text-primary" size="xl" />
+        <h1 className="text-2xl text-primary">{title}</h1>
+      </div>
       <div className="flex items-center justify-center gap-4">
         <FontAwesomeIcon icon={dayTime ? faSun : faMoon} className={dayTime ? "text-yellow-500" : "text-blue-500"} />
         <p className="text-sm text-accent">{currentDate}</p>
