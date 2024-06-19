@@ -21,13 +21,13 @@ const Notifications = () => {
     return (
        
             <Layout>
-                <div className="flex flex-col cursor-pointer bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
-                    <div className="flex items-center gap-4 ml-4 mb-6 pb-6 mt-4">
+                <div className="flex flex-col cursor-pointer bg-background-paper rounded-xl shadow-md p-10 pb-2 w-full h-screen overflow-y-auto">
+                    {/* <div className="flex items-center gap-4 ml-4 mb-6 pb-6 mt-4">
                     <FontAwesomeIcon icon={faBell} className="text-primary" size="xl" />
                     <h1 className="text-2xl text-primary">
                         Notifications
                     </h1>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col gap-4">
                       {isNotificationsLoading ? <div className="flex items-center justify-center p-10">
                         <LoadingSpinner/>

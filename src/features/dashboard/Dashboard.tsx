@@ -124,7 +124,7 @@ const Dashboard = () => {
             <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 h-full w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
-                    <h1 className="text-2xl text-primary">Recent Transfers</h1>
+                    <h2 className="text-2xl font-light text-primary">Recent Transfers</h2>
                     <span className="text-sm text-accent">{dashboard.recent_transfers.length} in total</span>
                     </div>
                     <div className="flex gap-8 items-center">
