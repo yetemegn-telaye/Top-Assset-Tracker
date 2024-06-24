@@ -16,6 +16,8 @@ import {
   selectUsersError,
   selectUsersLoading,
 } from "./UsersSlice";
+import { format } from "date-fns";
+import { fetchLocationsThunk, selectLocations } from "../transfers/TransferSlice";
 
 const Settings = () => {
   interface UsersData {
@@ -37,7 +39,7 @@ const Settings = () => {
   const usersError = useAppSelector(selectUsersError);
   const isAddUserLoading = useAppSelector(selectAddUserLoading);
   const addUserError = useAppSelector(selectAddUserError);
-
+  const [tableData, setTableData] = useState<UsersData[]>([]);
 
   const columns: Column<UsersData>[] = [
     {
@@ -59,10 +61,12 @@ const Settings = () => {
     {
       Header: "Created At",
       accessor: "created_at",
+      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
     },
     {
       Header: "Updated At",
       accessor: "updated_at",
+      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
     },
     {
       Header: "Location ID",
@@ -81,8 +85,13 @@ const Settings = () => {
   const handleAddUser = (newUser: UsersData) => {
     dispatch(addUserThunk(newUser));
   };
+  
 
-
+  useEffect(() => {
+    const sortedUsers = [...users].sort((a, b) => a.id - b.id);
+    setTableData(sortedUsers);
+    console.log(sortedUsers);
+  }, [users]);
 
   return (
     <Layout>
@@ -93,7 +102,7 @@ const Settings = () => {
         </div>
         <div className="grid grid-cols-1 gap-6">
           <AddUser onAddUser={handleAddUser} isLoading={isAddUserLoading} addUserError={addUserError} />
-          <UsersTable columns={columns} data={users} isLoading={isUsersLoading} errorMessage={usersError} />
+          <UsersTable columns={columns} data={tableData} isLoading={isUsersLoading} errorMessage={usersError} />
         </div>
       </div>
     </Layout>

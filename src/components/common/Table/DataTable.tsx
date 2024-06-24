@@ -29,7 +29,7 @@ interface TableProps<T extends object> {
 
 const DataTable = <T extends object>({ columns, data, isLoading,error }: TableProps<T>) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const navigate = useNavigate();
 
