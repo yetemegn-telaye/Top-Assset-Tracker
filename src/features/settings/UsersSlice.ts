@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../redux/store";
 import { usersApi } from "./UsersApi";
 
+
+
 interface UserState {
   users: any[];
   isLoading: boolean;
@@ -17,6 +19,7 @@ const initialState: UserState = {
     isAddUserLoading: false,
     addUserError: null,
 };
+
 
 export const fetchUsersThunk = createAsyncThunk(
   "users/fetchUsers",

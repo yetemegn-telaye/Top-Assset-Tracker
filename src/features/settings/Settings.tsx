@@ -43,10 +43,6 @@ const Settings = () => {
 
   const columns: Column<UsersData>[] = [
     {
-      Header: "ID",
-      accessor: "id",
-    },
-    {
       Header: "User Name",
       accessor: "name",
     },

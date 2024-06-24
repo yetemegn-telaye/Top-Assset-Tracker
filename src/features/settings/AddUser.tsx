@@ -43,7 +43,7 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
         <FontAwesomeIcon icon={faUserCircle} className="text-secondary-light" />
         <h2 className="text-xl text-center text-secondary">Add New User</h2>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div className="mb-4 flex items-center">
           <label htmlFor="name" className="w-1/4 text-sm font-medium text-gray-700">Name</label>
           <input
@@ -89,14 +89,14 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
           />
         </div>
       </div>
-      <div className="mt-6 text-right">
+      <div className="mt-6 text-center">
         {
           isLoading ? <p className="text-sm text-secondary">Adding user...</p> : 
           addUserError ? <p className="text-sm text-error">{addUserError}</p> : 
           (
             <button
             type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary-light focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-secondary-light"
+            className="inline-flex w-1/2 justify-center py-2 px-4 border border-transparent shadow-md text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary-light focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-secondary-light"
           >
             Add User
           </button>
