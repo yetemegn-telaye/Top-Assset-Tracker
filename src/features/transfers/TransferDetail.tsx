@@ -48,9 +48,9 @@ const TransferDetail = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-32 mt-8 justify-center items-end">
+          <div className="flex gap-20 w-full mt-8 justify-center items-end">
             <div className="flex flex-col gap-5">
-              <div className="flex gap-3 items-center text-sm w-48">
+              <div className="flex gap-3 items-center justify-between text-sm w-48">
                 <p className=" text-accent-light">Issuer:</p>
                 <div className="flex flex-col items-center">
                   <p className="text-gray-700">{detail.issuer_name? detail.issuer_name : 'no issuer'}</p>
@@ -66,9 +66,9 @@ const TransferDetail = () => {
                   </div>
                 </div>
               )}
-              <div className="flex gap-1 items-center text-sm w-48">
+              <div className="flex gap-1 items-center justify-between text-sm w-48">
                 <p className="text-accent-light">Transfer Agent:</p>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center ">
                   <p className="text-gray-700">{detail.guest_name ? detail.guest_name : 'no agent'}</p>
                   <p className="text-accent-light hover:text-info">+251911904565</p>
                 </div>
