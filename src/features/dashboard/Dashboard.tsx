@@ -110,7 +110,7 @@ const Dashboard = () => {
        
         setTableData(filteredData);
     } else {
-        setTableData(dashboard.recent_transfers.slice(0,3));
+        setTableData(dashboard.recent_transfers);
       }
       },[searchTerm, dashboard.recent_transfers,dashboard.summary]);
 
@@ -143,7 +143,7 @@ const Dashboard = () => {
                     <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
                 </div>
-            <DataTable columns={columns} data={tableData.slice(0,3)} isLoading={isDashboardLoading} error={error} />
+            <DataTable columns={columns} data={tableData} isLoading={isDashboardLoading} error={error} />
             
             </div>
             {isDashboardLoading ? <LoadingSpinner/> :(

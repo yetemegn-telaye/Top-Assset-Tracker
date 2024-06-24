@@ -6,9 +6,11 @@ import { faSort, faSortAsc, faSortDesc } from '@fortawesome/free-solid-svg-icons
 import { useNavigate } from 'react-router-dom';
 import Pagination from '../Table/Pagination';
 import UsersActionButtons from './UsersActionButtons';
+import LoadingSpinner from '../LoadingSpinner';
+import ErrorDisplay from '../ErrorDisplay';
 
 interface Data {
-  id: string;
+  id: number;
   name: string;
   email: string;
   phone: string;
@@ -20,12 +22,14 @@ interface Data {
   role_name: string;
 }
 
-interface TableProps<T extends object> {
+interface TableProps<T extends Data> {
   columns: Column<T>[];
   data: T[];
+  isLoading: boolean;
+  errorMessage: string | null;
 }
 
-const UsersTable = <T extends Data>({ columns, data }: TableProps<T>) => {
+const UsersTable = <T extends Data>({ columns, data, isLoading, errorMessage }: TableProps<T>) => {
   const [tableData, setTableData] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -46,7 +50,7 @@ const UsersTable = <T extends Data>({ columns, data }: TableProps<T>) => {
     return tableData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }, [currentPage, itemsPerPage, tableData]);
 
-  const handleDelete = useCallback((id: string) => {
+  const handleDelete = useCallback((id: number) => {
     setTableData(prevData => prevData.filter(item => item.id !== id));
   }, []);
 
@@ -98,7 +102,26 @@ const UsersTable = <T extends Data>({ columns, data }: TableProps<T>) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        {isLoading ? (
+          <tbody>
+            <tr>
+              <td colSpan={columns.length} className="text-center py-4">
+               <LoadingSpinner/>
+              </td>
+            </tr>
+          </tbody>
+        ) : errorMessage ? (
+          <tbody>
+            <tr>
+              <td colSpan={columns.length} className="text-center py-4">
+               <ErrorDisplay message={errorMessage}/>
+              </td>
+            </tr>
+          </tbody>
+        ) :
+         (
+          <tbody {...getTableBodyProps()}>
+          
           {rows.map(row => {
             prepareRow(row);
             return (
@@ -124,6 +147,10 @@ const UsersTable = <T extends Data>({ columns, data }: TableProps<T>) => {
             );
           })}
         </tbody>
+        )
+        
+      }
+        
       </table>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
     </div>

@@ -14,16 +14,16 @@ const NewTransferOrder = () => {
   const [orderData, setOrderData] = useState({
     item: {
       name: "",
-      qty: 0,
-      unit_measurement: "",
-      returnable: true
+      qty: 1,
+      unit_measurement: "pcs",
+      returnable: false
     },
     guest: {
       name: "",
       phone: ''
     },
-    approver_id: 1,
-    destination_id: 1,
+    approver_id: '',
+    destination_id: '',
     images: [] as File[]
   });
 
@@ -108,12 +108,7 @@ const NewTransferOrder = () => {
   return (
     <Layout>
       <div className="bg-background-paper rounded-xl overflow-y-auto shadow-md p-2 pb-8 w-full h-screen">
-        {/* <div className="flex items-center gap-4 mt-4 ml-12 mb-4  pb-4">
-          <FontAwesomeIcon icon={faFile} className="text-primary" size="xl" />
-          <h1 className="text-2xl text-primary">
-            New Order
-          </h1>
-        </div> */}
+  
         <div className="flex flex-col gap-8 items-center justify-center pb-3 mt-8">
           <StatusBarLine currentStatus={currentStatus} icons={icons} />
           {isCreateTransferLoading ? <div>
@@ -127,19 +122,20 @@ const NewTransferOrder = () => {
                    <div className="flex flex-col gap-4">
                      <label htmlFor="item.name" className="text-accent text-sm">Item Name</label>
                      <input type="text" id="item.name" name="item.name"
+                      required
                        onChange={handleChange} value={orderData.item.name}
                        className="rounded-md border border-primary-light p-2" />
                    </div>
                    <div className="flex gap-2 items-center">
                      <div className="flex flex-col gap-4">
                        <label htmlFor="item.qty" className="text-accent text-sm">Quantity</label>
-                       <input type="number" id="item.qty" name="item.qty"
+                       <input type="number" id="item.qty" name="item.qty" required
                          onChange={handleChange} value={orderData.item.qty}
                          className="rounded-md border border-primary-light p-2 w-32" />
                      </div>
                      <div className="flex flex-col gap-4">
                        <label htmlFor="item.unit_measurement" className="text-accent text-sm">Unit</label>
-                       <select name="item.unit_measurement" id="item.unit_measurement" onChange={handleChange} value={orderData.item.unit_measurement} className="rounded-md border border-primary-light p-2 text-accent">
+                       <select name="item.unit_measurement" id="item.unit_measurement" onChange={handleChange} value={orderData.item.unit_measurement} required className="rounded-md border border-primary-light p-2 text-accent">
                          <option value="pcs">pcs</option>
                          <option value="kg">kg</option>
                          <option value="g">g</option>
@@ -152,7 +148,9 @@ const NewTransferOrder = () => {
                  <div className="flex gap-4">
                    <div className="flex flex-col gap-4">
                      <label htmlFor="approver_id" className="text-accent text-sm">Approver</label>
-                     <select name="approver_id" id="approver_id" onChange={handleChange} value={isApproversLoading ?('Loading...'): (orderData.approver_id)} className="rounded-md border border-primary-light p-2 text-accent">
+                     <select name="approver_id" id="approver_id" onChange={handleChange} required
+                      value={isApproversLoading ?('Loading...'): (orderData.approver_id)}
+                      className="rounded-md border border-primary-light p-2 text-accent">
                        {approvers.map((approver) => (
                          <option key={approver.id} value={approver.id}>{approver.name}</option>
                        ))}
@@ -160,7 +158,8 @@ const NewTransferOrder = () => {
                    </div>
                    <div className="flex flex-col gap-4">
                      <label htmlFor="destination_id" className="text-accent text-sm">Destination</label>
-                     <select name="destination_id" id="destination_id" onChange={handleChange} value={isLocationsLoading ?('Loading...'): orderData.destination_id} className="rounded-md border border-primary-light p-2 text-accent">
+                     <select name="destination_id" id="destination_id" onChange={handleChange} required
+                     value={isLocationsLoading ?('Loading...'): orderData.destination_id} className="rounded-md border border-primary-light p-2 text-accent">
                        {locations.map((location) => (
                          <option key={location.id} value={location.id}>{location.name}</option>
                        ))}

@@ -9,8 +9,14 @@ export const notificationApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    
+    clearNotification: builder.mutation({
+      query: (id) => ({
+        url: `/inbox/mark-as-read/${id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
+
 });
-export const {useFetchNotificationQuery} = notificationApi;
+export const {useFetchNotificationQuery, useClearNotificationMutation} = notificationApi;
 

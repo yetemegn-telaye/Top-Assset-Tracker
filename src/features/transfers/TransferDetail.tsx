@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faCheck, faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faCheck, faTruck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
 import { useDispatch } from "react-redux";
@@ -41,9 +41,10 @@ const TransferDetail = () => {
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl text-secondary">{detail.item_name}</h2>
               <div className="flex flex-col gap-4 mt-2">
-                <p className=" text-accent-light">Quantity: <span className="text-gray-500 ml-6">{detail.qty + detail.unit_measurement}</span></p>
-                <p className="text-accent-light">Returnable: <FontAwesomeIcon icon={faCheck} className="text-secondary text-2xl ml-2" /> {detail.returnable}</p>
-                <p className="text-accent-light">Issued date: <span className="text-gray-500 "> {detail.issued_date}</span></p>
+                <p className=" text-accent-light">Quantity: <span className="text-gray-500 ml-6">{detail.qty ? (detail.qty + detail.unit_measurement) : '0'}</span></p>
+                {detail.returnable ? <p className="text-accent-light">Returnable: <FontAwesomeIcon icon={faCheck} className="text-secondary text-2xl ml-2" /> {detail.returnable}</p> : 
+                <p className="flex text-accent-light items-center">Returnable: <FontAwesomeIcon icon={faXmark} className="text-error text-2xl ml-2" /> </p>}
+                <p className="text-accent-light">Issued date: <span className="text-gray-500 ml-2"> {detail.issued_date? detail.issued_date: '---'}</span></p>
               </div>
             </div>
           </div>
@@ -51,15 +52,15 @@ const TransferDetail = () => {
             <div className="flex flex-col gap-5">
               <div className="flex gap-3 items-center text-sm w-48">
                 <p className=" text-accent-light">Issuer:</p>
-                <div className="flex flex-col">
-                  <p className="text-gray-700">{detail.issuer_name}</p>
+                <div className="flex flex-col items-center">
+                  <p className="text-gray-700">{detail.issuer_name? detail.issuer_name : 'no issuer'}</p>
                   <p className="text-accent-light hover:text-info">+251911904565</p>
                 </div>
               </div>
               {detail.receiver_name && detail.receiver_phone && (
                 <div className="flex gap-3 items-center text-sm w-48">
                   <p className=" text-accent-light">Receiver:</p>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col items-center">
                     <p className="text-gray-700">{detail.receiver_name}</p>
                     <p className="text-accent-light hover:text-info">+251911904565</p>
                   </div>
@@ -67,22 +68,22 @@ const TransferDetail = () => {
               )}
               <div className="flex gap-1 items-center text-sm w-48">
                 <p className="text-accent-light">Transfer Agent:</p>
-                <div className="flex flex-col">
-                  <p className="text-gray-700">{detail.guest_name}</p>
+                <div className="flex flex-col items-center">
+                  <p className="text-gray-700">{detail.guest_name ? detail.guest_name : 'no agent'}</p>
                   <p className="text-accent-light hover:text-info">+251911904565</p>
                 </div>
               </div>
             </div>
             <div className="flex flex-col gap-16">
               <div className="flex gap-6 items-center">
-                <div>
+                <div className="flex flex-col items-center">
                   <p className="text-accent-light text-xs">Origin</p>
-                  <p>{detail.origin}</p>
+                  <p>{detail.origin? detail.origin : '---'}</p>
                 </div>
                 <FontAwesomeIcon icon={faArrowRight} className="text-secondary text-2xl" />
-                <div>
+                <div className="flex flex-col items-center">
                   <p className="text-accent-light text-xs">Destination</p>
-                  <p>{detail.destination}</p>
+                  <p>{detail.destination? detail.destination : '---'}</p>
                 </div>
               </div>
               {

@@ -4,20 +4,16 @@ import { useState } from "react";
 
 interface AddUserProps {
     onAddUser: (user: any) => void;
+    isLoading: boolean;
+    addUserError: string | null;
     }
 
-const AddUser:React.FC<AddUserProps> = ({ onAddUser }) => {
+const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) => {
   const [user, setUser] = useState({
-    id:'',
     name: '',
     email: '',
     role: '1',
     phone: '',
-    email_verified_at: '12-02-2024',
-    created_at: '12-02-2024',
-    updated_at: '12-02-2024',
-    location_id: '1',
-    role_name: '',
   });
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,19 +25,15 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser }) => {
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onAddUser({ ...user, id:(Math.floor(Math.random() * 100)).toString() });
+    onAddUser(user);
     console.log(user);
     setUser({
-       id: '', 
+      
       name: '',
       email: '',
       role: '1',
       phone: '',
-      email_verified_at: '12-02-2024',
-      created_at: '12-02-2024',
-      updated_at: '12-02-2024',
-      location_id: '1',
-      role_name: '',
+     
     });
   };
   
@@ -51,7 +43,7 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser }) => {
         <FontAwesomeIcon icon={faUserCircle} className="text-secondary-light" />
         <h2 className="text-xl text-center text-secondary">Add New User</h2>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div className="mb-4 flex items-center">
           <label htmlFor="name" className="w-1/4 text-sm font-medium text-gray-700">Name</label>
           <input
@@ -80,7 +72,7 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser }) => {
             type="text"
             name="role_name"
             id="role_name"
-            value={user.role_name}
+            value={user.role}
             onChange={handleChange}
             className="mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -97,13 +89,21 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser }) => {
           />
         </div>
       </div>
-      <div className="mt-6 text-right">
-        <button
-          type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary-light focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-secondary-light"
-        >
-          Add User
-        </button>
+      <div className="mt-6 text-center">
+        {
+          isLoading ? <p className="text-sm text-secondary">Adding user...</p> : 
+          addUserError ? <p className="text-sm text-error">{addUserError}</p> : 
+          (
+            <button
+            type="submit"
+            className="inline-flex w-1/2 justify-center py-2 px-4 border border-transparent shadow-md text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary-light focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-secondary-light"
+          >
+            Add User
+          </button>
+          )
+        }
+        
+       
       </div>
     </form>
   );
