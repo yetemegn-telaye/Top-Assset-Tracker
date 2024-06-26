@@ -49,7 +49,10 @@ const DataTable = <T extends object>({ columns, data, isLoading,error }: TablePr
 
   const handleView = (row: T) => {
     const {id} = row as any;
-    navigate(`/transfers/${id}`); 
+    //cut away the first 11 characters and give me whats remaining
+    // const newId = id.slice(11);
+    // console.log('View' + newId);
+    // navigate(`/transfers/${newId}`); 
   };
 
   const handleDelete = (row: T) => {
@@ -58,7 +61,8 @@ const DataTable = <T extends object>({ columns, data, isLoading,error }: TablePr
 
   const handleRowClick = (e: any) => {
     const id = e.target.parentElement.children[0].textContent;
-    navigate(`/transfers/${id}`);
+    const newId = id.slice(11);
+    navigate(`/transfers/${newId}`);
   };
 
   const actionsColumn: Column<T> = {

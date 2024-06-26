@@ -42,7 +42,7 @@ const TransferDetail = () => {
               <h2 className="text-2xl text-secondary">{detail.item_name}</h2>
               <div className="flex flex-col gap-4 mt-2">
                 <p className=" text-accent-light">Quantity: <span className="text-gray-500 ml-6">{detail.qty ? (detail.qty + detail.unit_measurement) : '0'}</span></p>
-                {detail.returnable ? <p className="text-accent-light">Returnable: <FontAwesomeIcon icon={faCheck} className="text-secondary text-2xl ml-2" /> {detail.returnable}</p> : 
+                {detail.returnable ? <p className="text-accent-light">Returnable: <FontAwesomeIcon icon={faCheck} className="text-secondary text-2xl ml-2" /> </p> : 
                 <p className="flex text-accent-light items-center">Returnable: <FontAwesomeIcon icon={faXmark} className="text-error text-2xl ml-2" /> </p>}
                 <p className="text-accent-light">Issued date: <span className="text-gray-500 ml-2"> {detail.issued_date? detail.issued_date: '---'}</span></p>
               </div>
