@@ -7,7 +7,7 @@ import { usersApi } from "./UsersApi";
 interface UserState {
   users: any[];
   isLoading: boolean;
-error: string | null;
+error: any | null;
 isAddUserLoading: boolean;
 addUserError: string | null;
 }
@@ -28,13 +28,10 @@ export const fetchUsersThunk = createAsyncThunk(
       const response = await dispatch(usersApi.endpoints.fetchUsers.initiate({})).unwrap();
       return response;
     } catch (err: any) {
-      console.error("Error in fetchUsers:", err);
+      console.error("Error in fetchUsers:", err.response.status);
       //use error code to check if its 401 and redirect to login and clear local storage
-      if(err.response.status === 401){
-        localStorage.clear();
-        window.location.href = "/login";
-      }
-      return rejectWithValue(err.response ? err.response.data : { error: "Failed to fetch users" });
+      
+      return rejectWithValue(err.response ? err.response.status.code : { error: "Failed to fetch users" });
     }
   }
 );
@@ -76,7 +73,10 @@ const usersSlice = createSlice({
       usersApi.endpoints.fetchUsers.matchRejected,
       (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? null;
+        //state.error = action.error.message ?? null;
+        
+        state.error = action.payload?.status;
+        console.log(action.payload?.status);
       }
     );
     builder.addMatcher(

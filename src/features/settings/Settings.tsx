@@ -18,6 +18,7 @@ import {
 } from "./UsersSlice";
 import { format } from "date-fns";
 import { fetchLocationsThunk, selectLocations } from "../transfers/TransferSlice";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
   interface UsersData {
@@ -40,6 +41,7 @@ const Settings = () => {
   const isAddUserLoading = useAppSelector(selectAddUserLoading);
   const addUserError = useAppSelector(selectAddUserError);
   const [tableData, setTableData] = useState<UsersData[]>([]);
+  const navigate = useNavigate();
 
   const columns: Column<UsersData>[] = [
     {
@@ -68,7 +70,14 @@ const Settings = () => {
 
   useEffect(() => {
     dispatch(fetchUsersThunk());
-  }, [dispatch]);
+    if(usersError===401){
+      localStorage.removeItem('token');
+      navigate('/');
+      alert('Session Expired. Please login again');
+    }
+  }, [dispatch,usersError]);
+
+  
 
   const handleAddUser = (newUser: UsersData) => {
     dispatch(addUserThunk(newUser));
