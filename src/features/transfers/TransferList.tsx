@@ -34,7 +34,7 @@ const TransferList = () => {
   const columns: Column<TransferData>[] = [
     {
       Header: 'ID',
-      accessor: 'id'
+      accessor: 'id',
     },
     {
       Header: 'Item Name',
@@ -74,18 +74,25 @@ const TransferList = () => {
 
   const fetchTransferList = () => {
     dispatch(fetchTransfersListThunk());
+  
   };
 
   useEffect(() => {
     fetchTransferList();
-  }, [dispatch]);
+    if(transfersError===401){
+      localStorage.removeItem('token');
+      alert('Session Expired. Please login again');
+      navigate('/');
+    }
+  }, [dispatch,transfersError]);
 
   useFetchOnRouteChange(fetchTransferList);
 
   useEffect(() => {
     let modifiedTransferList = transferList.map((item, index) => ({
       ...item,
-      id: `ATV-00000${index + 1}-${item.id}`
+      id: `ATV-00000${index + 1}-${item.id}`,
+      original_id: item.id,
     }));
 
     if (searchTerm !== '' || selectedStatus !== '') {

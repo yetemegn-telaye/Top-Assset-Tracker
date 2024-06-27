@@ -7,7 +7,7 @@ interface NotificationState {
   isLoading: boolean;
   isClearLoading: boolean;
   clearNotificationError: string | null;
-  error: string | null;
+  error: any | null;
 }
 
 const initialState: NotificationState = {
@@ -67,7 +67,7 @@ const notificationSlice = createSlice({
       notificationApi.endpoints.fetchNotification.matchRejected,
       (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.payload?.status ?? null;
       }
     );
     builder.addMatcher(

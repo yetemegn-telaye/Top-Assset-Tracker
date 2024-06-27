@@ -18,6 +18,7 @@ import {
 } from "./UsersSlice";
 import { format } from "date-fns";
 import { fetchLocationsThunk, selectLocations } from "../transfers/TransferSlice";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
   interface UsersData {
@@ -29,7 +30,7 @@ const Settings = () => {
     created_at: string;
     updated_at: string;
     role: string;
-    location_id: string;
+    location: any;
     role_name: string;
   }
 
@@ -40,6 +41,7 @@ const Settings = () => {
   const isAddUserLoading = useAppSelector(selectAddUserLoading);
   const addUserError = useAppSelector(selectAddUserError);
   const [tableData, setTableData] = useState<UsersData[]>([]);
+  const navigate = useNavigate();
 
   const columns: Column<UsersData>[] = [
     {
@@ -55,18 +57,10 @@ const Settings = () => {
       accessor: "phone",
     },
     {
-      Header: "Created At",
-      accessor: "created_at",
-      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
-    },
-    {
-      Header: "Updated At",
-      accessor: "updated_at",
-      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
-    },
-    {
-      Header: "Location ID",
-      accessor: "location_id",
+      Header: "Location",
+      accessor: "location",
+      Cell: ({ value }: { value: any }) => (value ? <p>{value.name}</p> : <p>Not Assigned</p>),
+      
     },
     {
       Header: "Role Name",
@@ -76,17 +70,23 @@ const Settings = () => {
 
   useEffect(() => {
     dispatch(fetchUsersThunk());
-  }, [dispatch]);
+    if(usersError===401){
+      localStorage.removeItem('token');
+      alert('Session Expired. Please login again');
+      navigate('/');
+      
+    }
+  }, [dispatch,usersError]);
+
+  
 
   const handleAddUser = (newUser: UsersData) => {
     dispatch(addUserThunk(newUser));
   };
-  
 
   useEffect(() => {
     const sortedUsers = [...users].sort((a, b) => a.id - b.id);
     setTableData(sortedUsers);
-    console.log(sortedUsers);
   }, [users]);
 
   return (

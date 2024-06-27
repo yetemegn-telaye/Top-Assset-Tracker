@@ -26,7 +26,7 @@ const ReturnableList = () => {
   const [tableData, setTableData] = useState<ReturnablesData[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const returnables = useAppSelector(selectReturnablesList);
-  const error = useAppSelector(selectReturnablesError);
+  const errorReturnables = useAppSelector(selectReturnablesError);
   const isReturnablesLoading = useAppSelector(selectIsReturnablesLoading);
 
   const columns: Column<ReturnablesData>[] = [
@@ -64,7 +64,11 @@ const ReturnableList = () => {
 
   useEffect(() => {
     dispatch(fetchReturnablesListThunk());
-  }, [dispatch,returnables]);
+    if(errorReturnables===401){
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+  }, [dispatch,returnables,errorReturnables]);
 
   useEffect(() => {
     if (searchTerm !== "") {
@@ -86,16 +90,10 @@ const ReturnableList = () => {
   return (
     <Layout>
       <div className="bg-background-paper rounded-xl shadow-md p-10 pb-2 w-full h-screen overflow-y-auto">
-        {/* <div className="flex item-center justify-between ml-4 mb-6 pb-6 mt-4">
-          <div className="flex items-center gap-4 ">
-            <FontAwesomeIcon icon={faRepeat} className="text-primary" size="xl" />
-            <h1 className="text-2xl text-primary">Returnables</h1>
-          </div>
-        </div> */}
         <div className="flex justify-between mb-8 items-center">
           <SearchInput setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
         </div>
-        <RetunablesTable columns={columns} data={tableData} isLoading={isReturnablesLoading} error={error} />
+        <RetunablesTable columns={columns} data={tableData} isLoading={isReturnablesLoading} error={errorReturnables} />
       </div>
     </Layout>
   );

@@ -8,17 +8,25 @@ import { clearNotificationThunk, fetchNotificationsThunk, selectIsNotificationsL
 import { useEffect } from "react";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorDisplay from "../../components/common/ErrorDisplay";
+import { useNavigate } from "react-router-dom";
 
 const Notifications = () => {
 
       const dispatch = useDispatch<AppDispatch>();
-      useEffect(() => {
-        dispatch(fetchNotificationsThunk());
-      },[dispatch]);
       const notfications = useAppSelector(selectNotifications);
       const isNotificationsLoading = useAppSelector(selectIsNotificationsLoading);
       const notificationsError = useAppSelector(selectNotificationError);
       const isClearLoading = useAppSelector(selectIsNotificationsLoading);
+      const navigate = useNavigate();
+      useEffect(() => {
+        dispatch(fetchNotificationsThunk());
+        if(notificationsError===401){
+          localStorage.removeItem('token');
+          navigate('/');
+          alert('Session Expired. Please login again');
+        }
+      },[dispatch,notificationsError]);
+     
 
       const handleClear = (id:any) => {
         console.log(id);

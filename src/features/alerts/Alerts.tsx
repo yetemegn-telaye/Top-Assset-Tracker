@@ -6,28 +6,30 @@ import { AppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect } from "react";
 import AlertCard from "./AlertCard";
 import { fetchNotificationsThunk, selectNotifications } from "../notifications/notificationsSlice";
-import { fetchAlertsThunk, selectAlerts } from "./AlertsSlice";
+import { fetchAlertsThunk, selectAlerts, selectAlertsError } from "./AlertsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Alerts = () => {
 
       const dispatch = useDispatch<AppDispatch>();
+      const errorAlerts = useAppSelector(selectAlertsError);
+      const navigate = useNavigate();
       useEffect(() => {
         // dispatch(fetchNotificationsThunk());
         dispatch(fetchAlertsThunk());
-      },[]);
-      const notifications:any =useAppSelector(selectNotifications);
+        if(errorAlerts===401){
+          localStorage.removeItem('token');
+          alert('Session Expired. Please login again');
+          navigate('/');
+
+        }
+      },[dispatch,errorAlerts]);
       const alerts:any = useAppSelector(selectAlerts);
-      // const alertNotifications = (notifications.notifications).filter((notification:any) => notification.notification.message.includes('to approve'));
   
       return (
             <Layout>
                 <div className="flex flex-col cursor-pointer bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
-                    {/* <div className="flex items-center gap-4 ml-4 mb-6 pb-6 mt-4">
-                    <FontAwesomeIcon icon={faExclamation} className="text-error" size="xl" />
-                    <h2 className="text-2xl text-primary">
-                        Alerts
-                    </h2>
-                    </div> */}
+           
                     <div className="flex flex-col gap-4">
                     {alerts.map((alert:any, index:any) => (
                         <AlertCard key={index} alertObj={alert} />

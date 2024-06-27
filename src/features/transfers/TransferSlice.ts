@@ -9,13 +9,14 @@ interface TransferState {
   approvers: any[];
   locations: any[];
   isTransfersLoading: boolean;
-  error: string | null;
+  error: any | null;
   isApproverLoading: boolean;
   isLocationLoading: boolean;
-  approversError: string | null;
-  locationsError: string | null;
+  approversError: any | null;
+  locationsError: any | null;
   isCreateTransferLoading: boolean;
   createTransferError: string | null;
+  errorCode: any | null;
   
 }
 
@@ -32,6 +33,7 @@ const initialState: TransferState = {
   locationsError: null,
   isCreateTransferLoading: false,
   createTransferError: null,
+  errorCode: null,
 };
 
 
@@ -138,7 +140,7 @@ const transferSlice = createSlice({
       transferApi.endpoints.fetchTransferList.matchRejected,
       (state, action) => {
         state.isTransfersLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.payload?.status ?? null;
       }
     );
     builder.addMatcher(
@@ -168,6 +170,12 @@ const transferSlice = createSlice({
         state.transfer = action.payload.transfer_order;
       }
     );
+    builder.addMatcher(
+      transferApi.endpoints.fetchTransferDetails.matchRejected,
+      (state,action) => {
+        state.errorCode = action.payload?.status ?? null;
+      }
+    );
    builder.addMatcher(
     transferApi.endpoints.updateTransferStatus.matchFulfilled,
     (state, action: any) => {
@@ -194,7 +202,7 @@ const transferSlice = createSlice({
     transferApi.endpoints.fetchApprovers.matchRejected,
     (state, action: any) => {
       state.isApproverLoading = false;
-      state.approversError = action.error.message ?? null;
+      state.approversError = action.payload?.status ?? null;
     }
   );
   builder.addMatcher(
@@ -216,7 +224,7 @@ const transferSlice = createSlice({
     (transferApi.endpoints.fetchLocations.matchRejected,
     (state, action: any) => {
       state.isLocationLoading = false;
-      state.locationsError = action.error.message ?? null;
+      state.locationsError = action.payload?.status ?? null;
     }
   );
   }
@@ -234,5 +242,6 @@ export const selectIsLocationLoading = (state: RootState) => state.transfer.isLo
 export const selectLocationsError = (state: RootState) => state.transfer.locationsError;
 export const selectIsCreateTransferLoading = (state: RootState) => state.transfer.isCreateTransferLoading;
 export const selectCreateTransferError = (state: RootState) => state.transfer.createTransferError;
+export const selectErrorCode = (state: RootState) => state.transfer.errorCode;
 
 export default transferSlice.reducer;

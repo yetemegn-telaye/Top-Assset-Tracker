@@ -5,9 +5,9 @@ import { RootState } from "../../redux/store";
 interface ReturnablesState {
   returnables: any[];
   isReturnablesLoading: boolean;
-  errorReturnables: string | null;
+  errorReturnables: any | null;
   isItemRetunLoading: boolean;
-  itemReturnError: string | null;
+  itemReturnError: any | null;
 }
 
 const initialState: ReturnablesState = {
@@ -26,8 +26,8 @@ export const fetchReturnablesListThunk = createAsyncThunk(
       const response = await dispatch(returnablesApi.endpoints.fetchReturnables.initiate({})).unwrap();
       return response;
     } catch (err: any) {
-      console.error("Error in fetchReturnablesListThunk:", err);
-      return rejectWithValue(err.response ? err.response.data : { error: "Failed to fetch returnables" });
+      console.error("Error in fetchReturnablesListThunk:", err.response);
+      return rejectWithValue(err.response ? err.response.satus.code : { error: "Failed to fetch returnables" });
     }
   }
 );
@@ -50,38 +50,49 @@ const returnablesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchReturnablesListThunk.pending, (state) => {
-      state.isReturnablesLoading = true;
-      state.errorReturnables = null;
-    });
-    builder.addCase(fetchReturnablesListThunk.fulfilled, (state, action) => {
-      state.returnables = action.payload.returnable_items;
-      state.isReturnablesLoading = false;
-    });
-    builder.addCase(fetchReturnablesListThunk.rejected, (state, action) => {
-      state.errorReturnables = action.error.message ?? "Failed to fetch returnables";
-      state.isReturnablesLoading = false;
-    });
-    builder.addCase(
-      returnItemThunk.fulfilled,
+    builder.addMatcher(
+      returnablesApi.endpoints.fetchReturnables.matchFulfilled,
+      (state, action: any) => {
+        state.returnables = action.payload.returnable_items;
+        state.isReturnablesLoading = false;
+      }
+    );
+    builder.addMatcher(
+      returnablesApi.endpoints.fetchReturnables.matchPending,
+      (state) => {
+        state.isReturnablesLoading = true;
+        state.errorReturnables = null;
+      }
+    );
+    builder.addMatcher(
+      returnablesApi.endpoints.fetchReturnables.matchRejected,
       (state, action) => {
-        console.log("Return Item response:", action.payload);
+        state.isReturnablesLoading = false;
+        state.errorReturnables = action.payload?.status ?? "Failed to fetch returnables";
+        console.log('error in returnables', action.payload?.status)
+      }
+    );
+
+    builder.addMatcher(
+      returnablesApi.endpoints.returnItem.matchFulfilled,
+      (state, action: any) => {
         state.isItemRetunLoading = false;
         state.itemReturnError = null;
       }
     );
-    builder.addCase(
-      returnItemThunk.pending,
-      (state) => {
+    
+    builder.addMatcher(
+      returnablesApi.endpoints.returnItem.matchPending,
+      (state)=>{
         state.isItemRetunLoading = true;
         state.itemReturnError = null;
       }
     );
-    builder.addCase(
-      returnItemThunk.rejected,
+    builder.addMatcher(
+      returnablesApi.endpoints.returnItem.matchRejected,
       (state, action) => {
         state.isItemRetunLoading = false;
-        state.itemReturnError = action.error.message ?? "Failed to return item";
+        state.itemReturnError = action.error ?? "Failed to return item";
       }
     );
   },

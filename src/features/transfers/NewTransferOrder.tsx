@@ -5,17 +5,27 @@ import StatusBarLine from "./StatusBarLine";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectCreateTransferError, selectIsApproverLoading, selectIsCreateTransferLoading, selectIsLocationLoading, selectLocations } from "./TransferSlice";
+import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectApproversError, selectCreateTransferError, selectIsApproverLoading, selectIsCreateTransferLoading, selectIsLocationLoading, selectLocations, selectLocationsError } from "./TransferSlice";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorDisplay from "../../components/common/ErrorDisplay";
+import { useNavigate } from "react-router-dom";
 
 const NewTransferOrder = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const approvers = useAppSelector(selectApprovers);
+  const locations = useAppSelector(selectLocations);
+  const isApproversLoading = useAppSelector(selectIsApproverLoading);
+  const isLocationsLoading = useAppSelector(selectIsLocationLoading);
+  const locationsError = useAppSelector(selectLocationsError);
+  const approversError = useAppSelector(selectApproversError);
+  const isCreateTransferLoading = useAppSelector(selectIsCreateTransferLoading);
+  const createTransferError = useAppSelector(selectCreateTransferError);
+  const navigate = useNavigate();
   const [orderData, setOrderData] = useState({
     item: {
       name: "",
       qty: 1,
-      unit_measurement: "pcs",
+      unit_measurement: "",
       returnable: false
     },
     guest: {
@@ -31,13 +41,13 @@ const NewTransferOrder = () => {
   useEffect(() => {
     dispatch(fetchApproversThunk());
     dispatch(fetchLocationsThunk());
-    }, [dispatch]);
- const approvers = useAppSelector(selectApprovers);
- const locations = useAppSelector(selectLocations);
- const isApproversLoading = useAppSelector(selectIsApproverLoading);
- const isLocationsLoading = useAppSelector(selectIsLocationLoading);
- const isCreateTransferLoading = useAppSelector(selectIsCreateTransferLoading);
- const createTransferError = useAppSelector(selectCreateTransferError);
+    if(locationsError===401 || approversError===401){
+      localStorage.removeItem('token');
+      alert('Please login to access this page');
+      navigate('/');
+    }
+    }, [dispatch,locationsError, approversError]);
+
 
  
 
@@ -92,7 +102,16 @@ const NewTransferOrder = () => {
     orderData.images.forEach((file, index) => {
       formData.append(`images[${index}]`, file);
     });
-  console.log('form data', formData);  
+  console.log('form data', formData); 
+
+  if(orderData.approver_id === '' || orderData.destination_id === '') {
+    alert('Please select approver and destination');
+    return;
+  }
+  if(orderData.guest.name === '' || orderData.guest.phone === '') {
+    alert('Please provide guest name and phone number');
+    return;
+  }
     dispatch(createTransferThunk(formData));
     console.log('order data in new order', orderData);
   }
@@ -136,6 +155,7 @@ const NewTransferOrder = () => {
                      <div className="flex flex-col gap-4">
                        <label htmlFor="item.unit_measurement" className="text-accent text-sm">Unit</label>
                        <select name="item.unit_measurement" id="item.unit_measurement" onChange={handleChange} value={orderData.item.unit_measurement} required className="rounded-md border border-primary-light p-2 text-accent">
+                         <option value='' selected>Select unit</option>
                          <option value="pcs">pcs</option>
                          <option value="kg">kg</option>
                          <option value="g">g</option>
@@ -151,6 +171,7 @@ const NewTransferOrder = () => {
                      <select name="approver_id" id="approver_id" onChange={handleChange} required
                       value={isApproversLoading ?('Loading...'): (orderData.approver_id)}
                       className="rounded-md border border-primary-light p-2 text-accent">
+                       <option value=''>Select Approver</option>
                        {approvers.map((approver) => (
                          <option key={approver.id} value={approver.id}>{approver.name}</option>
                        ))}
@@ -160,6 +181,7 @@ const NewTransferOrder = () => {
                      <label htmlFor="destination_id" className="text-accent text-sm">Destination</label>
                      <select name="destination_id" id="destination_id" onChange={handleChange} required
                      value={isLocationsLoading ?('Loading...'): orderData.destination_id} className="rounded-md border border-primary-light p-2 text-accent">
+                        <option value=''>Select Destination</option>
                        {locations.map((location) => (
                          <option key={location.id} value={location.id}>{location.name}</option>
                        ))}

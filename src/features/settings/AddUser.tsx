@@ -12,11 +12,31 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
   const [user, setUser] = useState({
     name: '',
     email: '',
-    role: '1',
     phone: '',
+    role: '',
+    location_id: 0,
   });
+  const [locations, setLocations] = useState<any[]>([
+    {location_id: 1, name: 'Top 1'},
+    {location_id: 2, name: 'Top 2'},
+    {location_id: 3, name: 'Top 3'}
+  ]);
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e:any) => {
+    if (e.target.name === 'role') {
+      setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+      });
+      return;
+    } 
+    if(e.target.name === 'location_id') {
+      setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+      });
+      return;
+    }
     setUser({
       ...user,
       [e.target.name]: e.target.value,
@@ -25,15 +45,15 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onAddUser(user);
     console.log(user);
+    onAddUser(user);
+    
     setUser({
-      
       name: '',
       email: '',
-      role: '1',
       phone: '',
-     
+      role: '', 
+      location_id: 0, 
     });
   };
   
@@ -49,6 +69,7 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
           <input
             type="text"
             name="name"
+            required
             id="name"
             value={user.name}
             onChange={handleChange}
@@ -59,6 +80,7 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
           <label htmlFor="email" className="w-1/4 text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
+            required
             name="email"
             id="email"
             value={user.email}
@@ -68,25 +90,35 @@ const AddUser:React.FC<AddUserProps> = ({ onAddUser, isLoading, addUserError }) 
         </div>
         <div className="mb-4 flex items-center">
           <label htmlFor="role" className="w-1/4 text-sm font-medium text-gray-700">Role</label>
-          <input
-            type="text"
-            name="role_name"
-            id="role_name"
-            value={user.role}
-            onChange={handleChange}
-            className="mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+          <select name="role" required id="role" value={user.role} onChange={handleChange} className="mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
         </div>
         <div className="mb-4 flex items-center">
           <label htmlFor="phone" className="w-1/4 text-sm font-medium text-gray-700">Phone</label>
           <input
             type="text"
+            required
             name="phone"
             id="phone"
             value={user.phone}
             onChange={handleChange}
             className="mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+        </div>
+        <div className="mb-4 flex items-center col-span-2 justify-self-center">
+       
+        <label htmlFor="location_id" className="w-1/4 text-sm font-medium text-gray-700 mr-3">Location</label>
+         <select name="location_id" id="location_id" onChange={handleChange} required
+          value={user.location_id} className="mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value=''>Select Location</option>
+          {locations.map((location) => (
+              <option key={location.location_id} value={location.location_id}>{location.name}</option>
+            ))}
+           </select>
+                 
         </div>
       </div>
       <div className="mt-6 text-center">
