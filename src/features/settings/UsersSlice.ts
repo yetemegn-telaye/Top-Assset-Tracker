@@ -31,7 +31,7 @@ export const fetchUsersThunk = createAsyncThunk(
       console.error("Error in fetchUsers:", err.response.status);
       //use error code to check if its 401 and redirect to login and clear local storage
       
-      return rejectWithValue(err.response ? err.response.status.code : { error: "Failed to fetch users" });
+      return rejectWithValue(err.response ? err.response.data: { error: "Failed to fetch users" });
     }
   }
 );
@@ -73,10 +73,7 @@ const usersSlice = createSlice({
       usersApi.endpoints.fetchUsers.matchRejected,
       (state, action) => {
         state.isLoading = false;
-        //state.error = action.error.message ?? null;
-        
-        state.error = action.payload?.status;
-        console.log(action.payload);
+        state.error = action.payload?.status ?? null;
       }
     );
     builder.addMatcher(

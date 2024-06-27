@@ -26,7 +26,7 @@ export const fetchNotificationsThunk = createAsyncThunk(
       return response;
     } catch (err: any) {
       console.error("Error in fetchNotifications:", err);
-      return rejectWithValue(err.response ? err.response.response.status.code : { error: "Failed to fetch notifications" });
+      return rejectWithValue(err.response ? err.response.data : { error: "Failed to fetch notifications" });
     }
   }
 );
