@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faBox, faCheck, faClock, faRepeat, faStamp, faTruck, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchTransferDetailsThunk, selectTransferDetail, updateTransferStatusThunk } from "./TransferSlice";
+import { fetchTransferDetailsThunk, selectErrorCode, selectTransferDetail, updateTransferStatusThunk } from "./TransferSlice";
 import { useEffect } from "react";
 import { TransferStatus } from "../../constants/data";
 import { returnItemThunk } from "../returnables/ReturnablesSlice";
@@ -15,10 +15,17 @@ const TransferDetail = () => {
   const id: any = parseInt((useParams<{ id: string }>().id) ?? '');
   const dispatch = useDispatch<AppDispatch>();
   const detail = useAppSelector(selectTransferDetail);
+  const errorCode = useAppSelector(selectErrorCode);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchTransferDetailsThunk(id));
-  }, [dispatch, id]);
+    if (errorCode === 401) {
+      localStorage.removeItem('token');
+      alert('You are not authorized to view this page, Login and try again');
+      navigate('/');
+    }
+  }, [dispatch, id, errorCode]);
  
 
   const handleUpdate = (status: string) => {

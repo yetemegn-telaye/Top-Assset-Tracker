@@ -16,6 +16,7 @@ interface TransferState {
   locationsError: any | null;
   isCreateTransferLoading: boolean;
   createTransferError: string | null;
+  errorCode: any | null;
   
 }
 
@@ -32,6 +33,7 @@ const initialState: TransferState = {
   locationsError: null,
   isCreateTransferLoading: false,
   createTransferError: null,
+  errorCode: null,
 };
 
 
@@ -168,6 +170,12 @@ const transferSlice = createSlice({
         state.transfer = action.payload.transfer_order;
       }
     );
+    builder.addMatcher(
+      transferApi.endpoints.fetchTransferDetails.matchRejected,
+      (state,action) => {
+        state.errorCode = action.payload?.status ?? null;
+      }
+    );
    builder.addMatcher(
     transferApi.endpoints.updateTransferStatus.matchFulfilled,
     (state, action: any) => {
@@ -234,5 +242,6 @@ export const selectIsLocationLoading = (state: RootState) => state.transfer.isLo
 export const selectLocationsError = (state: RootState) => state.transfer.locationsError;
 export const selectIsCreateTransferLoading = (state: RootState) => state.transfer.isCreateTransferLoading;
 export const selectCreateTransferError = (state: RootState) => state.transfer.createTransferError;
+export const selectErrorCode = (state: RootState) => state.transfer.errorCode;
 
 export default transferSlice.reducer;
