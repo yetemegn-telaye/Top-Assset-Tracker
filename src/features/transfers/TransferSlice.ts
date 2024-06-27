@@ -12,8 +12,8 @@ interface TransferState {
   error: any | null;
   isApproverLoading: boolean;
   isLocationLoading: boolean;
-  approversError: string | null;
-  locationsError: string | null;
+  approversError: any | null;
+  locationsError: any | null;
   isCreateTransferLoading: boolean;
   createTransferError: string | null;
   
@@ -194,7 +194,7 @@ const transferSlice = createSlice({
     transferApi.endpoints.fetchApprovers.matchRejected,
     (state, action: any) => {
       state.isApproverLoading = false;
-      state.approversError = action.error.message ?? null;
+      state.approversError = action.payload?.status ?? null;
     }
   );
   builder.addMatcher(
@@ -216,7 +216,7 @@ const transferSlice = createSlice({
     (transferApi.endpoints.fetchLocations.matchRejected,
     (state, action: any) => {
       state.isLocationLoading = false;
-      state.locationsError = action.error.message ?? null;
+      state.locationsError = action.payload?.status ?? null;
     }
   );
   }

@@ -5,12 +5,22 @@ import StatusBarLine from "./StatusBarLine";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectCreateTransferError, selectIsApproverLoading, selectIsCreateTransferLoading, selectIsLocationLoading, selectLocations } from "./TransferSlice";
+import { createTransferThunk, fetchApproversThunk, fetchLocationsThunk, selectApprovers, selectApproversError, selectCreateTransferError, selectIsApproverLoading, selectIsCreateTransferLoading, selectIsLocationLoading, selectLocations, selectLocationsError } from "./TransferSlice";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ErrorDisplay from "../../components/common/ErrorDisplay";
+import { useNavigate } from "react-router-dom";
 
 const NewTransferOrder = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const approvers = useAppSelector(selectApprovers);
+  const locations = useAppSelector(selectLocations);
+  const isApproversLoading = useAppSelector(selectIsApproverLoading);
+  const isLocationsLoading = useAppSelector(selectIsLocationLoading);
+  const locationsError = useAppSelector(selectLocationsError);
+  const approversError = useAppSelector(selectApproversError);
+  const isCreateTransferLoading = useAppSelector(selectIsCreateTransferLoading);
+  const createTransferError = useAppSelector(selectCreateTransferError);
+  const navigate = useNavigate();
   const [orderData, setOrderData] = useState({
     item: {
       name: "",
@@ -31,13 +41,13 @@ const NewTransferOrder = () => {
   useEffect(() => {
     dispatch(fetchApproversThunk());
     dispatch(fetchLocationsThunk());
-    }, [dispatch]);
- const approvers = useAppSelector(selectApprovers);
- const locations = useAppSelector(selectLocations);
- const isApproversLoading = useAppSelector(selectIsApproverLoading);
- const isLocationsLoading = useAppSelector(selectIsLocationLoading);
- const isCreateTransferLoading = useAppSelector(selectIsCreateTransferLoading);
- const createTransferError = useAppSelector(selectCreateTransferError);
+    if(locationsError===401 || approversError===401){
+      localStorage.removeItem('token');
+      alert('Please login to access this page');
+      navigate('/');
+    }
+    }, [dispatch,locationsError, approversError]);
+
 
  
 
