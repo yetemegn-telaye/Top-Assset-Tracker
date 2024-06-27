@@ -29,7 +29,7 @@ const Settings = () => {
     created_at: string;
     updated_at: string;
     role: string;
-    location_id: string;
+    location: any;
     role_name: string;
   }
 
@@ -65,8 +65,10 @@ const Settings = () => {
       Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
     },
     {
-      Header: "Location ID",
-      accessor: "location_id",
+      Header: "Location",
+      accessor: "location",
+      Cell: ({ value }: { value: any }) => (value ? <p>{value.name}</p> : <p>Not Assigned</p>),
+      
     },
     {
       Header: "Role Name",
@@ -81,12 +83,10 @@ const Settings = () => {
   const handleAddUser = (newUser: UsersData) => {
     dispatch(addUserThunk(newUser));
   };
-  
 
   useEffect(() => {
     const sortedUsers = [...users].sort((a, b) => a.id - b.id);
     setTableData(sortedUsers);
-    console.log(sortedUsers);
   }, [users]);
 
   return (

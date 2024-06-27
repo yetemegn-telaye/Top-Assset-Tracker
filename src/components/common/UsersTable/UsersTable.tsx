@@ -18,7 +18,7 @@ interface Data {
   created_at: string;
   updated_at: string;
   role: string;
-  location_id: string;
+  location: any;
   role_name: string;
 }
 
