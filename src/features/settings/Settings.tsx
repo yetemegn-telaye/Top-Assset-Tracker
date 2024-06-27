@@ -55,16 +55,6 @@ const Settings = () => {
       accessor: "phone",
     },
     {
-      Header: "Created At",
-      accessor: "created_at",
-      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
-    },
-    {
-      Header: "Updated At",
-      accessor: "updated_at",
-      Cell: ({ value }: { value: string }) => <p>{format(new Date(value), 'PPpp')}</p>,
-    },
-    {
       Header: "Location",
       accessor: "location",
       Cell: ({ value }: { value: any }) => (value ? <p>{value.name}</p> : <p>Not Assigned</p>),
