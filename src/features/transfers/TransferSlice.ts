@@ -9,7 +9,7 @@ interface TransferState {
   approvers: any[];
   locations: any[];
   isTransfersLoading: boolean;
-  error: string | null;
+  error: any | null;
   isApproverLoading: boolean;
   isLocationLoading: boolean;
   approversError: string | null;
@@ -138,7 +138,7 @@ const transferSlice = createSlice({
       transferApi.endpoints.fetchTransferList.matchRejected,
       (state, action) => {
         state.isTransfersLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.payload?.status ?? null;
       }
     );
     builder.addMatcher(

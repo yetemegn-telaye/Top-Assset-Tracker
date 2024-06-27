@@ -74,11 +74,17 @@ const TransferList = () => {
 
   const fetchTransferList = () => {
     dispatch(fetchTransfersListThunk());
+  
   };
 
   useEffect(() => {
     fetchTransferList();
-  }, [dispatch]);
+    if(transfersError===401){
+      localStorage.removeItem('token');
+      alert('Session Expired. Please login again');
+      navigate('/');
+    }
+  }, [dispatch,transfersError]);
 
   useFetchOnRouteChange(fetchTransferList);
 

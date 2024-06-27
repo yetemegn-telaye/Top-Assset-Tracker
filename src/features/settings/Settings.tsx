@@ -72,8 +72,9 @@ const Settings = () => {
     dispatch(fetchUsersThunk());
     if(usersError===401){
       localStorage.removeItem('token');
-      navigate('/');
       alert('Session Expired. Please login again');
+      navigate('/');
+      
     }
   }, [dispatch,usersError]);
 
