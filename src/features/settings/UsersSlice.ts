@@ -29,6 +29,11 @@ export const fetchUsersThunk = createAsyncThunk(
       return response;
     } catch (err: any) {
       console.error("Error in fetchUsers:", err);
+      //use error code to check if its 401 and redirect to login and clear local storage
+      if(err.response.status === 401){
+        localStorage.clear();
+        window.location.href = "/login";
+      }
       return rejectWithValue(err.response ? err.response.data : { error: "Failed to fetch users" });
     }
   }
