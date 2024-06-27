@@ -7,13 +7,15 @@ interface DashboardState {
   summary: any[];
   isLoading: boolean;
   error: string | null;
+  errorCode: any | null;
 }
 
 const initialState: DashboardState = {
   recent_transfers: [],
   summary: [],
   isLoading: false,
-  error: null
+  error: null,
+  errorCode: null,
 };
 
 export const fetchDashboardStatsThunk = createAsyncThunk(
@@ -56,6 +58,7 @@ const dashboardSlice = createSlice({
       (state, action) => {
         state.isLoading = false;
         state.error = action.error.message ?? null;
+        state.errorCode = action.payload?.status ?? null;
       }
     );
   },
@@ -64,5 +67,6 @@ const dashboardSlice = createSlice({
 export const selectDashboardStats = (state: RootState) => state.dashboard;
 export const selectIsLoading = (state: RootState) => state.dashboard.isLoading;
 export const selectError = (state: RootState)=> state.dashboard.error;
+export const selectErrorCode = (state: RootState)=> state.dashboard.errorCode;
 
 export default dashboardSlice.reducer;

@@ -9,8 +9,9 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 import { transferData } from "../../constants/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { fetchDashboardStatsThunk, selectDashboardStats, selectError, selectIsLoading } from "./dashboardSlice"
+import { fetchDashboardStatsThunk, selectDashboardStats, selectError, selectErrorCode, selectIsLoading } from "./dashboardSlice"
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
     // interface Data {
@@ -48,7 +49,9 @@ const Dashboard = () => {
       const isDashboardLoading = useAppSelector(selectIsLoading);
       const error = useAppSelector(selectError);
       const [tableData, setTableData] = useState<RecentTransfer[]>([]);
-      
+      const errorCode = useAppSelector(selectErrorCode);
+      const navigate = useNavigate();
+
       const columns: Column<RecentTransfer>[] = [
         {
             Header: 'ID',
@@ -92,7 +95,12 @@ const Dashboard = () => {
       
       useEffect(() => {
         dispatch(fetchDashboardStatsThunk());
-      }, [dispatch]);
+        if(errorCode === 401) {
+          localStorage.removeItem('token');
+          alert('Session Expired. Please login again');
+          navigate('/');
+        }
+      }, [dispatch,errorCode]);
       
       
 
