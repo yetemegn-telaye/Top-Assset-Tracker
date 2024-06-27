@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faCheck, faTruck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faBox, faCheck, faClock, faRepeat, faStamp, faTruck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import StatusBarLine from "./StatusBarLine";
 import Carousel from "../../components/common/Carousel";
 import { useDispatch } from "react-redux";
@@ -18,6 +18,7 @@ const TransferDetail = () => {
   useEffect(() => {
     dispatch(fetchTransferDetailsThunk(id));
   }, [dispatch, id]);
+ 
 
   const handleUpdate = (status: string) => {
     if (window.confirm(`Are you sure you want to ${status} this transfer?`) && detail) {
@@ -27,13 +28,13 @@ const TransferDetail = () => {
 
   const defaultImage = 'https://fakeimg.pl/600x400/cccccc/848687?text=No+image+added'; 
   const images = detail?.images && detail.images.length > 0 && detail.images[0] !== '' ? detail.images : [defaultImage];
-
+  console.log(detail);
   return (
     <Layout>
       <div className="bg-background-paper rounded-xl shadow-lg flex flex-col gap-3 items-center w-full h-screen overflow-y-auto pt-12 pb-9">
         <StatusBarLine
           currentStatus={detail?.status ?? 'Origin'}
-          icons={[<FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faTruck} />]}
+          icons={[<FontAwesomeIcon icon={faClock} />, <FontAwesomeIcon icon={faStamp} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faBox} />,<FontAwesomeIcon icon={faRepeat}/>]}
         />
         <div className="flex flex-col w-full items-center gap-8 justify-center">
           <div className="flex gap-20 items-center justify-center mt-8">
@@ -96,9 +97,10 @@ const TransferDetail = () => {
                     detail.status === TransferStatus.IN_TRANSIT ? (
                       <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('at_destination')}>Receive</button>
                     ) :
-                      detail.status === TransferStatus.AT_DESTINATION ? (
-                        ''
+                      (detail.status === TransferStatus.AT_DESTINATION && detail.returnable==='1') ? (
+                        <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('returned_item')}>Return</button>
                       ) : ''
+                      
               }
             </div>
           </div>

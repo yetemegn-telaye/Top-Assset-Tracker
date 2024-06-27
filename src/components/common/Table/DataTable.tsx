@@ -60,7 +60,7 @@ const DataTable = <T extends object>({ columns, data, isLoading,error }: TablePr
   };
 
   const handleRowClick = (e: any) => {
-    const id = e.target.parentElement.children[0].textContent;
+    const id = e.target.closest('tr').children[0].textContent;
     const newId = id.slice(11);
     navigate(`/transfers/${newId}`);
   };
