@@ -9,6 +9,7 @@ import { AppDispatch, useAppSelector } from "../../redux/store";
 import { fetchTransferDetailsThunk, selectTransferDetail, updateTransferStatusThunk } from "./TransferSlice";
 import { useEffect } from "react";
 import { TransferStatus } from "../../constants/data";
+import { returnItemThunk } from "../returnables/ReturnablesSlice";
 
 const TransferDetail = () => {
   const id: any = parseInt((useParams<{ id: string }>().id) ?? '');
