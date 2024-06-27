@@ -76,7 +76,7 @@ const usersSlice = createSlice({
         //state.error = action.error.message ?? null;
         
         state.error = action.payload?.status;
-        console.log(action.payload?.status);
+        console.log(action.payload);
       }
     );
     builder.addMatcher(
