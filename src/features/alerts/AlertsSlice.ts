@@ -5,7 +5,7 @@ import { alertsApi } from "./AlertsApi";
 interface AlertState {
   alerts: any[];
   isLoading: boolean;
-  error: string|null;
+  error: any | null;
 }
 
 const initialState: AlertState = {
@@ -52,7 +52,7 @@ const alertsSlice = createSlice({
       alertsApi.endpoints.fetchAlerts.matchRejected,
       (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.payload?.status ?? null;
       }
     );
   },
