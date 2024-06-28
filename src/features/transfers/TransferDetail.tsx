@@ -42,7 +42,7 @@ const TransferDetail = () => {
       <div className="bg-background-paper rounded-xl shadow-lg flex flex-col gap-3 items-center w-full h-screen overflow-y-auto pt-12 pb-9">
         <StatusBarLine
           currentStatus={detail?.status ?? 'Origin'}
-          icons={[<FontAwesomeIcon icon={faClock} />, <FontAwesomeIcon icon={faStamp} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faBox} />,<FontAwesomeIcon icon={faRepeat}/>]}
+          icons={[<FontAwesomeIcon icon={faClock} />, <FontAwesomeIcon icon={faStamp} />, <FontAwesomeIcon icon={faTruck} />, <FontAwesomeIcon icon={faBox} />]}
         />
         <div className="flex flex-col w-full items-center gap-8 justify-center">
           <div className="flex gap-20 items-center justify-center mt-8">
@@ -106,7 +106,7 @@ const TransferDetail = () => {
                       <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('at_destination')}>Receive</button>
                     ) :
                       (detail.status === TransferStatus.AT_DESTINATION && detail.returnable==='1') ? (
-                        <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('returned_item')}>Return</button>
+                        <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('completed')}>Return</button>
                       ) : ''
                       
               }
