@@ -16,7 +16,7 @@ const StatusBarLine: React.FC<StatusBarLineProps> = ({ currentStatus, icons }) =
     TransferStatus.AT_DESTINATION
   ];
 
-  const currentStatusLabel = currentStatus === 'returned_item' ? 'Returned Item' : currentStatus === 'lost_item' ? 'Lost Item' : '';
+  const currentStatusLabel = currentStatus === TransferStatus.COMPLETED ? 'Completed' : currentStatus === TransferStatus.ITEM_LOST ? 'Lost Item' : '';
 
   return (
     <div className="flex gap-3 items-center justify-center bg-gray-100 rounded shadow-md w-full p-4 px-7 inline-block">
@@ -32,13 +32,13 @@ const StatusBarLine: React.FC<StatusBarLineProps> = ({ currentStatus, icons }) =
           {index < statuses.length - 1 && <hr className="w-20 border border-accent-light" />}
         </React.Fragment>
       ))}
-      {(currentStatus === 'returned_item' || currentStatus === 'lost_item') && (
+      {(currentStatus === TransferStatus.COMPLETED || currentStatus === TransferStatus.ITEM_LOST) && (
         <>
           <hr className="w-20 border border-accent-light" />
           <div className={`flex gap-2 items-center text-sm rounded p-2 ${
-            currentStatus === 'returned_item' ? 'bg-secondary text-white' : 'bg-error text-white'
+            currentStatus === TransferStatus.COMPLETED ? 'bg-secondary text-white' : 'bg-error text-white'
           }`}>
-            {currentStatusLabel === 'Returned Item' ? icons[statuses.length] : icons[statuses.length + 1]}
+            {currentStatusLabel === 'Completed' ? icons[statuses.length] : icons[statuses.length + 1]}
             {currentStatusLabel}
             <FontAwesomeIcon icon={faCheckCircle} />
           </div>
