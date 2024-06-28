@@ -1,21 +1,23 @@
+// store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/auth/authSlice";
-import baseApi from "../utils/api";
-import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
-import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+
+import authReducer from "../features/auth/authSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import transferReducer from "../features/transfers/TransferSlice";
 import notificationsReducer from "../features/notifications/notificationsSlice";
 import returnablesReducer from "../features/returnables/ReturnablesSlice";
 import usersReducer from "../features/settings/UsersSlice";
 import alertsReducer from "../features/alerts/AlertsSlice";
+import baseApi from "../utils/api";
 
+// Persist configuration for the entire store
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"], 
+  whitelist: ["auth"], // Only persist the auth reducer
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
