@@ -1,7 +1,8 @@
+// authSlice.ts
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { authApi } from "./AuthApi";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import persistReducer from "redux-persist/es/persistReducer";
 
 export interface User {
   id: number;
@@ -53,7 +54,6 @@ export const loginUserThunk = createAsyncThunk(
       const response = await dispatch(authApi.endpoints.loginUser.initiate(credentials));
       return response.data;
     } catch (err: any) {
-      alert("Error in loginUser:");
       return rejectWithValue(err.response.data);
     }
   }
@@ -70,7 +70,6 @@ export const logOutUser = createAsyncThunk(
       window.localStorage.removeItem('token');
       return response.data;
     } catch (err: any) {
-      console.error("Error in logoutUser:", err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -99,10 +98,12 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.loginUser.matchFulfilled,
       (state, action: any) => {
-        state.message = action.payload.message;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
         window.localStorage.setItem("token", action.payload.token);
+        window.localStorage.setItem("user", JSON.stringify(action.payload.user));
+        state.message = action.payload.message;
+        state.user = window.localStorage.getItem("user") !== null ? JSON.parse(window.localStorage.getItem("user")!) : action.payload.user;
+        state.token = action.payload.token;
+
       }
     );
     builder.addMatcher(
@@ -122,7 +123,6 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.logoutUser.matchFulfilled,
       (state, action: any) => {
-        console.log("logoutUser fulfilled payload:", action.payload);
         state.message = "";
         state.user = {
           id: 0,
@@ -154,13 +154,14 @@ const authSlice = createSlice({
   },
 });
 
-const persistConfig = {
+// Persist configuration for the auth slice
+const persistAuthConfig = {
   key: "auth",
   storage,
   whitelist: ["token", "user"],
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
+const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice.reducer);
 
 export const { clearAuthState } = authSlice.actions;
 
@@ -171,6 +172,6 @@ export const selectUser = (state: any) => state.auth.user;
 export const selectIsLoginLoading = (state: any) => state.auth.isLoginLoading;
 export const selectLoginError = (state: any) => state.auth.loginError;
 export const selectIsLogoutLoading = (state: any) => state.auth.isLogoutLoading;
-export const  selectLogoutError = (state: any) => state.auth.logoutError;
+export const selectLogoutError = (state: any) => state.auth.logoutError;
 
 export default persistedAuthReducer;

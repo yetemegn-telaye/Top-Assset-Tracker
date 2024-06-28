@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import topLogo from "../assets/top-logo-final.png";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../../redux/store";
-import { clearAuthState, logOutUser } from "../../features/auth/authSlice";
+import { clearAuthState, logOutUser, selectUser } from "../../features/auth/authSlice";
 import { fetchNotificationsThunk, selectNotifications } from "../../features/notifications/notificationsSlice";
 
 const Sidebar = () => {
@@ -14,7 +14,9 @@ const Sidebar = () => {
   const token = useAppSelector((state: { auth: { token: string } }) => state.auth.token);
   const navigate = useNavigate();
   const notifications = useAppSelector(selectNotifications);
+  const user = window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user') as string) : useAppSelector(selectUser);
 
+  console.log(user);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -136,8 +138,8 @@ const Sidebar = () => {
               <img src="https://i.imghippo.com/files/CCcN51718192469.webp" alt="Profile" className="w-full rounded-full" />
             </div>
             <div className="flex flex-col items-center justify-center">
-              <h6 className="text-secondary font-light hidden md:block">Abebe Kebede</h6>
-              <span className="text-sm text-accent font-light hidden md:block">abebe@topssets.com</span>
+              <h6 className="text-secondary font-light hidden md:block">{user.name}</h6>
+              <span className="text-sm text-accent font-light hidden md:block">{user.email}</span>
               <button onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} className="text-accent hover:text-info" /> </button>
             </div>
           </div>
