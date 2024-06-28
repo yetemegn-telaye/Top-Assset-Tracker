@@ -92,10 +92,7 @@ const Settings = () => {
   return (
     <Layout>
       <div className="flex flex-col bg-background-paper rounded-xl shadow-md p-8 pb-2 w-full h-screen overflow-y-auto">
-        <div className="flex items-center gap-4 ml-4 mb-6 pb-6 mt-4">
-          <FontAwesomeIcon icon={faScrewdriverWrench} className="text-primary" size="xl" />
-          <h1 className="text-2xl text-primary">Settings</h1>
-        </div>
+        
         <div className="grid grid-cols-1 gap-6">
           <AddUser onAddUser={handleAddUser} isLoading={isAddUserLoading} addUserError={addUserError} />
           <UsersTable columns={columns} data={tableData} isLoading={isUsersLoading} errorMessage={usersError} />
