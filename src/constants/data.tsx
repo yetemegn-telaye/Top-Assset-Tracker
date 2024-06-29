@@ -31,5 +31,5 @@ export const transferData: Data[] = [
     ITEM_LOST = 'item_lost',
     APPROVED = 'approved',
     REJECTED = 'rejected',
-    CANCELED = 'canceled'
+    CANCELED = 'canceled',
   }

@@ -1,36 +1,50 @@
-import { faAngleLeft, faAngleRight, faAnglesLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-  }
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
 
-const Pagination :React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-    return (
-        <div className="flex items-center gap-2 justify-end mt-8">
-        {currentPage > 1 && (
-            <>
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => onPageChange(i)}
+          className={`px-4 py-2 rounded-lg ${currentPage === i ? 'bg-secondary text-white' : 'text-secondary'}`}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
+  return (
+    <div className="flex items-center gap-2 justify-end mt-8">
+      {currentPage > 1 && (
         <button
           onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
           className="text-secondary px-4 py-2 rounded-lg"
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        <span className="text-secondary text-xs border border-secondary rounded p-1 px-2" >{currentPage-1}</span>
-        </>
       )}
-        <span className="text-white text-xs bg-secondary rounded p-1 px-2">{currentPage}</span>
+      {renderPageNumbers()}
+      {currentPage < totalPages && (
         <button
           onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
           className="text-secondary px-4 py-2 rounded-lg"
         >
-            <FontAwesomeIcon icon={faAngleRight} className="font-light" />
+          <FontAwesomeIcon icon={faAngleRight} />
         </button>
-        </div>
-    );
-    }
+      )}
+    </div>
+  );
+};
+
 export default Pagination;
