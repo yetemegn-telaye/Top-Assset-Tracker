@@ -6,7 +6,7 @@ import topLogo from "../../components/assets/top-logo-final.png";
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../../redux/store';
 import { loginUserThunk, selectIsAuthenticated, selectIsLoginLoading, selectLoginError } from './authSlice';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
+import LoadingDots from '../../components/common/LoadingDots';
 
 interface FormData {
     email: string;
@@ -88,8 +88,8 @@ const Login = () => {
                     </button>
                 </form>
                 {isLoginLoading && (
-                    <div className="flex justify-center mt-4 w-12 h-12">
-                        <LoadingSpinner />
+                    <div className="flex justify-center items-center">
+                        <LoadingDots />
                     </div>
                 )}
                 {loginError && (
