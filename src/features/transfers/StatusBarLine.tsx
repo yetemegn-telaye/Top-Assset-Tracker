@@ -16,7 +16,7 @@ const StatusBarLine: React.FC<StatusBarLineProps> = ({ currentStatus, icons }) =
     TransferStatus.AT_DESTINATION
   ];
 
-  const currentStatusLabel = currentStatus === TransferStatus.COMPLETED ? 'Completed' : currentStatus === TransferStatus.ITEM_LOST ? 'Lost Item' : '';
+  const currentStatusLabel = currentStatus === TransferStatus.COMPLETED ? 'Completed' : currentStatus === TransferStatus.ITEM_LOST ? 'Lost Item' : currentStatus=== TransferStatus.REJECTED ? 'Rejected' : '';
 
   return (
     <div className="flex gap-3 items-center justify-center bg-gray-100 rounded shadow-md w-full p-4 px-7 inline-block">
@@ -32,7 +32,7 @@ const StatusBarLine: React.FC<StatusBarLineProps> = ({ currentStatus, icons }) =
           {index < statuses.length - 1 && <hr className="w-20 border border-accent-light" />}
         </React.Fragment>
       ))}
-      {(currentStatus === TransferStatus.COMPLETED || currentStatus === TransferStatus.ITEM_LOST) && (
+      {(currentStatus === TransferStatus.COMPLETED || currentStatus === TransferStatus.ITEM_LOST || currentStatus===TransferStatus.REJECTED) && (
         <>
           <hr className="w-20 border border-accent-light" />
           <div className={`flex gap-2 items-center text-sm rounded p-2 ${

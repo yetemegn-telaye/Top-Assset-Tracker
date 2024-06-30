@@ -63,15 +63,15 @@ const TransferDetail = () => {
                 <p className=" text-accent-light">Issuer:</p>
                 <div className="flex flex-col items-center">
                   <p className="text-gray-700">{detail.issuer_name? detail.issuer_name : 'no issuer'}</p>
-                  <p className="text-accent-light hover:text-info">+251911904565</p>
+                  <p className="text-accent-light hover:text-info">{detail.issuer_phone ? detail.issuer_phone : '-'}</p>
                 </div>
               </div>
               {detail.receiver_name && detail.receiver_phone && (
                 <div className="flex gap-3 items-center text-sm w-48">
                   <p className=" text-accent-light">Receiver:</p>
                   <div className="flex flex-col items-center">
-                    <p className="text-gray-700">{detail.receiver_name}</p>
-                    <p className="text-accent-light hover:text-info">+251911904565</p>
+                    <p className="text-gray-700">{detail.receiver_name? detail.receiver_name : 'No receiver'}</p>
+                    <p className="text-accent-light hover:text-info">{detail.receiver_phone ? detail.receiver_phone : '-'}</p>
                   </div>
                 </div>
               )}
@@ -79,7 +79,7 @@ const TransferDetail = () => {
                 <p className="text-accent-light">Transfer Agent:</p>
                 <div className="flex flex-col items-center ">
                   <p className="text-gray-700">{detail.guest_name ? detail.guest_name : 'no agent'}</p>
-                  <p className="text-accent-light hover:text-info">+251911904565</p>
+                  <p className="text-accent-light hover:text-info">{detail.guest_phone ? detail.guest_phone : '-'}</p>
                 </div>
               </div>
             </div>
@@ -97,7 +97,10 @@ const TransferDetail = () => {
               </div>
               {
                 detail.status === TransferStatus.WAITING_FOR_APPROVAL ? (
-                  <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('approved')}>Approve</button>
+                  <div className="flex items-center gap-3">
+                  <button className="bg-secondary w-20 text-white px-1 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('approved')}>Approve</button>
+                  <button className="bg-error w-20 text-white px-1 py-2 rounded-md shadow-xl hover:bg-error-light" onClick={() => handleUpdate('rejected')}>Reject</button>
+                  </div>
                 ) :
                   detail.status === TransferStatus.APPROVED ? (
                     <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('in_transit')}>Send</button>
