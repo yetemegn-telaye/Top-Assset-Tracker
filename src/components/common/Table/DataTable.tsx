@@ -147,7 +147,7 @@ const DataTable = <T extends object>({ columns, data, isLoading,error }: TablePr
                       let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
                       let cellContent = cell.render('Cell');
                       if (cell.column.id === 'status') {
-                        const color = cellValue === TransferStatus.WAITING_FOR_APPROVAL ? 'primary-lighter' : (cellValue === TransferStatus.APPROVED || cellValue === TransferStatus.COMPLETED || TransferStatus.AT_DESTINATION ) ? 'secondary-light' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== TransferStatus.IN_TRANSIT ? 'secondary-lighter' : 'error-lighter';
+                        const color = cellValue === TransferStatus.WAITING_FOR_APPROVAL ? 'primary-lighter' : (cellValue === TransferStatus.APPROVED || cellValue === TransferStatus.COMPLETED ) ? 'secondary-light' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== TransferStatus.IN_TRANSIT ? 'secondary-lighter' : cellValue=== TransferStatus.AT_DESTINATION ? 'secondary-light': 'error-lighter';
                         cellContent = <Badge color={color} value={cellValue} />;
                       }
                       return (
