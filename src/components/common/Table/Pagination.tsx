@@ -10,12 +10,15 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+    const startPage = Math.max(1, currentPage - 1);
+    const endPage = Math.min(totalPages, currentPage + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button
           key={i}
           onClick={() => onPageChange(i)}
-          className={`px-4 py-2 rounded-lg ${currentPage === i ? 'bg-secondary text-white' : 'text-secondary'}`}
+          className={`px-2 py-0 rounded-lg border border-secondary ${currentPage === i ? 'bg-secondary text-white' : 'text-secondary'}`}
         >
           {i}
         </button>
@@ -35,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         </button>
       )}
       {renderPageNumbers()}
-      {currentPage < totalPages && (
+      {currentPage < totalPages - 1 && (
         <button
           onClick={() => onPageChange(currentPage + 1)}
           className="text-secondary px-4 py-2 rounded-lg"

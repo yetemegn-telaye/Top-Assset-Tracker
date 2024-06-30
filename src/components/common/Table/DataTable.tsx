@@ -8,6 +8,7 @@ import ActionButtons from './ActionButtons';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../LoadingSpinner';
 import ErrorDisplay from '../ErrorDisplay';
+import { TransferStatus } from '../../../constants/data';
 
 interface Data {
   id: number;
@@ -146,7 +147,7 @@ const DataTable = <T extends object>({ columns, data, isLoading,error }: TablePr
                       let cellClass = "px-6 py-4 text-accent font-light text-sm text-center";
                       let cellContent = cell.render('Cell');
                       if (cell.column.id === 'status') {
-                        const color = cellValue === 'waiting_for_approval' ? 'primary-lighter' : cellValue === 'approved' ? 'secondary-lighter' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== 'in_transit' ? 'secondary-lighter' : cellValue==='at_destination'? 'secondary-light': 'error-lighter';
+                        const color = cellValue === TransferStatus.WAITING_FOR_APPROVAL ? 'primary-lighter' : (cellValue === TransferStatus.APPROVED || cellValue === TransferStatus.COMPLETED || TransferStatus.AT_DESTINATION ) ? 'secondary-light' : cellValue=== 'returnables' ? 'accent-light' : cellValue=== TransferStatus.IN_TRANSIT ? 'secondary-lighter' : 'error-lighter';
                         cellContent = <Badge color={color} value={cellValue} />;
                       }
                       return (
