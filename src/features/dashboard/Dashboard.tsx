@@ -105,8 +105,19 @@ const Dashboard = () => {
       
 
       useEffect(() => {
+        let modifiedTransferList = dashboard.recent_transfers.map((item, index) => ({
+          ...item,
+          id: `ATV-00000${index + 1}-${item.id}`,
+          original_id: item.id,
+        }));
+
+
+
+       
+
         if(searchTerm != '') {
-        const filteredData = dashboard.recent_transfers.filter((item) => {
+          let filteredData = modifiedTransferList;
+         filteredData = dashboard.recent_transfers.filter((item) => {
           return (
             item.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.issuer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -118,7 +129,7 @@ const Dashboard = () => {
        
         setTableData(filteredData);
     } else {
-        setTableData(dashboard.recent_transfers);
+        setTableData(modifiedTransferList);
       }
       },[searchTerm, dashboard.recent_transfers,dashboard.summary]);
 

@@ -97,9 +97,9 @@ const TransferDetail = () => {
               </div>
               {
                 detail.status === TransferStatus.WAITING_FOR_APPROVAL ? (
-                  <div className="flex items-center">
-                  <button className="bg-secondary w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('approved')}>Approve</button>
-                  <button className="bg-error w-48 text-white px-4 py-2 rounded-md shadow-xl hover:bg-error-light" onClick={() => handleUpdate('rejected')}>Reject</button>
+                  <div className="flex items-center gap-3">
+                  <button className="bg-secondary w-20 text-white px-1 py-2 rounded-md shadow-xl hover:bg-secondary-light" onClick={() => handleUpdate('approved')}>Approve</button>
+                  <button className="bg-error w-20 text-white px-1 py-2 rounded-md shadow-xl hover:bg-error-light" onClick={() => handleUpdate('rejected')}>Reject</button>
                   </div>
                 ) :
                   detail.status === TransferStatus.APPROVED ? (
