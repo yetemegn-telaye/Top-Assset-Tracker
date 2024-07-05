@@ -139,8 +139,8 @@ const Dashboard = () => {
       
     return (
         <Layout>
-            <div className="flex flex-col gap-3 items-start h-screen w-full">
-            <div className="bg-background-paper rounded-xl shadow-md p-8 pb-2 h-full w-full">
+            <div className="flex flex-col gap-3 items-start h-min-screen overflow-y-auto w-full">
+            <div className="bg-background-paper rounded-xl shadow-md p-8 h-full w-full">
                 <div className="flex item-center justify-between mb-6 pb-6">
                     <div>
                     <h2 className="text-2xl font-light text-primary">Recent Transfers</h2>
@@ -166,13 +166,11 @@ const Dashboard = () => {
             
             </div>
             {isDashboardLoading ? <LoadingSpinner/> :(
-                <div className="flex items-center justify-between gap-4 w-full">
-                {dashboard.summary.map((item, index) => (
-                    <StatusCard key={index} status={item.status} count={item.count} />
-                ))
-                }
-    
-                </div>
+             <div className="flex flex-wrap items-center justify-between gap-4 w-full mb-1">
+             {dashboard.summary.map((item, index) => (
+                 <StatusCard key={index} status={item.status} count={item.count} />
+             ))}
+         </div>
             ) }
           
             </div>
