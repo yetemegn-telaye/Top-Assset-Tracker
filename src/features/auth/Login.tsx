@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../../redux/store';
 import { loginUserThunk, selectIsAuthenticated, selectIsLoginLoading, selectLoginError } from './authSlice';
 import LoadingDots from '../../components/common/LoadingDots';
+import './Login.css';
 
 interface FormData {
     email: string;
@@ -40,17 +41,17 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center">
-            <div className="text-lg flex flex-col gap-2 items-center mt-20">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-secondary-lighter">
+            <div className="text-lg flex flex-col gap-2 items-center mt-20 animate-fadeIn">
                 <img src={topLogo} alt="Top Logo" className="w-48 h-20" />
-                <span className="text-xl font-light text-primary">Asset Tracker</span>
+                <span className="text-2xl font-semibold text-primary">Asset Tracker</span>
             </div>
-            <div className="bg-background-paper border border-gray-300 rounded-xl shadow-md w-50 m-auto flex flex-col max-h-screen items-center justify-center gap-6 p-12">
+            <div className="bg-white border border-gray-300 rounded-xl shadow-lg w-80 m-auto flex flex-col max-h-screen items-center justify-center gap-6 p-8 animate-slideIn">
                 <div className='flex flex-col items-center justify-center gap-4'>
-                    <FontAwesomeIcon icon={faUserCircle} size="2x" className="text-primary-light" />
-                    <p className='text-xs text-secondary-light font-light'>Welcome to Top's Tracking System.</p>
+                    <FontAwesomeIcon icon={faUserCircle} size="3x" className="text-primary" />
+                    <p className='text-sm text-secondary font-light'>Welcome to Top's Tracking System.</p>
                 </div>
-                <form className="flex flex-col space-y-8 w-full" onSubmit={handleSubmit}>
+                <form className="flex flex-col space-y-6 w-full" onSubmit={handleSubmit}>
                     <div className='relative'>
                         <input
                             required
@@ -60,10 +61,10 @@ const Login = () => {
                             name='email'
                             value={loginFormData.email}
                             onChange={handleInputChange}
-                            className="p-2 pl-10 border-0 border-b border-primary-light w-full"
+                            className="p-2 pl-10 border-0 border-b border-primary-light w-full focus:outline-none focus:border-primary transition duration-200"
                         />
                         <FontAwesomeIcon icon={faUserCircle}
-                            className='text-accent absolute right-2 top-1/2 transform -translate-y-1/2' />
+                            className='text-primary absolute left-2 top-1/2 transform -translate-y-1/2' />
                     </div>
                     <div className='relative'>
                         <input
@@ -74,14 +75,14 @@ const Login = () => {
                             name='password'
                             value={loginFormData.password}
                             onChange={handleInputChange}
-                            className="p-2 pl-10 border-0 border-b border-primary-light w-full"
+                            className="p-2 pl-10 border-0 border-b border-primary-light w-full focus:outline-none focus:border-primary transition duration-200"
                         />
                         <FontAwesomeIcon icon={faLock} size='1x'
-                            className='text-accent absolute right-2 top-1/2 transform -translate-y-1/2' />
+                            className='text-primary absolute left-2 top-1/2 transform -translate-y-1/2' />
                     </div>
                     <button
                         type="submit"
-                        className="p-2 bg-primary text-white rounded-md hover:bg-primary-light flex items-center justify-center gap-2"
+                        className="p-2 bg-primary text-white rounded-md hover:bg-primary-dark flex items-center justify-center gap-2 transition duration-200"
                     >
                         Login
                         <FontAwesomeIcon icon={faRightToBracket} size='1x' />

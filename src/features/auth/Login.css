@@ -1,0 +1,43 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.bg-cover {
+    background-size: cover;
+}
+
+.bg-center {
+    background-position: center;
+}
+
+.bg-no-repeat {
+    background-repeat: no-repeat;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.animate-slideIn {
+    animation: slideIn 1s ease-in-out;
+}
+
+.bg-gradient-to-br {
+    background: linear-gradient(to bottom right, #cce7ff, #b3d1ff, #99bbff, #80a6ff);
+}
